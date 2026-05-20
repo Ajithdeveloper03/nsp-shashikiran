@@ -126,9 +126,14 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
         
         {/* ── LEFT SIDE: CONTENT ── */}
         <article className="max-w-none">
-          <div className="relative rounded-[2.5rem] overflow-hidden mb-12 md:mb-20 shadow-2xl group">
-            <img src={post.image} alt={post.title} className="w-full h-auto transform transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-[2.5rem]" />
+          <div className="mb-12 md:mb-20">
+            <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl group">
+              <img loading="lazy" src={post.image} alt={post.title} className="w-full h-auto transform transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-[2.5rem]" />
+            </div>
+            {post.slug === 'smarter-future-srirangam' && (
+              <p className="text-center text-gray-500 font-bold uppercase tracking-widest text-xs mt-5">Smart Temple Plan</p>
+            )}
           </div>
 
           <div className="text-sm md:text-base text-gray-700 leading-relaxed mb-8 md:mb-12 border-l-4 border-[#CC0000] pl-5 md:pl-8 py-2">
@@ -149,7 +154,7 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
 
               {section.image && (
                 <div className="relative rounded-[2.5rem] overflow-hidden mb-10 md:mb-12 shadow-2xl border border-gray-100">
-                  <img src={section.image} alt={section.title[lang as 'en' | 'ta']} className="w-full aspect-[16/9] object-cover" />
+                  <img loading="lazy" src={section.image} alt={section.title[lang as 'en' | 'ta']} className="w-full aspect-[16/9] object-cover" />
                 </div>
               )}
 
@@ -187,15 +192,15 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
 
         {/* ── RIGHT SIDE: TABLE OF CONTENTS (STUCK) ── */}
         <aside className="hidden lg:block">
-          <div className="sticky top-32 space-y-12">
+          <div className="sticky top-32 space-y-8">
             
             {/* Table of Contents */}
-            <div className="bg-gray-60 shadow-2xl rounded-[2.5rem] p-10 border border-gray-100">
-              <h4 className="text-sm font-bpld text-[#CC0000] uppercase tracking-[2px] mb-8 flex items-center gap-3">
-                <div className="w-6 h-px bg-[#CC0000]/30" />
+            <div className="bg-gray-50 shadow-xl rounded-3xl p-6 border border-gray-100">
+              <h4 className="text-xs font-black text-[#CC0000] uppercase tracking-[2px] mb-5 flex items-center gap-2">
+                <div className="w-4 h-px bg-[#CC0000]/30" />
                 {t.toc}
               </h4>
-              <nav className="flex flex-col gap-5">
+              <nav className="flex flex-col gap-3">
                 {post.sections.map((section) => (
                   <a
                     key={section.id}
@@ -204,9 +209,9 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
                       e.preventDefault();
                       document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className={`text-sm  tracking-wider transition-all hover:text-[#CC0000] flex items-center gap-3 group ${activeSection === section.id ? 'text-[#CC0000] translate-x-2' : 'text-gray-500'}`}
+                    className={`text-xs tracking-wider transition-all hover:text-[#CC0000] flex items-center gap-3 group ${activeSection === section.id ? 'text-[#CC0000] translate-x-2' : 'text-gray-500'}`}
                   >
-                    <div className={`w-2 h-2 rounded-full transition-all border-2 border-current ${activeSection === section.id ? 'bg-[#CC0000] scale-100' : 'bg-transparent scale-50 group-hover:scale-100'}`} />
+                    <div className={`w-1.5 h-1.5 rounded-full transition-all border-2 border-current ${activeSection === section.id ? 'bg-[#CC0000] scale-100' : 'bg-transparent scale-50 group-hover:scale-100'}`} />
                     {section.title[lang as 'en' | 'ta']}
                   </a>
                 ))}
@@ -217,9 +222,9 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
                       e.preventDefault();
                       document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className={`text-sm font-black uppercase tracking-wider transition-all hover:text-[#CC0000] flex items-center gap-3 group ${activeSection === 'faq' ? 'text-[#CC0000] translate-x-2' : 'text-gray-400'}`}
+                    className={`text-xs font-black uppercase tracking-wider transition-all hover:text-[#CC0000] flex items-center gap-3 group ${activeSection === 'faq' ? 'text-[#CC0000] translate-x-2' : 'text-gray-400'}`}
                   >
-                    <div className={`w-2 h-2 rounded-full transition-all border-2 border-current ${activeSection === 'faq' ? 'bg-[#CC0000] scale-100' : 'bg-transparent scale-50 group-hover:scale-100'}`} />
+                    <div className={`w-1.5 h-1.5 rounded-full transition-all border-2 border-current ${activeSection === 'faq' ? 'bg-[#CC0000] scale-100' : 'bg-transparent scale-50 group-hover:scale-100'}`} />
                     {t.faq}
                   </a>
                 )}
@@ -227,9 +232,9 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
             </div>
 
             {/* Share Section */}
-            <div className="px-10">
-              <h4 className="text-sm font-black text-gray-400 uppercase tracking-[4px] mb-8">{t.share}</h4>
-              <div className="flex gap-4">
+            <div className="px-6">
+              <h4 className="text-xs font-black text-gray-400 uppercase tracking-[4px] mb-4">{t.share}</h4>
+              <div className="flex gap-3">
                 {[
                   { icon: Camera, color: 'hover:bg-[#E1306C]' },
                   { icon: Globe, color: 'hover:bg-[#0077B5]' },
@@ -238,25 +243,25 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
                 ].map((item, i) => (
                   <button
                     key={i}
-                    className={`w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 transition-all hover:text-white hover:border-transparent ${item.color}`}
+                    className={`w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 transition-all hover:text-white hover:border-transparent ${item.color}`}
                   >
-                    <item.icon size={18} />
+                    <item.icon size={16} />
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Candidate CTA */}
-            <div className="p-10 bg-black rounded-[2.5rem] text-white overflow-hidden relative group">
+            <div className="p-8 bg-black rounded-3xl text-white overflow-hidden relative group">
               <div className="relative z-10">
-                <h4 className="text-2xl font-black mb-4 leading-tight tracking-tight">Join the movement for a Smarter Srirangam</h4>
-                <p className="text-white/60 text-sm mb-8 leading-relaxed">Be part of the change you want to see in our constituency. Your voice matters in building a better future.</p>
-                <Link to="/contact" className="inline-block bg-[#CC0000] text-white px-10 py-4 rounded-full text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl">
+                <h4 className="text-xl font-black mb-3 leading-tight tracking-tight">Join the movement for a Smarter Srirangam</h4>
+                <p className="text-white/60 text-xs mb-6 leading-relaxed">Be part of the change you want to see in our constituency.</p>
+                <button onClick={() => window.dispatchEvent(new CustomEvent('open-join-popup'))} className="inline-flex items-center justify-center whitespace-nowrap w-full bg-[#CC0000] text-white px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl">
                   Join Now
-                </Link>
+                </button>
               </div>
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#CC0000]/20 blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-orange-500/10 blur-2xl translate-y-1/2 -translate-x-1/2" />
+              <div className="absolute top-0 right-0 w-24 h-24 bg-[#CC0000]/20 blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute bottom-0 left-0 w-20 h-20 bg-orange-500/10 blur-2xl translate-y-1/2 -translate-x-1/2" />
             </div>
 
           </div>

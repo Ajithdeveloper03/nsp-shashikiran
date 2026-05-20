@@ -29,6 +29,12 @@
   .font-tamil {
     font-family: 'Hind Madurai', sans-serif;
   }
+
+  /* Global paragraph justification */
+  p {
+    text-align: justify;
+    hyphens: auto;
+  }
 }
 
 /* Custom Scrollbar */

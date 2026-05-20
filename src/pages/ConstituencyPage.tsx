@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Landmark, TreePine, Flower2, Building2, Waves, TrafficCone, Droplets, Wheat, Briefcase, AlertTriangle, MapPin } from 'lucide-react';
-import heroBg from '../assets/shashi4.png';
+import heroBg from '../assets/my cons.png';
 import shashi1 from '../assets/The Temple Town.jpg';
 import shashi2 from '../assets/srirangam island.jpg';
 import shashi5 from '../assets/butter fly park.jpg';
@@ -31,7 +31,6 @@ const translations = {
       title1: 'SRI',
       title2: 'RANGAM',
       desc: 'The Land of Tradition, Facing Modern Challenges — a sacred River Island where divinity meets daily life.',
-      scroll: 'Scroll to Explore'
     },
     mission: {
       tag: 'The Mission',
@@ -73,7 +72,6 @@ const translations = {
       title1: 'ஸ்ரீ',
       title2: 'ரங்கம்',
       desc: 'பாரம்பரியத்தின் நிலம், நவீன சவால்களை எதிர்கொள்கிறது — தெய்வீகமும் அன்றாட வாழ்க்கையும் சங்கமிக்கும் புனிதமான நதித் தீவு.',
-      scroll: 'ஆராய உருட்டவும்'
     },
     mission: {
       tag: 'நோக்கம்',
@@ -134,7 +132,7 @@ const HeritagePanel = ({ item, idx, Icon }: { item: any; idx: number; Icon: any 
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden bg-black">
       {/* Full BG image with scroll-driven scale */}
       <motion.div className="absolute inset-0 z-0" style={{ scale: imgScale }}>
-        <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
+        <img loading="lazy" src={item.img} alt={item.title} className="w-full h-full object-cover" />
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30 z-10" />
       {idx % 2 !== 0 && <div className="absolute inset-0 bg-gradient-to-l from-black/90 via-black/60 to-black/30 z-10" />}
@@ -190,7 +188,7 @@ const ProblemPanel = ({ item, idx, Icon }: { item: any; idx: number; Icon: any }
         {/* Image with clip-path reveal */}
         <motion.div className={`relative h-[50vh] lg:h-[80vh] overflow-hidden ${isEven ? 'order-1' : 'order-1 lg:order-2'}`}
           style={{ clipPath: useTransform(imgClip, v => isEven ? `inset(0 ${v}% 0 0)` : `inset(0 0 0 ${v}%)`) }}>
-          <img src={item.img} alt={item.title} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" />
+          <img loading="lazy" src={item.img} alt={item.title} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className={`absolute top-0 bottom-0 w-1 ${isEven ? 'right-0' : 'left-0'}`} style={{ backgroundColor: item.accent }} />
         </motion.div>
@@ -269,7 +267,7 @@ const ConstituencyPage = ({ lang = 'en' }: { lang?: string }) => {
             transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="h-1 bg-[#FF8C00] rounded-full mb-6" />
           <motion.span initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}
-            className="text-[#FF8C00] text-sm md:text-sm font-black tracking-[10px] uppercase block mb-4">
+            className="text-[#000000] text-sm md:text-sm font-black tracking-[5px] uppercase block mb-4">
             {t.hero.tag}
           </motion.span>
           <div className="overflow-hidden">
@@ -328,14 +326,14 @@ const ConstituencyPage = ({ lang = 'en' }: { lang?: string }) => {
       {/* ═══ PROBLEMS DIVIDER ═══ */}
       <section className="relative bg-black overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#CC0000] via-[#FF8C00] to-[#CC0000]" />
-        <div className="py-28 px-6 relative z-10">
+        <div className="py-12 px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
-              <p className="text-white/20 text-sm font-black tracking-[8px] uppercase mb-6">{t.realityHeader.tag}</p>
+              <p className="text-[#CC0000] text-sm text-center font-black  tracking-[8px] uppercase mb-3">{t.realityHeader.tag}</p>
               <h2 className="text-3xl md:text-7xl font-black text-white leading-[0.9] mb-6 tracking-tight">
                 {t.realityHeader.title}
               </h2>
-              <p className="text-white/30 text-sm md:text-base font-medium max-w-xl mx-auto">
+              <p className="text-white/30 text-sm md:text-base text-center font-medium max-w-xl mx-auto">
                 {t.realityHeader.desc}
               </p>
             </Reveal>
@@ -350,25 +348,25 @@ const ConstituencyPage = ({ lang = 'en' }: { lang?: string }) => {
       })}
 
       {/* ═══ CTA ═══ */}
-      <section className="relative bg-white overflow-hidden py-28 px-6">
+      <section className="relative bg-white overflow-hidden py-20 px-6">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#CC0000] to-[#FF8C00]" />
         <div className="max-w-4xl mx-auto text-center">
           <Reveal>
-            <div className="w-12 h-1 bg-gradient-to-r from-[#CC0000] to-[#FF8C00] mx-auto mb-10 rounded-full" />
-            <p className="text-[#CC0000] font-black text-sm tracking-[6px] uppercase mb-5">{t.cta.tag}</p>
-            <h2 className="text-3xl md:text-4xl lg:text-6xl font-black text-gray-900 leading-[1.1] mb-6 tracking-tight">
+            <div className="w-12 h-1 bg-gradient-to-r from-[#CC0000] to-[#FF8C00] mx-auto mb-4 rounded-full" />
+            <p className="text-[#CC0000] text-center font-black text-sm tracking-[6px] uppercase mb-5">{t.cta.tag}</p>
+            <h2 className="text-3xl md:text-4xl lg:text-4xl font-black text-gray-900 leading-[1.1] mb-4 tracking-tight">
               {t.cta.title}
             </h2>
-            <p className="text-gray-400 font-bold text-lg mb-12">{t.cta.author}</p>
+            <p className="text-gray-400 text-center font-bold text-lg mb-8">{t.cta.author}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.a href="/agenda" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
                 className="bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl">
                 {t.cta.agenda}
               </motion.a>
-              <motion.a href="/" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-                className="bg-white border-2 border-gray-200 text-gray-800 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm hover:border-[#CC0000] hover:text-[#CC0000] transition-all">
+              <motion.button onClick={() => window.dispatchEvent(new CustomEvent('open-join-popup'))} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+                className="bg-[#CC0000] text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl hover:shadow-[0_0_40px_rgba(204,0,0,0.3)] transition-all whitespace-nowrap inline-flex items-center justify-center">
                 {t.cta.join}
-              </motion.a>
+              </motion.button>
             </div>
           </Reveal>
         </div>

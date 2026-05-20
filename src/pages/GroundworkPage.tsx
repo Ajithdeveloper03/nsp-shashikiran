@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { blogPosts } from '../data/blogs';
-import heroBg from '../assets/hero-bg2.jpeg';
+import heroBg from '../assets/ground work.jpg';
 
 const GroundworkPage = ({ lang = 'en' }: { lang?: string }) => {
   const t = {
@@ -32,7 +32,7 @@ const GroundworkPage = ({ lang = 'en' }: { lang?: string }) => {
       {/* ── HERO ── */}
       <section className="relative h-[60vh] w-full flex flex-col items-center justify-center overflow-hidden bg-black">
         <div className="absolute inset-0 z-0">
-          <img src={heroBg} alt="" className="w-full h-full object-cover opacity-60" />
+          <img src={heroBg} alt="" style={{backgroundPosition: "top"}} className="w-full h-full object-cover opacity-60" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90" />
         </div>
 
@@ -47,7 +47,7 @@ const GroundworkPage = ({ lang = 'en' }: { lang?: string }) => {
           <h1 className="text-3xl sm:text-4xl md:text-7xl font-black text-white leading-none mb-6 tracking-tight">
             {t.title}
           </h1>
-          <p className="text-white/70 text-sm md:text-lg max-w-2xl mx-auto font-medium tracking-wide">
+          <p className="text-white/70 text-sm md:text-lg max-w-2xl mx-auto text-center font-medium tracking-wide">
             {t.subtitle}
           </p>
         </div>
@@ -63,7 +63,7 @@ const GroundworkPage = ({ lang = 'en' }: { lang?: string }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="group flex flex-col bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500"
+              className="group flex flex-col bg-white rounded-[2.5rem] overflow-hidden border border-gray-300 shadow-md hover:shadow-2xl transition-all duration-500"
             >
               <Link to={`/groundwork/${post.slug}`} className="block relative h-64 overflow-hidden">
                 <img 

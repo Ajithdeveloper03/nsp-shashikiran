@@ -3,17 +3,17 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import {
   Phone, Camera, MessageCircle, Share2,
   Globe,
-  ArrowUp, Menu, X, ChevronLeft, ChevronRight
+  ArrowUp, Menu, X, ChevronRight
 } from 'lucide-react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import AboutMePage from './pages/AboutMePage';
-import JourneyPage from './pages/JourneyPage';
-import AgendaPage from './pages/AgendaPage';
-import ConstituencyPage from './pages/ConstituencyPage';
-import ManifestoPage from './pages/ManifestoPage';
-import ContactPage from './pages/ContactPage';
-import GroundworkPage from './pages/GroundworkPage';
-import BlogDetailPage from './pages/BlogDetailPage';
+const AboutMePage = React.lazy(() => import('./pages/AboutMePage'));
+const JourneyPage = React.lazy(() => import('./pages/JourneyPage'));
+const AgendaPage = React.lazy(() => import('./pages/AgendaPage'));
+const ConstituencyPage = React.lazy(() => import('./pages/ConstituencyPage'));
+const ManifestoPage = React.lazy(() => import('./pages/ManifestoPage'));
+const ContactPage = React.lazy(() => import('./pages/ContactPage'));
+const GroundworkPage = React.lazy(() => import('./pages/GroundworkPage'));
+const BlogDetailPage = React.lazy(() => import('./pages/BlogDetailPage'));
 import logoImg from './assets/shashikarann.png';
 import heroBgImg from './assets/hero-bg1.jpeg';
 import heroBgImg2 from './assets/hero-bg2.jpeg';
@@ -23,6 +23,10 @@ import shashi1 from './assets/shashi1.png';
 import shashi2 from './assets/shashi2.png';
 import shashi3 from './assets/shashi3.png';
 import shashi4 from './assets/shashi4.png';
+import about1 from './assets/about1.jpeg';
+import about2 from './assets/about2.jpeg';
+import about3 from './assets/about3.jpeg';
+import about4 from './assets/about4.jpeg';
 // import shashi5 from './assets/shashi5.png';
 import shashi6 from './assets/home 2008.png';
 import shashi7 from './assets/home 2011.png';
@@ -45,7 +49,7 @@ const translations = {
         title: "A Student of History & Spirituality",
         subtitle: "Ethics & Culture",
         text: "Having studied at Ramakrishna School, he holds a deep love for Indian culture and agriculture. As a devotee of Lord Krishna, he is passionate about bringing 'Dharma' (ethics and duty) into the world of politics.",
-        bg: shashi1,
+        bg: about3,
         accent: "#CC0000"
       },
       {
@@ -54,7 +58,7 @@ const translations = {
         title: "A Professional Architect of Policy",
         subtitle: "Systematic Mindset",
         text: "He is not just a politician but a highly qualified professional. With degrees in Mechanical Engineering, MBA, and Public Administration, he approaches every social problem with a practical and systematic mindset.",
-        bg: shashi2,
+        bg: about4,
         accent: "#CC0000"
       },
       {
@@ -63,7 +67,7 @@ const translations = {
         title: "The Financial Expert",
         subtitle: "Mechanics of Money",
         text: "As a Certified Financial Planner and Investment Banker, he understands the 'mechanics of money.' His primary focus is on solving the economic struggles of the common people and improving their financial well-being.",
-        bg: shashi3,
+        bg: about2,
         accent: "#CC0000"
       },
       {
@@ -72,7 +76,7 @@ const translations = {
         title: "The Man of Integrity",
         subtitle: "Principles Over Power",
         text: "Despite receiving many offers to join major political parties, he chose to stay independent. He stands firm in his 'National Socialist' ideology, prioritizing his principles over easy political power.",
-        bg: shashi4,
+        bg: about1,
         accent: "#CC0000"
       },
     ],
@@ -338,92 +342,77 @@ const FullScreenJoin = ({ isOpen, onClose, t }: { isOpen: boolean; onClose: () =
   if (!isOpen) return null;
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[10000] bg-black flex flex-col overflow-y-auto"
+      className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
+      onClick={resetJoin}
     >
-      {/* Background with blur */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-black/30 backdrop-blur-sm z-10" />
-        <img src={heroBgImg} alt="" className="w-full h-full object-cover opacity-20" />
-      </div>
+      {/* Blurred backdrop */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-md" />
 
-      {/* Header */}
-      <div className="relative z-10 p-6 md:p-6 flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <img src={logoImg} alt="Logo" className="w-12 h-auto" />
-          <div className="hidden sm:block">
-            <div className="font-black text-xl text-white leading-none tracking-tight">Shashikiran KN</div>
+      {/* Modal card */}
+      <motion.div
+        className="relative z-10 w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl"
+        initial={{ scale: 0.88, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.88, opacity: 0, y: 20 }}
+        transition={{ type: "spring", damping: 26, stiffness: 260 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header image strip */}
+        <div className="relative h-28 w-full">
+          <img src={joinHeaderImg} alt="Movement" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/30 to-transparent" />
+          {/* Close button */}
+          <button
+            onClick={resetJoin}
+            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/50 transition-colors"
+          >
+            <X size={16} />
+          </button>
+          {/* Logo badge */}
+          <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-14 h-14 bg-white rounded-full shadow-lg border-2 border-white flex items-center justify-center z-10">
+            <img src={logoImg} alt="Logo" className="w-full h-auto" />
           </div>
         </div>
-        <button onClick={resetJoin} className="group flex items-center gap-3 text-white/50 hover:text-white transition-colors">
-          <span className="font-black text-xs tracking-widest uppercase">{t.joinBack}</span>
-          <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white transition-all">
-            <X size={20} />
-          </div>
-        </button>
-      </div>
 
-      {/* Content */}
-      <div className="relative z-10 flex-1 flex items-center justify-center p-6 md:p-6">
-        <motion.div 
-          className="w-full max-w-xl bg-white border border-gray-100 rounded-[2.5rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)]"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", damping: 25, stiffness: 200 }}
-        >
-          <div className="relative h-52 w-full">
-            <img src={joinHeaderImg} alt="Movement" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full shadow-xl border-4 border-white flex items-center justify-center z-10">
-              <img src={logoImg} alt="Logo" className="w-full h-auto" />
-            </div>
-          </div>
+        {/* Body */}
+        <div className="px-6 pt-10 pb-6 flex flex-col items-center gap-4">
+          <h2 className="text-xl font-black text-gray-800 text-center tracking-tight">{t.joinTitle}</h2>
 
-          <div className="p-6 md:p-10 pt-12 flex flex-col items-center">
-            <h2 className="text-2xl md:text-3xl font-black text-gray-800 mb-8 text-center tracking-tight">{t.joinTitle}</h2>
-
-            <div className="relative w-full">
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-8 w-full">
-                {/* Missed Call Section */}
-                <div className="flex flex-col items-center gap-3">
-                  <p className="text-[0.9rem] font-black text-[#FF8C00] uppercase tracking-widest">Give A Missed Call On</p>
-                  <div className="w-full bg-orange-50 border border-dashed border-[#FF8C00]/30 rounded-2xl p-6 text-center shadow-sm">
-                    <div className="flex items-center justify-center gap-2 text-lg font-black text-gray-800">
-                      <Phone size={18} className="text-[#FF8C00]" fill="currentColor" />
-                      88 00 00 2024
-                    </div>
-                  </div>
-                </div>
-
-                {/* WhatsApp Option */}
-                <div className="flex flex-col items-center gap-3">
-                  <p className="text-[0.9rem] font-black text-green-600 uppercase tracking-widest">WhatsApp To This Number</p>
-                  <a href="https://wa.me/918800002024" className="w-full bg-green-50 border border-dashed border-green-500/30 rounded-2xl p-6 text-center flex flex-col items-center justify-center group hover:bg-green-100 transition-colors shadow-sm">
-                    <div className="flex items-center justify-center gap-2 text-lg font-black text-gray-800">
-                      <MessageCircle size={18} className="text-green-500" fill="currentColor" />
-                      88 00 00 2024
-                    </div>
-                  </a>
-                </div>
-              </div>
-
-              {/* Minimal OR Separator */}
-              <div className="absolute -mt-4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border border-gray-50 shadow-xl flex items-center justify-center z-20 pointer-events-none">
-                <span className="text-[0.65rem] font-black text-gray-500 uppercase tracking-widest">OR</span>
+          {/* Missed Call */}
+          <div className="w-full flex flex-col items-center gap-2">
+            <p className="text-[0.7rem] font-black text-[#FF8C00] uppercase tracking-widest">Give A Missed Call On</p>
+            <div className="w-full bg-orange-50 border border-dashed border-[#FF8C00]/40 rounded-2xl py-4 px-5 text-center">
+              <div className="flex items-center justify-center gap-2 text-base font-black text-gray-800">
+                <Phone size={16} className="text-[#FF8C00]" fill="currentColor" />
+                88 00 00 2024
               </div>
             </div>
-            
-            {/* <div className="mt-8 pt-8 border-t border-gray-100 w-full text-center">
-               <p className="text-gray-400 text-[0.65rem] font-bold uppercase tracking-widest leading-relaxed">
-                  Join the movement and stay updated with the latest news and updates from the constituency.
-               </p>
-            </div> */}
           </div>
-        </motion.div>
-      </div>
+
+          {/* OR divider */}
+          <div className="flex items-center gap-3 w-full">
+            <div className="flex-1 h-px bg-gray-100" />
+            <span className="text-[0.6rem] font-black text-gray-400 uppercase tracking-widest">OR</span>
+            <div className="flex-1 h-px bg-gray-100" />
+          </div>
+
+          {/* WhatsApp */}
+          <div className="w-full flex flex-col items-center gap-2">
+            <p className="text-[0.7rem] font-black text-green-600 uppercase tracking-widest">WhatsApp To This Number</p>
+            <a
+              href="https://wa.me/918800002024"
+              className="w-full bg-green-50 border border-dashed border-green-500/40 rounded-2xl py-4 px-5 text-center flex items-center justify-center gap-2 hover:bg-green-100 transition-colors"
+            >
+              <MessageCircle size={16} className="text-green-500" fill="currentColor" />
+              <span className="text-base font-black text-gray-800">88 00 00 2024</span>
+            </a>
+          </div>
+        </div>
+      </motion.div>
     </motion.div>
   );
 };
@@ -440,10 +429,10 @@ const Navbar = ({ t, lang, setLang, onJoin, onDonate }: any) => {
     return unsub;
   }, [scrollYProgress]);
 
-  const navBgClass = scrolled 
-    ? 'bg-black/90 shadow-lg py-2' 
+  const navBgClass = scrolled
+    ? 'bg-black/90 shadow-lg py-2'
     : 'bg-transparent py-4';
-    
+
   const textClass = 'text-white';
   const logoTextClass = 'text-white';
 
@@ -476,7 +465,7 @@ const Navbar = ({ t, lang, setLang, onJoin, onDonate }: any) => {
                     {/* Dropdown */}
                     <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                       <div className="bg-white rounded-2xl p-2 shadow-2xl min-w-[200px] border border-gray-100">
-                        <Link 
+                        <Link
                           to="/manifesto"
                           className="block px-6 py-3 text-gray-800 font-black text-[0.7rem] hover:bg-orange-50 hover:text-[#CC0000] rounded-xl transition-all uppercase tracking-wider"
                         >
@@ -547,11 +536,11 @@ const Navbar = ({ t, lang, setLang, onJoin, onDonate }: any) => {
           {/* Right actions */}
           <div className="flex items-center gap-2 md:gap-4">
             {/* Language Toggle */}
-            <div 
+            <div
               onClick={() => setLang(lang === 'en' ? 'ta' : 'en')}
               className="hidden md:flex items-center relative bg-black/40 backdrop-blur-md p-1 cursor-pointer border border-[#FF8C00]/30 overflow-hidden w-20 h-8"
             >
-              <motion.div 
+              <motion.div
                 className="absolute inset-y-1 w-[36px] bg-[#FF8C00] shadow-lg z-0"
                 animate={{ x: lang === 'en' ? 0 : 38 }}
                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -648,6 +637,15 @@ const Navbar = ({ t, lang, setLang, onJoin, onDonate }: any) => {
                   );
                 }
 
+                if (t.navIds[i] === 'contact') {
+                  return (
+                    <Link key={i} to="/contact" onClick={() => setMenuOpen(false)}
+                      className="text-2xl font-black uppercase py-3 border-b border-gray-50 hover:text-[#CC0000] transition-colors">
+                      {item}
+                    </Link>
+                  );
+                }
+
                 return (
                   <Link key={i} to={t.navIds[i] === 'hero' ? '/' : `/#${t.navIds[i]}`} onClick={() => setMenuOpen(false)}
                     className="text-2xl font-black uppercase py-3 border-b border-gray-50 hover:text-[#CC0000] transition-colors">
@@ -722,11 +720,11 @@ const HeroSection = ({ t }: any) => {
 
 const AboutSection = ({ t }: any) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ 
-    target: containerRef, 
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
     offset: ["start start", "end end"]
   });
-  
+
   const xTranslate = useTransform(scrollYProgress, [0, 1], ["0%", `-${(t.story.length - 1) * 100}%`]);
 
   return (
@@ -736,19 +734,19 @@ const AboutSection = ({ t }: any) => {
           {t.story.map((item: any, i: number) => (
             <div key={i} className="relative flex-shrink-0 w-screen h-full flex items-center overflow-hidden">
               <div className="absolute inset-0">
-                <img src={item.bg} alt={item.title} className="w-full h-full object-cover grayscale" />
+                <img loading="lazy" src={item.bg} alt={item.title} className="w-full h-full object-cover grayscale" />
                 <div className="absolute inset-0 bg-black/80"></div>
                 <div className="absolute left-0 top-0 bottom-0 w-1.5" style={{ backgroundColor: '#FF8C00' }}></div>
               </div>
 
-              <div className="relative z-10 max-w-full mx-auto px-6 md:px-10 lg:px-16 w-full grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 md:gap-10 items-center">
+              <div className="relative z-10 max-w-full mx-auto px-6 md:px-10 lg:px-16 w-full grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 md:gap-10 items-center">
                 <div className="pt-20 md:pt-0">
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: false, margin: "-100px" }}
                     transition={{ duration: 0.8, delay: 0.1 }}
-                  > 
+                  >
                     <div className="flex items-center gap-3 mb-4 md:mb-6">
                       <span className="text-[#CC0000] font-black text-[0.65rem] md:text-xs tracking-[5px] uppercase">{item.chapter}</span>
                       <div className="flex-1 h-px bg-white/10"></div>
@@ -782,19 +780,19 @@ const AboutSection = ({ t }: any) => {
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
           {t.story.map((_: any, i: number) => {
-             const start = i / t.story.length;
-             const end = (i + 1) / t.story.length;
-             const scaleX = useTransform(scrollYProgress, [start, end], [0, 1]);
-             const opacity = useTransform(scrollYProgress, [start, start + 0.01, end - 0.01, end], [0.3, 1, 1, 0.3]);
-             
-             return (
-               <div key={i} className="relative w-12 h-1 bg-white/10 rounded-full overflow-hidden" style={{ width: '3rem' }}>
-                 <motion.div
-                   style={{ scaleX, opacity, backgroundColor: '#FF8C00' }}
-                   className="absolute inset-0 origin-left"
-                 />
-               </div>
-             );
+            const start = i / t.story.length;
+            const end = (i + 1) / t.story.length;
+            const scaleX = useTransform(scrollYProgress, [start, end], [0, 1]);
+            const opacity = useTransform(scrollYProgress, [start, start + 0.01, end - 0.01, end], [0.3, 1, 1, 0.3]);
+
+            return (
+              <div key={i} className="relative w-12 h-1 bg-white/10 rounded-full overflow-hidden" style={{ width: '3rem' }}>
+                <motion.div
+                  style={{ scaleX, opacity, backgroundColor: '#FF8C00' }}
+                  className="absolute inset-0 origin-left"
+                />
+              </div>
+            );
           })}
         </div>
       </div>
@@ -814,7 +812,7 @@ const JourneySection = ({ t }: any) => {
           transition={{ duration: 1.2, ease: "easeOut" }}
           className="absolute inset-0"
         >
-          <img src={item.img} alt={item.title} className="w-full h-full object-cover grayscale" />
+          <img loading="lazy" src={item.img} alt={item.title} className="w-full h-full object-cover grayscale" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30" />
         </motion.div>
       </AnimatePresence>
@@ -828,8 +826,8 @@ const JourneySection = ({ t }: any) => {
             initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
           >
-            <div className="text-[4rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-black text-white/10 leading-none mb-[-0.5rem] md:mb-[-1rem]">{item.year}</div>
-            <h2 className="text-3xl md:text-6xl lg:text-8xl font-black text-white leading-none mb-6 tracking-tight">
+            <div className="text-[4rem] sm:text-[5rem] md:text-[8rem] lg:text-[8rem] font-black text-white/10 leading-none mb-[-0.5rem] md:mb-[-1rem]">{item.year}</div>
+            <h2 className="text-3xl md:text-6xl lg:text-6xl font-black text-white leading-none mb-6 tracking-tight">
               {item.title}
             </h2>
             <p className="text-white/65 text-sm md:text-xl leading-relaxed max-w-xl">{item.desc}</p>
@@ -837,34 +835,39 @@ const JourneySection = ({ t }: any) => {
         </AnimatePresence>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 z-20 bg-black/50 backdrop-blur-sm border-t border-white/10">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-16 flex items-center">
-          <button onClick={() => setActive(Math.max(0, active - 1))}
-            className="p-4 text-white/40 hover:text-white transition-colors flex-shrink-0">
-            <ChevronLeft size={22} />
-          </button>
+      <div className="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" style={{ height: '100px' }} />
+      <div className="absolute bottom-0 left-0 right-0 z-30">
+        <div className="max-w-[1400px] mx-auto px-6 overflow-x-auto no-scrollbar pb-6 pt-10">
+          <div className="flex items-end justify-start md:justify-center min-w-max h-28">
+            {t.journeyTimeline.map((it: any, i: number) => (
+              <div key={i} className="flex items-end">
+                {/* Year Marker */}
+                <div className="relative flex flex-col items-center justify-end group px-2 md:px-4 h-full cursor-pointer" onClick={() => setActive(i)}>
+                  <span className={`font-black text-lg md:text-lg mb-4 transition-colors ${active === i ? 'text-white' : 'text-white/70 group-hover:text-white'}`}>
+                    {it.year}
+                  </span>
 
-          <div className="flex-1 overflow-x-auto no-scrollbar">
-            <div className="flex items-stretch justify-center min-w-max md:min-w-0">
-              {t.journeyTimeline.map((it: any, i: number) => (
-                <button key={i} onClick={() => setActive(i)}
-                  className={`relative flex-shrink-0 px-4 md:px-8 py-5 flex flex-col items-center gap-1 transition-all group ${active === i ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
-                >
                   {active === i && (
-                    <motion.div layoutId="activeYear" className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#CC0000] rounded-t" />
+                    <motion.div layoutId="activeYearLine" className="absolute bottom-0 w-12 h-[3px] bg-[#FF8C00] shadow-[0_0_15px_rgba(255,140,0,0.8)] rounded-full" />
                   )}
-                  <div className={`w-1 h-3 rounded-full transition-colors ${active === i ? 'bg-[#CC0000]' : 'bg-white/20 group-hover:bg-white/40'}`}></div>
-                  <span className="font-black text-xs md:text-base tracking-tight">{it.year}</span>
-                  {active === i && <span className="text-[#CC0000] text-[0.6rem] font-bold tracking-[2px] uppercase hidden md:block">{it.title}</span>}
-                </button>
-              ))}
-            </div>
-          </div>
 
-          <button onClick={() => setActive(Math.min(t.journeyTimeline.length - 1, active + 1))}
-            className="p-4 text-white/40 hover:text-white transition-colors flex-shrink-0">
-            <ChevronRight size={22} />
-          </button>
+                  {active !== i && (
+                    <div className="w-[2px] h-4 bg-white/60 mt-auto rounded-full" />
+                  )}
+                </div>
+
+                {/* Intermediate Ticks */}
+                {i !== t.journeyTimeline.length - 1 && (
+                  <div className="flex items-end pb-0 h-4 gap-4 md:gap-6 px-4 md:px-6">
+                    <div className="w-[2px] h-2 bg-white/40 rounded-full" />
+                    <div className="w-[2px] h-3 bg-white/50 rounded-full" />
+                    <div className="w-[2px] h-2 bg-white/40 rounded-full" />
+                    <div className="w-[2px] h-3 bg-white/50 rounded-full" />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -898,7 +901,7 @@ const JourneySection = ({ t }: any) => {
 //                 alt={item.title} 
 //                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
 //               />
-              
+
 //               {/* Overlay */}
 //               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
 
@@ -1010,7 +1013,7 @@ const Footer = ({ t }: any) => (
   <footer className="bg-black text-white pt-20 pb-8 relative overflow-hidden border-t border-white/5">
     <div className="max-w-[1400px] mx-auto px-6 md:px-16">
       {/* Main content grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-8">
         {/* Brand section */}
         <div className="md:col-span-1">
           <FadeIn>
@@ -1020,7 +1023,20 @@ const Footer = ({ t }: any) => (
                 <div className="font-black text-xl text-[#FF8C00] leading-none tracking-tight">Shashikiran KN</div>
               </div>
             </div>
-            <p className="text-white/50 text-sm leading-relaxed font-medium">{t.footerText}</p>
+            <p className="text-white/50 text-sm leading-relaxed font-medium mb-8">{t.footerText}</p>
+
+            {/* Social icons */}
+            <div className="flex items-center flex-wrap gap-4">
+              {[Share2, Camera, MessageCircle, Globe].map((Icon, i) => (
+                <motion.button
+                  key={i}
+                  whileHover={{ y: -3 }}
+                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:border-[#CC0000] hover:text-[#CC0000] transition-colors duration-300"
+                >
+                  <Icon size={16} />
+                </motion.button>
+              ))}
+            </div>
           </FadeIn>
         </div>
 
@@ -1032,7 +1048,7 @@ const Footer = ({ t }: any) => (
               {t.nav.slice(0, 4).map((link: string, i: number) => {
                 const id = t.navIds[i];
                 const to = id === 'hero' ? '/' : (['about', 'journey', 'agenda', 'constituency', 'manifesto', 'contact'].includes(id) ? `/${id}` : `/#${id}`);
-                
+
                 return (
                   <Link key={i} to={to} className="text-white/50 text-sm font-medium hover:text-[#CC0000] transition-colors duration-300">
                     {link}
@@ -1051,7 +1067,7 @@ const Footer = ({ t }: any) => (
               {t.nav.slice(4).map((link: string, i: number) => {
                 const id = t.navIds[i + 4];
                 const to = id === 'hero' ? '/' : (id === 'groundwork' ? '/groundwork' : (['about', 'journey', 'agenda', 'constituency', 'manifesto', 'contact'].includes(id) ? `/${id}` : `/#${id}`));
-                
+
                 return (
                   <Link key={i + 4} to={to} className="text-white/50 text-sm font-medium hover:text-[#CC0000] transition-colors duration-300">
                     {link}
@@ -1084,27 +1100,7 @@ const Footer = ({ t }: any) => (
         </div>
       </div>
 
-      {/* Social icons */}
-      <div className="border-t border-white/5 py-8">
-        <div className="flex items-center justify-between flex-wrap gap-6">
-          <div className="flex gap-4">
-            {[Share2, Camera, MessageCircle, Globe].map((Icon, i) => (
-              <motion.button
-                key={i}
-                whileHover={{ y: -3 }}
-                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:border-[#CC0000] hover:text-[#CC0000] transition-colors duration-300"
-              >
-                <Icon size={16} />
-              </motion.button>
-            ))}
-          </div>
-          <div className="flex items-center gap-6 text-[0.65rem] text-white/30 font-bold tracking-widest uppercase">
-            <a href="#" className="hover:text-white transition-colors">{t.footerPrivacy}</a>
-            <span>•</span>
-            <a href="#" className="hover:text-white transition-colors">{t.footerTerms}</a>
-          </div>
-        </div>
-      </div>
+
 
       {/* Bottom bar */}
       <div className="border-t border-white/5 pt-6 text-center">
@@ -1144,6 +1140,16 @@ const HomePage = ({ t }: any) => {
   );
 };
 
+// ─── LOADING FALLBACK ────────────────────────────────────────────────────────
+const LoadingFallback = () => (
+  <div className="w-full h-screen flex items-center justify-center bg-white">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-12 h-12 border-4 border-gray-100 border-t-[#CC0000] rounded-full animate-spin" />
+      <div className="text-xs font-black tracking-[3px] text-gray-500 uppercase">Loading...</div>
+    </div>
+  </div>
+);
+
 // ─── APP ROOT ─────────────────────────────────────────────────────────────────
 const App = () => {
   const [lang, setLang] = useState<'en' | 'ta'>('en');
@@ -1156,18 +1162,27 @@ const App = () => {
     document.title = lang === 'ta' ? "சசிகிரண் 2026 | ஸ்ரீரங்கத்தின் குரல்" : "Sashikiran 2026 | Voice of Srirangam";
     const onScroll = () => setScrolled(window.scrollY > 400);
     window.addEventListener('scroll', onScroll, { passive: true });
-    
-    // Only show popup on homepage
+
+    // Listen for custom popup open event
+    const handleOpenPopup = () => setShowPopup(true);
+    window.addEventListener('open-join-popup', handleOpenPopup);
+
+    // Only show popup automatically on homepage
     let timer: ReturnType<typeof setTimeout>;
     if (location.pathname === '/') {
-       timer = setTimeout(() => setShowPopup(true), 6000);
+      timer = setTimeout(() => setShowPopup(true), 6000);
     }
-    return () => { window.removeEventListener('scroll', onScroll); if(timer) clearTimeout(timer); };
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('open-join-popup', handleOpenPopup);
+      if (timer) clearTimeout(timer);
+    };
   }, [lang, location.pathname]);
 
   useEffect(() => {
     if (!location.hash) {
-       window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
     }
   }, [location.pathname]);
 
@@ -1178,17 +1193,19 @@ const App = () => {
         {showPopup && <FullScreenJoin isOpen={showPopup} onClose={() => setShowPopup(false)} t={t} />}
       </AnimatePresence>
 
-      <Routes>
-        <Route path="/" element={<HomePage t={t} />} />
-        <Route path="/about" element={<AboutMePage lang={lang} />} />
-        <Route path="/journey" element={<JourneyPage lang={lang} />} />
-        <Route path="/agenda" element={<AgendaPage lang={lang} />} />
-        <Route path="/constituency" element={<ConstituencyPage lang={lang} />} />
-        <Route path="/manifesto" element={<ManifestoPage lang={lang} />} />
-        <Route path="/contact" element={<ContactPage lang={lang} />} />
-        <Route path="/groundwork" element={<GroundworkPage lang={lang} />} />
-        <Route path="/groundwork/:slug" element={<BlogDetailPage lang={lang} />} />
-      </Routes>
+      <React.Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/" element={<HomePage t={t} />} />
+          <Route path="/about" element={<AboutMePage lang={lang} />} />
+          <Route path="/journey" element={<JourneyPage lang={lang} />} />
+          <Route path="/agenda" element={<AgendaPage lang={lang} />} />
+          <Route path="/constituency" element={<ConstituencyPage lang={lang} />} />
+          <Route path="/manifesto" element={<ManifestoPage lang={lang} />} />
+          <Route path="/contact" element={<ContactPage lang={lang} />} />
+          <Route path="/groundwork" element={<GroundworkPage lang={lang} />} />
+          <Route path="/groundwork/:slug" element={<BlogDetailPage lang={lang} />} />
+        </Routes>
+      </React.Suspense>
 
       <Footer t={t} />
 
@@ -1198,7 +1215,7 @@ const App = () => {
           <motion.button
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-44 right-6 md:right-10 w-12 h-12 rounded-full bg-white border border-gray-200 shadow-lg flex items-center justify-center text-gray-700 hover:bg-gray-50 z-50 transition-colors"
+            className="fixed bottom-10 right-6 md:right-10 w-12 h-12 rounded-full bg-white border border-gray-200 shadow-lg flex items-center justify-center text-gray-700 hover:bg-gray-50 z-50 transition-colors"
           >
             <ArrowUp size={20} />
           </motion.button>

@@ -1,14 +1,17 @@
 import blogCover from '../assets/blog-cover.jpeg';
 import blog1 from '../assets/blog1.jpeg';
 import blog2 from '../assets/blog2.jpeg';
-import blog3 from '../assets/blog3.jpeg';
+// import blog3 from '../assets/blog3.jpeg';
 import blog4 from '../assets/blog4.jpeg';
 import blog5 from '../assets/blog5.jpeg';
 import blog6 from '../assets/blog6.jpeg';
-import blog7 from '../assets/blog7.jpeg';
-// import blog8 from '../assets/blog8.jpeg';
+// import blog7 from '../assets/blog7.jpeg';
+import blog8 from '../assets/blog10.jpeg';
+import blog9 from '../assets/blog11.jpeg';
+
+
 import akkaravadisal from '../assets/akkaravadisal.png';
-import skill50 from '../assets/Skill 50.jpeg';
+// import skill50 from '../assets/Skill 50.jpeg';
 
 export interface BlogPost {
   slug: string;
@@ -78,7 +81,7 @@ export const blogPosts: BlogPost[] = [
           en: "Job & Skill Development for Youth",
           ta: "இளைஞர்களுக்கான வேலை மற்றும் திறன் மேம்பாடு"
         },
-        image: skill50,
+        image: blog2,
         content: {
           en: "Unemployment and lack of skill-based opportunities continue to affect many young people. To address this, Shashikiran has proposed the creation of 50 job and skill development centers or opportunities focused on empowering youth.\n\nThe vision is to prepare students and young professionals for modern careers through:\n• Digital skills training\n• Communication development\n• Technical learning programs\n• Freelancing guidance\n• Entrepreneurship support\n• Placement assistance\n\nThis initiative is especially important because many talented youth leave smaller towns searching for opportunities elsewhere. By bringing skill development closer to the community, the plan aims to create local employment and reduce migration pressure.\n\nShashikiran believes that youth are the backbone of Srirangam’s future, and investing in their growth is essential for long-term development.",
           ta: "வேலையில்லாத் திண்டாட்டம் மற்றும் திறன் சார்ந்த வாய்ப்புகள் இல்லாமை பல இளைஞர்களைத் தொடர்ந்து பாதிக்கிறது. இதைத் தீர்க்க, சசிகிரண் இளைஞர்களுக்கு அதிகாரம் அளிப்பதில் கவனம் செலுத்தும் 50 வேலை மற்றும் திறன் மேம்பாட்டு மையங்கள் அல்லது வாய்ப்புகளை உருவாக்க முன்மொழிந்துள்ளார்.\n\nமாணவர்கள் மற்றும் இளம் தொழில் வல்லுநர்களை நவீன தொழில்களுக்கு தயார்படுத்துவதே இதன் நோக்கமாகும்:\n• டிஜிட்டல் திறன் பயிற்சி\n• தகவல் தொடர்பு மேம்பாடு\n• தொழில்நுட்ப கற்றல் திட்டங்கள்\n• ஃப்ரீலான்சிங் வழிகாட்டுதல்\n• தொழில்முனைவோர் ஆதரவு\n• வேலை வாய்ப்பு உதவி\n\nபல திறமையான இளைஞர்கள் வாய்ப்புகளைத் தேடி சிறிய நகரங்களை விட்டு வெளியேறுவதால் இந்த முயற்சி மிகவும் முக்கியமானது. திறன் மேம்பாட்டை சமூகத்திற்கு நெருக்கமாக கொண்டு வருவதன் மூலம், உள்ளூர் வேலைவாய்ப்பை உருவாக்கவும், இடம்பெயர்வு அழுத்தத்தை குறைக்கவும் இத்திட்டம் நோக்கமாகக் கொண்டுள்ளது."
@@ -90,7 +93,7 @@ export const blogPosts: BlogPost[] = [
           en: "Entrepreneur Development Through Dedicated Skill Centers",
           ta: "பிரத்யேக திறன் மையங்கள் மூலம் தொழில்முனைவோர் மேம்பாடு"
         },
-        image: blog2,
+        image: blog4,
         content: {
           en: "Apart from jobs, the Smart Temple Term Plan also focuses on entrepreneurship. The proposal includes creating 5 entrepreneur skill development spaces designed to help aspiring business owners.\n\nMany people have ideas but lack guidance, mentorship, or infrastructure. These centers are expected to support:\n• Startup ideas\n• Small business training\n• Financial awareness\n• Marketing education\n• Digital business support\n• Networking opportunities\n\nBy encouraging entrepreneurship, the initiative aims to create more self-employed individuals and strengthen the local economy.\n\nInstead of depending entirely on outside companies, this vision encourages people to build businesses within Srirangam itself.",
           ta: "வேலைகள் தவிர, ஸ்மார்ட் டெம்பிள் டெர்ம் பிளான் தொழில்முனைவோர் மீதும் கவனம் செலுத்துகிறது. ஆர்வமுள்ள வணிக உரிமையாளர்களுக்கு உதவும் வகையில் வடிவமைக்கப்பட்ட 5 தொழில்முனைவோர் திறன் மேம்பாட்டு இடங்களை உருவாக்குவது இந்த முன்மொழிவில் அடங்கும்.\n\nபலவரிடம் யோசனைகள் உள்ளன, ஆனால் வழிகாட்டுதல், வழிகாட்டல் அல்லது உள்கட்டமைப்பு வசதிகள் இல்லை. இந்த மையங்கள் ஆதரவளிக்கும் என்று எதிர்பார்க்கப்படுகிறது:\n• ஸ்டார்ட்அப் யோசனைகள்\n• சிறு வணிக பயிற்சி\n• நிதி விழிப்புணர்வு\n• சந்தைப்படுத்தல் கல்வி\n• டிஜிட்டல் வணிக ஆதரவு\n• நெட்வொர்க்கிங் வாய்ப்புகள்\n\nதொழில்முனைவோரை ஊக்குவிப்பதன் மூலம், அதிக சுயதொழில் செய்பவர்களை உருவாக்கவும், உள்ளூர் பொருளாதாரத்தை வலுப்படுத்தவும் இந்த முயற்சி நோக்கமாகக் கொண்டுள்ளது."
@@ -102,7 +105,7 @@ export const blogPosts: BlogPost[] = [
           en: "Water & Drainage Fix: Solving Everyday Problems",
           ta: "தண்ணீர் மற்றும் வடிகால் தீர்வு: அன்றாட பிரச்சனைகளைத் தீர்த்தல்"
         },
-        image: blog3,
+        image: blog5,
         content: {
           en: "Water stagnation and drainage issues are among the most common complaints in many residential areas. During rainy seasons, poor drainage creates inconvenience, health concerns, and road damage.\n\nRecognizing this issue, Shashikiran has promised focused improvements in water management and drainage systems.\n\nThe objective is to:\n• Improve underground drainage systems\n• Prevent water stagnation\n• Ensure smoother water flow during rain\n• Maintain cleaner streets\n• Reduce health risks caused by stagnant water\n\nInfrastructure development is meaningful only when it solves daily problems faced by ordinary residents. This promise reflects a practical understanding of the community’s needs.",
           ta: "பல குடியிருப்புப் பகுதிகளில் தேங்கும் தண்ணீர் மற்றும் வடிகால் பிரச்சினைகள் மிகவும் பொதுவான புகார்களில் ஒன்றாகும். மழைக்காலங்களில், மோசமான வடிகால் வசதி அசௌகரியம், சுகாதாரக் கவலைகள் மற்றும் சாலை சேதங்களை உருவாக்குகிறது.\n\nஇப்பிரச்சினையை உணர்ந்து, சசிகிரண் நீர் மேலாண்மை மற்றும் வடிகால் அமைப்புகளில் கவனம் செலுத்தி மேம்பாடுகளைச் செய்வதாக உறுதியளித்துள்ளார்.\n\nஇதன் நோக்கம்:\n• பாதாள சாக்கடை திட்டங்களை மேம்படுத்துதல்\n• தண்ணீர் தேங்குவதைத் தடுத்தல்\n• மழையின் போது சீரான நீர் ஓட்டத்தை உறுதி செய்தல்\n• தூய்மையான தெருக்களைப் பராமரித்தல்\n• தேங்கி நிற்கும் நீரால் ஏற்படும் சுகாதார அபாயங்களைக் குறைத்தல்\n\nஉள்கட்டமைப்பு மேம்பாடு என்பது சாதாரண குடிமக்கள் எதிர்கொள்ளும் அன்றாடப் பிரச்சினைகளைத் தீர்க்கும்போதுதான் அர்த்தமுள்ளதாக இருக்கும்."
@@ -114,7 +117,7 @@ export const blogPosts: BlogPost[] = [
           en: "Clean Srirangam",
           ta: "தூய்மையான ஸ்ரீரங்கம்"
         },
-        image: blog4,
+        image: blog6,
         content: {
           en: "Cleanliness plays a major role in public health, tourism, and civic pride. As one of the most culturally and spiritually important places in Tamil Nadu, Srirangam deserves clean surroundings and organized waste management systems.\n\nThe “Clean Srirangam Campaign” proposed by Shashikiran focuses on:\n• Cleaner streets\n• Improved garbage collection\n• Public awareness campaigns\n• Better waste disposal management\n• Encouraging community participation\n\nA cleaner environment improves both the quality of life for residents and the experience for visitors coming to Srirangam.\n\nThe campaign is expected to combine civic responsibility with modern cleanliness management practices.",
           ta: "பொது சுகாதாரம், சுற்றுலா மற்றும் குடிமைப் பெருமையில் தூய்மை முக்கிய பங்கு வகிக்கிறது. தமிழ்நாட்டின் மிக முக்கியமான கலாச்சார மற்றும் ஆன்மீக இடங்களில் ஒன்றான ஸ்ரீரங்கம், தூய்மையான சுற்றுப்புறங்கள் மற்றும் ஒழுங்கமைக்கப்பட்ட கழிவு மேலாண்மை அமைப்புகளுக்குத் தகுதியானது.\n\nசசிகிரண் முன்மொழிந்த “தூய்மையான ஸ்ரீரங்கம் பிரச்சாரம்” பின்வருவனவற்றில் கவனம் செலுத்துகிறது:\n• தூய்மையான தெருக்கள்\n• மேம்படுத்தப்பட்ட குப்பை சேகரிப்பு\n• பொது விழிப்புணர்வு பிரச்சாரங்கள்\n• சிறந்த கழிவு அகற்றல் மேலாண்மை\n• சமூகப் பங்கேற்பை ஊக்குவித்தல்"
@@ -138,7 +141,7 @@ export const blogPosts: BlogPost[] = [
           en: "Flood Protection Machine & Disaster Preparedness",
           ta: "வெள்ளத் தடுப்பு இயந்திரம் மற்றும் பேரிடர் தயார்நிலை"
         },
-        image: blog6,
+        image: blog8,
         content: {
           en: "Flooding during heavy rainfall can disrupt normal life and damage homes, roads, and businesses. To reduce such risks, the Smart Temple Term Plan includes flood protection systems and machinery support.\n\nAccording to Shashikiran, disaster preparedness should not begin after damage occurs — it should begin before problems arise.\n\nThe flood protection initiative aims to:\n• Improve emergency response\n• Remove excess water faster\n• Reduce flood impact in vulnerable areas\n• Strengthen preparedness during monsoon seasons\n\nThis proactive approach reflects a long-term vision for safer infrastructure planning.",
           ta: "கனமழையின் போது ஏற்படும் வெள்ளப்பெருக்கு இயல்பு வாழ்க்கையை பாதிப்பதோடு வீடுகள், சாலைகள் மற்றும் வணிகங்களை சேதப்படுத்தும். இத்தகைய அபாயங்களைக் குறைக்க, ஸ்மார்ட் டெம்பிள் டெர்ம் பிளான் வெள்ளத் தடுப்பு அமைப்புகள் மற்றும் இயந்திர ஆதரவை உள்ளடக்கியது.\n\nசசிகிரணின் கூற்றுப்படி, பேரிடர் தயார்நிலை என்பது சேதம் ஏற்பட்ட பிறகு தொடங்கக்கூடாது - பிரச்சினைகள் எழுவதற்கு முன்பே தொடங்க வேண்டும்.\n\nவெள்ளத் தடுப்பு முயற்சி நோக்கமாகக் கொண்டுள்ளது:\n• அவசரகால பதிலை மேம்படுத்துதல்\n• உபரி நீரை வேகமாக வெளியேற்றுதல்\n• பாதிக்கப்பட்ட பகுதிகளில் வெள்ளத்தின் தாக்கத்தைக் குறைத்தல்\n• பருவமழை காலங்களில் தயார்நிலையை வலுப்படுத்துதல்"
@@ -150,7 +153,7 @@ export const blogPosts: BlogPost[] = [
           en: "Digital Governance Through Mobile Access",
           ta: "மொபைல் அணுகல் மூலம் டிஜிட்டல் நிர்வாகம்"
         },
-        image: blog7,
+        image: blog9,
         content: {
           en: "Technology has changed the way people access services. However, many citizens still struggle with complicated government procedures and lack of digital accessibility.\n\nTo modernize public access, Shashikiran has proposed digital governance solutions with mobile accessibility.\n\nThis vision includes:\n• Easier access to civic services\n• Mobile-based complaint systems\n• Digital communication with residents\n• Faster information sharing\n• Improved transparency\n\nDigital governance can reduce delays, simplify communication, and make administration more efficient for ordinary citizens.\n\nThe goal is to make governance more accessible, responsive, and citizen-friendly.",
           ta: "தொழில்நுட்பம் மக்கள் சேவைகளை அணுகும் முறையை மாற்றியுள்ளது. இருப்பினும், பல குடிமக்கள் இன்னும் சிக்கலான அரசாங்க நடைமுறைகள் மற்றும் டிஜிட்டல் அணுகல் இல்லாமையால் போராடுகிறார்கள்.\n\nபொது அணுகலை நவீனப்படுத்த, சசிகிரண் மொபைல் அணுகலுடன் கூடிய டிஜிட்டல் நிர்வாக தீர்வுகளை முன்மொழிந்துள்ளார்.\n\nஇந்த தொலைநோக்குப் பார்வையில் அடங்கும்:\n• குடிமைச் சேவைகளை எளிதாக அணுகுதல்\n• மொபைல் அடிப்படையிலான புகார் அமைப்புகள்\n• குடியிருப்பாளர்களுடன் டிஜிட்டல் தொடர்பு\n• வேகமான தகவல் பகிர்வு\n• மேம்பட்ட வெளிப்படைத்தன்மை"

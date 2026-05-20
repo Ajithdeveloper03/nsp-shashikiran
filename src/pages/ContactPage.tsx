@@ -67,10 +67,27 @@ const translations = {
 const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
   const t = translations[lang as keyof typeof translations] || translations.en;
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    try {
+      const response = await fetch('/contact.php', {
+        method: 'POST',
+        body: formData,
+      });
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      alert("Error submitting form.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -86,13 +103,13 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
         
         <div className="relative z-10 max-w-4xl">
           <Reveal>
-            <span className="text-[#FF8C00] text-[0.7rem] font-black tracking-[10px] uppercase block mb-6 drop-shadow-md">
+            <span className="text-[#FF8C00] text-[0.7rem] font-black tracking-[10px] uppercase block mb-3 drop-shadow-md">
               {t.hero.tag}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black leading-[0.95] tracking-tight mb-8 text-white drop-shadow-2xl">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black leading-[0.95] tracking-tight mb-6 text-white drop-shadow-2xl">
               {t.hero.title}
             </h1>
-            <p className="text-white/60 text-sm md:text-xl font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
+            <p className="text-white/60 text-sm md:text-xl text-center font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
               {t.hero.desc}
             </p>
           </Reveal>
@@ -123,25 +140,25 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label className="text-[0.65rem] font-black uppercase tracking-widest text-slate-400 pl-4">{t.form.name}</label>
-                      <input required type="text" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-[#CC0000] transition-colors font-bold" />
+                      <input required type="text" name="name" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-[#CC0000] transition-colors font-bold" />
                     </div>
                     <div className="space-y-2">
                       <label className="text-[0.65rem] font-black uppercase tracking-widest text-slate-400 pl-4">{t.form.email}</label>
-                      <input required type="email" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-[#CC0000] transition-colors font-bold" />
+                      <input required type="email" name="email" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-[#CC0000] transition-colors font-bold" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-[0.65rem] font-black uppercase tracking-widest text-slate-400 pl-4">{t.form.subject}</label>
-                    <input required type="text" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-[#CC0000] transition-colors font-bold" />
+                    <input required type="text" name="subject" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-[#CC0000] transition-colors font-bold" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[0.65rem] font-black uppercase tracking-widest text-slate-400 pl-4">{t.form.message}</label>
-                    <textarea required rows={5} className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-[#CC0000] transition-colors font-bold resize-none"></textarea>
+                    <textarea required name="message" rows={5} className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-[#CC0000] transition-colors font-bold resize-none"></textarea>
                   </div>
-                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                    className="w-full bg-[#CC0000] text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 shadow-xl shadow-red-100">
+                  <motion.button disabled={loading} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                    className="w-full bg-[#CC0000] text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 shadow-xl shadow-red-100 disabled:opacity-70">
                     <Send size={16} />
-                    {t.form.submit}
+                    {loading ? "Sending..." : t.form.submit}
                   </motion.button>
                 </form>
               )}

@@ -3,11 +3,11 @@ import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import shashi1 from '../assets/A Foundation of Discipline.png';
 import shashi2 from '../assets/the character.png';
-import shashi3 from '../assets/shashi3.png';
+import shashi3 from '../assets/Academic Mastery1.png';
 import shashi4 from '../assets/shashi4.png';
 import shashi6 from '../assets/shashi6.png';
 import shashi7 from '../assets/shashi7.png';
-import heroBg from '../assets/about_bg.png';
+import heroBg from '../assets/about page banner.jpg';
 
 const content = {
   en: {
@@ -92,7 +92,7 @@ const AboutMePage = ({ lang = 'en' }: { lang?: string }) => {
         <div className="relative z-20 w-full px-6 md:px-16 pb-24 md:pb-32 flex flex-col justify-end items-start h-full">
           <div className="max-w-4xl flex flex-col items-start gap-2 md:gap-3">
             <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-              className="text-[#FF8C00] text-sm md:text-sm font-black tracking-[6px] md:tracking-[10px] uppercase drop-shadow-lg">{c.eyebrow}</motion.span>
+              className="text-[#000000] text-sm md:text-sm font-black tracking-[3px] md:tracking-[5px] uppercase drop-shadow-2xl">{c.eyebrow}</motion.span>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35, ease: [0.23, 1, 0.32, 1] }}
               className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1] drop-shadow-2xl tracking-tight">
@@ -118,11 +118,11 @@ const AboutMePage = ({ lang = 'en' }: { lang?: string }) => {
       </section>
 
       {/* ── SECTION 1: ROOTS (No Box) ── */}
-      <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-white">
-        <div className="max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-center px-6 md:px-12 py-16">
+      <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-white">
+        <div className="max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-center px-6 md:px-12 py-10 md:py-12">
           <FadeUp>
             <div className="relative rounded-[3rem] overflow-hidden shadow-2xl">
-              <img src={shashi1} alt="Roots" className="w-full aspect-[4/5] object-cover" />
+              <img loading="lazy" src={shashi1} alt="Roots" className="w-full aspect-[5/5] object-cover" />
             </div>
           </FadeUp>
           <FadeUp delay={0.2}>
@@ -142,8 +142,8 @@ const AboutMePage = ({ lang = 'en' }: { lang?: string }) => {
       </section>
 
       {/* ── SECTION 2: CHARACTER (Matching Section 1, Swapped) ── */}
-      <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-slate-50">
-        <div className="max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-center px-6 md:px-12 py-16">
+      <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-slate-50">
+        <div className="max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-center px-6 md:px-12 py-10 md:py-12">
           <FadeUp className="order-2 lg:order-1">
             <div className="space-y-8">
               <div className="flex items-center gap-3">
@@ -158,28 +158,28 @@ const AboutMePage = ({ lang = 'en' }: { lang?: string }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
                 <div className="space-y-2">
                   <h3 className="text-sm font-black uppercase text-gray-900 tracking-wide">{c.s2sub1Title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{c.s2sub1}</p>
+                  <p className="text-sm text-gray-500 text-start leading-relaxed">{c.s2sub1}</p>
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-sm font-black uppercase text-gray-900 tracking-wide">{c.s2sub2Title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{c.s2sub2}</p>
+                  <p className="text-sm text-gray-500 text-start leading-relaxed">{c.s2sub2}</p>
                 </div>
               </div>
             </div>
           </FadeUp>
           <FadeUp delay={0.2} className="order-1 lg:order-2">
             <div className="relative rounded-[3rem] overflow-hidden shadow-2xl">
-              <img src={shashi2} alt="Character" className="w-full aspect-[4/5] object-cover" />
+              <img loading="lazy" src={shashi2} alt="Character" className="w-full aspect-[5/5] object-cover" />
             </div>
           </FadeUp>
         </div>
       </section>
 
       {/* ── SECTION 3: ACADEMIC MASTERY (Previous Card Design) ── */}
-      <section className="bg-white py-16 md:py-24">
+      <section className="bg-white py-12 md:py-16">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12">
           <FadeUp>
-            <div className="text-center mb-16">
+            <div className="text-center mb-12">
               <span className="text-[#FF8C00] font-black text-sm tracking-[5px] uppercase mb-3 block">{c.s3Tag}</span>
               <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
                 {c.s3Title} <span className="text-[#CC0000]">{c.s3Accent}</span>
@@ -193,19 +193,19 @@ const AboutMePage = ({ lang = 'en' }: { lang?: string }) => {
               <FadeUp key={idx} delay={idx * 0.1}>
                 <motion.div
                   whileHover={{ y: -8 }}
-                  className="group relative bg-slate-50 border border-gray-100 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex h-48"
+                  className="group relative bg-slate-50 border border-gray-100 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col sm:flex-row h-auto min-h-[12rem]"
                 >
-                  <div className="w-36 flex-shrink-0 relative overflow-hidden">
-                    <img src={imgSet[idx]} alt={item.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-slate-50/80" />
+                  <div className="w-full sm:w-36 h-48 sm:h-auto flex-shrink-0 relative overflow-hidden">
+                    <img loading="lazy" src={imgSet[idx]} alt={item.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" />
+                    <div className="absolute inset-0 bg-gradient-to-b sm:bg-gradient-to-r from-transparent to-slate-50" />
                   </div>
-                  <div className="flex-1 p-8 relative z-10 flex flex-col justify-center">
+                  <div className="flex-1 p-6 sm:p-8 relative z-10 flex flex-col justify-center">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-6 h-0.5 rounded-full" style={{ backgroundColor: item.color }} />
                       <span className="text-sm font-black tracking-[3px] uppercase" style={{ color: item.color }}>{item.n}</span>
                     </div>
                     <h3 className="text-sm font-black uppercase text-gray-900 mb-2">{item.title}</h3>
-                    <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">{item.desc}</p>
+                    <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
                   </div>
                 </motion.div>
               </FadeUp>
@@ -227,12 +227,12 @@ const AboutMePage = ({ lang = 'en' }: { lang?: string }) => {
           <FadeUp>
             <span className="text-[#CC0000] font-black text-sm tracking-[6px] uppercase mb-4 block">{c.ctaTag}</span>
             <h2 className="text-3xl md:text-5xl font-black text-gray-900 leading-[1.15] mb-4 tracking-tight">{c.ctaQuote}</h2>
-            <p className="text-sm text-gray-500 mb-10 max-w-lg mx-auto leading-relaxed">{c.ctaDesc}</p>
+            <p className="text-lg text-black mb-10 max-w-lg mx-auto text-center leading-relaxed">{c.ctaDesc}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a href="/" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-                className="bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white px-8 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl hover:shadow-[0_0_40px_rgba(204,0,0,0.2)] transition-all">
+              <motion.button onClick={() => window.dispatchEvent(new CustomEvent('open-join-popup'))} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+                className="bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white px-8 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl hover:shadow-[0_0_40px_rgba(204,0,0,0.2)] transition-all whitespace-nowrap inline-flex items-center justify-center">
                 {c.ctaJoin}
-              </motion.a>
+              </motion.button>
               <motion.a href="/journey" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
                 className="bg-white border-2 border-gray-200 text-gray-800 px-8 py-4 rounded-full font-black uppercase tracking-widest text-sm hover:border-[#CC0000] hover:text-[#CC0000] transition-all">
                 {c.ctaJourney}

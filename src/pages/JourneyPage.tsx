@@ -6,6 +6,13 @@ import shashi2 from '../assets/shashi2.png';
 import shashi3 from '../assets/shashi3.png';
 import shashi4 from '../assets/shashi4.png';
 import shashi5 from '../assets/shashi5.png';
+import shashi6 from '../assets/home 2008.png';
+import shashi7 from '../assets/home 2011.png';
+import shashi8 from '../assets/home 2015.png';
+import shashi9 from '../assets/home 2018.png';
+import shashi10 from '../assets/home 2019.png';
+import shashi11 from '../assets/home 2020.png';
+import shashi12 from '../assets/home 2026.png';
 
 /* ── TRANSLATIONS ─────────────────────────────────────────────── */
 const content = {
@@ -14,7 +21,6 @@ const content = {
     title: "From Vow to",
     accent: "Victory",
     quote: '"A journey of a thousand miles begins with a single step — taken with a sacred promise to the soil of this nation."',
-    scrollLabel: "Scroll to explore",
     destLabel: "Srirangam 2026",
     destDesc: "From a sacred vow at 17 to standing for Srirangam — every year of this journey has been a building block for Tamil Nadu's transformation.",
     destCta: "Join The Movement →",
@@ -22,23 +28,23 @@ const content = {
       {
         phase: "Phase 1", title: "The Awakening", years: "2008 – 2011", color: "#CC0000",
         events: [
-          { year: "2008", title: "The Spark of Discipline", img: shashi1, desc: "At 15, Shashikiran KN embraced Yoga for mental clarity and began reading world history and Indian heritage — realising India needs leaders with a global vision and a local heart." },
-          { year: "2011", title: "The Vow at Seventeen", img: shashi2, desc: "While peers planned careers, he took a sacred vow — pledging to forgo personal luxury and dedicate his life to the Third Liberation of India." },
+          { year: "2008", title: "The Spark of Discipline", img: shashi6, desc: "At 15, Shashikiran KN embraced Yoga for mental clarity and began reading world history and Indian heritage — realising India needs leaders with a global vision and a local heart." },
+          { year: "2011", title: "The Vow at Seventeen", img: shashi7, desc: "While peers planned careers, he took a sacred vow — pledging to forgo personal luxury and dedicate his life to the Third Liberation of India." },
         ],
       },
       {
         phase: "Phase 2", title: "The Intellectual Arsenal", years: "2012 – 2018", color: "#FF8C00",
         events: [
-          { year: "2012–2015", title: "Building the Foundation", img: shashi3, desc: "Years mastering Mechanical Engineering — learning that every complex problem has a systematic solution." },
-          { year: "2016", title: "Mastery of Governance", img: shashi4, desc: "Joined Manithaneeyam IAS Academy under Saidai Duraisaisamy, spending countless hours on Indian Polity, Constitution, and Administrative Law." },
-          { year: "2017–2018", title: "Financial Independence", img: shashi5, desc: "Achieved global credentials as a Certified Financial Planner (CFP) and Investment Banker, establishing Sarathi Groups — funded by hard work, not corruption." },
+          { year: "2012–2015", title: "Building the Foundation", img: shashi8, desc: "Years mastering Mechanical Engineering — learning that every complex problem has a systematic solution." },
+          { year: "2016", title: "Mastery of Governance", img: shashi9, desc: "Joined Manithaneeyam IAS Academy under Saidai Duraisaisamy, spending countless hours on Indian Polity, Constitution, and Administrative Law." },
+          { year: "2017–2018", title: "Financial Independence", img: shashi10, desc: "Achieved global credentials as a Certified Financial Planner (CFP) and Investment Banker, establishing Sarathi Groups — funded by hard work, not corruption." },
         ],
       },
       {
         phase: "Phase 3", title: "Service Before Power", years: "2019 – 2021", color: "#CC0000",
         events: [
-          { year: "2019", title: "NS Social Welfare Trust", img: shashi1, desc: "Launched the 'Feed the Need' initiative — ensuring hunger-free nights across Trichy. Action before ambition." },
-          { year: "2020", title: "The Political Blueprint", img: shashi2, desc: "Founded the National Socialist Party, inspired by Netaji Bose — drafting a manifesto on Digital Governance and Social Equality." },
+          { year: "2019", title: "NS Social Welfare Trust", img: shashi11, desc: "Launched the 'Feed the Need' initiative — ensuring hunger-free nights across Trichy. Action before ambition." },
+          { year: "2020", title: "The Political Blueprint", img: shashi12, desc: "Founded the National Socialist Party, inspired by Netaji Bose — drafting a manifesto on Digital Governance and Social Equality." },
         ],
       },
       {
@@ -62,7 +68,6 @@ const content = {
     title: "சபதத்திலிருந்து",
     accent: "வெற்றிவரை",
     quote: '"ஆயிரம் மைல் பயணம் ஒரே ஒரு அடியில் தொடங்குகிறது — இந்த தேசத்தின் மண்ணுக்கு ஒரு புனித வாக்குறுதியுடன்."',
-    scrollLabel: "கீழே உருட்டுங்கள்",
     destLabel: "ஸ்ரீரங்கம் 2026",
     destDesc: "17 வயதில் எடுத்த புனித சபதத்திலிருந்து ஸ்ரீரங்கத்திற்காக நிற்பது வரை — இந்த பயணத்தின் ஒவ்வொரு ஆண்டும் தமிழகத்தின் மாற்றத்திற்கான அடித்தளமாக அமைந்துள்ளது.",
     destCta: "இயக்கத்தில் சேருங்கள் →",
@@ -186,7 +191,7 @@ const EventCard = ({
     className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-xl transition-all duration-300 group"
   >
     <div className="relative h-48 md:h-56 overflow-hidden">
-      <img src={event.img} alt={event.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
+      <img loading="lazy" src={event.img} alt={event.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
       <div className="absolute bottom-3 left-4">
         <span className="bg-white/90 backdrop-blur-sm text-sm font-black uppercase tracking-widest px-3.5 py-1.5 rounded-full" style={{ color }}>
@@ -223,7 +228,7 @@ const JourneyPage = ({ lang = 'en' }: { lang?: string }) => {
         <div className="relative z-20 w-full px-6 md:px-16 pb-24 md:pb-32 flex flex-col justify-end items-start h-full">
           <div className="max-w-4xl flex flex-col items-start gap-2 md:gap-3">
             <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-[#FF8C00] text-sm md:text-sm font-black tracking-[6px] md:tracking-[10px] uppercase drop-shadow-lg">
+              className="text-[#ff0000] text-sm md:text-sm font-black tracking-[6px] md:tracking-[10px] uppercase drop-shadow-lg">
               {c.eyebrow}
             </motion.span>
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1] tracking-tight drop-shadow-2xl">
@@ -253,10 +258,10 @@ const JourneyPage = ({ lang = 'en' }: { lang?: string }) => {
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }} transition={{ duration: 0.6 }}
                   className="flex justify-center mb-8 mt-12">
-                  <div className="bg-white border border-gray-200 rounded-full px-8 py-3 shadow-md flex items-center gap-3 z-10">
+                  <div className="bg-white border border-gray-200 rounded-full px-4 py-3 shadow-md flex items-center gap-3 z-10">
                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: phase.color }} />
-                    <span className="text-sm font-black uppercase tracking-[3px] text-gray-900">{phase.phase}</span>
-                    <span className="text-sm text-gray-400 font-bold tracking-wide">· {phase.title} · {phase.years}</span>
+                    <span className="text-xs md:text-sm font-black uppercase tracking-[3px] text-gray-900 whitespace-nowrap">{phase.phase}</span>
+                    <span className="text-xs md:text-sm text-gray-400 font-bold tracking-wide">· {phase.title} · {phase.years}</span>
                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: phase.color }} />
                   </div>
                 </motion.div>
@@ -284,12 +289,12 @@ const JourneyPage = ({ lang = 'en' }: { lang?: string }) => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               transition={{ delay: 0.3 }}
               className="text-center bg-white border border-gray-100 rounded-2xl px-10 py-8 shadow-xl max-w-md">
-              <p className="text-sm font-black uppercase tracking-wide text-gray-900 mb-2">{c.destLabel}</p>
+              <p className="text-lg text-center font-black uppercase tracking-wide text-gray-900 mb-2">{c.destLabel}</p>
               <p className="text-sm text-gray-500 leading-relaxed mb-5">{c.destDesc}</p>
-              <motion.a href="/" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
-                className="inline-block bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white text-sm font-black uppercase tracking-widest px-7 py-3 rounded-full shadow-lg hover:shadow-[0_0_30px_rgba(204,0,0,0.2)] transition-all">
+              <motion.button onClick={() => window.dispatchEvent(new CustomEvent('open-join-popup'))} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center justify-center whitespace-nowrap bg-[#CC0000] text-white font-black text-sm  tracking-[1px] px-8 py-4 rounded-full shadow-2xl hover:bg-red-700 transition-colors">
                 {c.destCta}
-              </motion.a>
+              </motion.button>
             </motion.div>
           </div>
         </div>

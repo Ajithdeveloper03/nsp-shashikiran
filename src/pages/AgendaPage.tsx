@@ -1,13 +1,13 @@
 import { useRef } from 'react';
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import heroBg from '../assets/shashi3.png';
-import shashi1 from '../assets/shashi1.png';
-import shashi2 from '../assets/shashi2.png';
-import shashi3 from '../assets/shashi3.png';
-import shashi4 from '../assets/shashi4.png';
-import shashi5 from '../assets/shashi5.png';
-import shashi6 from '../assets/shashi6.png';
+import heroBg from '../assets/agenda-banner.jpg';
+import shashi1 from '../assets/FUTURE EDUCATION.jpg';
+import shashi2 from '../assets/DIGITAL HEALTH.jpg';
+import shashi3 from '../assets/SMART AGRICULTURE.jpg';
+import shashi4 from '../assets/DIGITAL GOVERNANCE.jpg';
+import shashi5 from '../assets/SKILLED BHARAT.jpg';
+import shashi6 from '../assets/smart-city.jpg';
 
 const content = {
   en: {
@@ -162,7 +162,7 @@ const AgendaPage = ({ lang = 'en' }: { lang?: string }) => {
         <div className="relative z-20 w-full px-6 md:px-16 pb-24 md:pb-32 flex flex-col justify-end items-start h-full">
           <div className="max-w-4xl flex flex-col items-start gap-2 md:gap-3">
             <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-              className="text-[#FF8C00] text-sm md:text-sm font-black tracking-[6px] md:tracking-[10px] uppercase drop-shadow-lg">{c.eyebrow}</motion.span>
+              className="text-[#000000] text-sm md:text-sm font-black tracking-[3px] md:tracking-[5px] uppercase drop-shadow-lg">{c.eyebrow}</motion.span>
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1] drop-shadow-2xl tracking-tight">
               {c.title1} <br /><span className="text-[#CC0000]">{c.title2}</span>
             </h1>
@@ -170,16 +170,10 @@ const AgendaPage = ({ lang = 'en' }: { lang?: string }) => {
               className="text-white/80 text-sm md:text-base leading-relaxed max-w-xl drop-shadow-md font-medium">"{c.quote}"</motion.p>
           </div>
         </div>
-
-        <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
-          initial={{ opacity: 0 }} animate={{ opacity: 0.6 }} transition={{ delay: 1.5 }}>
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-0.5 h-8 bg-gradient-to-b from-white to-transparent rounded-full" />
-        </motion.div>
       </section>
 
       {/* ── INTRO ── */}
-      <section className="py-16 px-6 bg-white border-b border-gray-100">
+      {/* <section className="py-16 px-6 bg-white border-b border-gray-100">
         <div className="max-w-3xl mx-auto text-center">
           <FadeUp>
             <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6 tracking-tight">{c.subtitle}</h2>
@@ -188,12 +182,12 @@ const AgendaPage = ({ lang = 'en' }: { lang?: string }) => {
             </p>
           </FadeUp>
         </div>
-      </section>
+      </section> */}
 
       {/* ── PILLARS (Alternating Split Sections like About Page) ── */}
       {c.points.map((point, idx) => (
         <section key={idx} className={`relative min-h-[70vh] flex items-center overflow-hidden ${idx % 2 === 0 ? 'bg-slate-50' : 'bg-white'}`}>
-          <div className="max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center px-6 md:px-12 py-20">
+          <div className="max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-center px-6 md:px-12 py-12 md:py-16">
             
             <FadeUp className={idx % 2 === 0 ? "order-2 lg:order-1" : "order-2 lg:order-2"}>
               <div className="space-y-6">
@@ -244,16 +238,18 @@ const AgendaPage = ({ lang = 'en' }: { lang?: string }) => {
           <FadeUp>
             <div className="w-12 h-1 bg-gradient-to-r from-[#CC0000] to-[#FF8C00] mx-auto mb-10 rounded-full" />
             <span className="text-[#CC0000] font-black text-sm tracking-[6px] uppercase mb-4 block">{c.footerTitle}</span>
-            <h2 className="text-3xl md:text-5xl font-black text-gray-900 leading-[1.15] mb-8 tracking-tight">
+            <h2 className="text-xl md:text-3xl font-black text-gray-900 leading-[1.15] mb-8 tracking-tight">
               {c.footerDesc}
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a href="/" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-                className="bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition-all">
+              <motion.button 
+                onClick={() => window.dispatchEvent(new CustomEvent('open-join-popup'))}
+                whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+                className="bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition-all whitespace-nowrap inline-flex items-center justify-center">
                 Join The Movement
-              </motion.a>
+              </motion.button>
               <motion.a href="/journey" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-                className="bg-white border-2 border-gray-100 text-gray-800 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm hover:border-[#CC0000] hover:text-[#CC0000] transition-all">
+                className="bg-white border-2 border-gray-300 text-gray-800 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm hover:border-[#CC0000] hover:text-[#CC0000] transition-all">
                 See Full Roadmap
               </motion.a>
             </div>
