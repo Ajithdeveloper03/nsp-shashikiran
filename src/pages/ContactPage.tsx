@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Camera, Share2, MessageCircle, Globe, Send, CheckCircle2 } from 'lucide-react';
-import heroBg from '../assets/contact.png';
+import { Phone, Mail, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { Facebook, Instagram, Youtube } from '../components/SocialIcons';
+import heroBg from '../assets/contact.jpg';
 
 /* ── Animation Components ── */
 const Reveal = ({ children, delay = 0, y = 20 }: { children: React.ReactNode; delay?: number; y?: number }) => (
@@ -26,15 +27,22 @@ const translations = {
       message: 'Your Message',
       submit: 'Send Message',
       success: 'Message Sent Successfully!',
-      successDesc: 'We will get back to you within 24-48 hours.'
+      successDesc: 'We will get back to you within 24-48 hours.',
+      sendAnother: 'Send Another Message',
+      sending: 'Sending...',
+      errorTryAgain: 'Something went wrong. Please try again.',
+      errorSubmit: 'Error submitting form.'
     },
     info: {
       title: 'Contact Details',
-      address: 'No. 12, Main Road, Srirangam, Trichy - 620006',
-      phone: '+91 98765 43210',
-      email: 'contact@shashikiran.in',
+      address: 'Plot No. 12, D-54, 9A Cross Road, West Thillai Nagar, Tiruchirappalli, Tamil Nadu 620018',
+      phone: '+91 96881 62147',
+      email: 'nsptn2031@gmail.com',
       hours: 'Mon - Sat: 9:00 AM - 7:00 PM',
-      social: 'Follow Us'
+      social: 'Follow Us',
+      addressLabel: 'Office Address',
+      phoneLabel: 'Phone Number',
+      emailLabel: 'Email Support'
     }
   },
   ta: {
@@ -51,15 +59,22 @@ const translations = {
       message: 'உங்கள் செய்தி',
       submit: 'செய்தி அனுப்பு',
       success: 'செய்தி வெற்றிகரமாக அனுப்பப்பட்டது!',
-      successDesc: '24-48 மணிநேரத்திற்குள் நாங்கள் உங்களைத் தொடர்பு கொள்வோம்.'
+      successDesc: '24-48 மணிநேரத்திற்குள் நாங்கள் உங்களைத் தொடர்பு கொள்வோம்.',
+      sendAnother: 'மற்றொரு செய்தியை அனுப்பவும்',
+      sending: 'அனுப்பப்படுகிறது...',
+      errorTryAgain: 'ஏதோ தவறு நடந்துவிட்டது. மீண்டும் முயற்சிக்கவும்.',
+      errorSubmit: 'படிவத்தை சமர்ப்பிப்பதில் பிழை ஏற்பட்டது.'
     },
     info: {
       title: 'தொடர்பு விவரங்கள்',
-      address: 'எண். 12, பிரதான சாலை, ஸ்ரீரங்கம், திருச்சி - 620006',
-      phone: '+91 98765 43210',
-      email: 'contact@shashikiran.in',
+      address: 'மனை எண் 12, D-54, 9ஏ குறுக்குச் சாலை, மேற்கு தில்லை நகர், திருச்சிராப்பள்ளி, தமிழ்நாடு 620018',
+      phone: '+91 96881 62147',
+      email: 'nsptn2031@gmail.com',
       hours: 'திங்கள் - சனி: காலை 9:00 - இரவு 7:00',
-      social: 'எங்களைப் பின்தொடரவும்'
+      social: 'எங்களைப் பின்தொடரவும்',
+      addressLabel: 'அலுவலக முகவரி',
+      phoneLabel: 'தொலைபேசி எண்',
+      emailLabel: 'மின்னஞ்சல் முகவரி'
     }
   }
 };
@@ -81,10 +96,10 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
       if (response.ok) {
         setSubmitted(true);
       } else {
-        alert("Something went wrong. Please try again.");
+        alert(t.form.errorTryAgain);
       }
     } catch (error) {
-      alert("Error submitting form.");
+      alert(t.form.errorSubmit);
     } finally {
       setLoading(false);
     }
@@ -98,7 +113,7 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
         <div className="absolute inset-0 z-0">
           <img src={heroBg} className="w-full h-full object-cover" alt="Banner" />
           {/* Strengthened Black Overlay for contrast */}
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-[0px]" />
         </div>
         
         <div className="relative z-10 max-w-4xl">
@@ -133,7 +148,7 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
                   </div>
                   <h3 className="text-2xl font-black text-green-900 mb-2">{t.form.success}</h3>
                   <p className="text-green-700 font-medium">{t.form.successDesc}</p>
-                  <button onClick={() => setSubmitted(false)} className="mt-8 text-green-700 font-black text-xs uppercase tracking-widest border-b border-green-200 pb-1">Send Another Message</button>
+                  <button onClick={() => setSubmitted(false)} className="mt-8 text-green-700 font-black text-xs uppercase tracking-widest border-b border-green-200 pb-1">{t.form.sendAnother}</button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -158,7 +173,7 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
                   <motion.button disabled={loading} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                     className="w-full bg-[#CC0000] text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 shadow-xl shadow-red-100 disabled:opacity-70">
                     <Send size={16} />
-                    {loading ? "Sending..." : t.form.submit}
+                    {loading ? t.form.sending : t.form.submit}
                   </motion.button>
                 </form>
               )}
@@ -176,7 +191,7 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
                     <MapPin className="text-[#CC0000]" size={24} />
                   </div>
                   <div>
-                    <span className="text-[0.6rem] font-black uppercase tracking-widest text-slate-400 block mb-1">Office Address</span>
+                    <span className="text-[0.6rem] font-black uppercase tracking-widest text-slate-400 block mb-1">{t.info.addressLabel}</span>
                     <p className="text-lg font-bold leading-snug">{t.info.address}</p>
                   </div>
                 </div>
@@ -186,7 +201,7 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
                     <Phone className="text-[#CC0000]" size={24} />
                   </div>
                   <div>
-                    <span className="text-[0.6rem] font-black uppercase tracking-widest text-slate-400 block mb-1">Phone Number</span>
+                    <span className="text-[0.6rem] font-black uppercase tracking-widest text-slate-400 block mb-1">{t.info.phoneLabel}</span>
                     <p className="text-xl font-black tracking-tight">{t.info.phone}</p>
                   </div>
                 </div>
@@ -196,7 +211,7 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
                     <Mail className="text-[#CC0000]" size={24} />
                   </div>
                   <div>
-                    <span className="text-[0.6rem] font-black uppercase tracking-widest text-slate-400 block mb-1">Email Support</span>
+                    <span className="text-[0.6rem] font-black uppercase tracking-widest text-slate-400 block mb-1">{t.info.emailLabel}</span>
                     <p className="text-lg font-bold">{t.info.email}</p>
                   </div>
                 </div>
@@ -217,12 +232,11 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
                 <span className="text-[0.6rem] font-black uppercase tracking-widest text-slate-400 block mb-6">{t.info.social}</span>
                 <div className="flex gap-4">
                   {[
-                    { icon: Camera, color: '#E1306C' },
-                    { icon: Share2, color: '#1DA1F2' },
-                    { icon: MessageCircle, color: '#25D366' },
-                    { icon: Globe, color: '#0077B5' }
+                    { icon: Facebook, color: '#1877F2', href: 'https://www.facebook.com/profile.php?id=61570864402762', label: 'Facebook' },
+                    { icon: Instagram, color: '#E1306C', href: 'https://instagram.com/shashikiran_srirangam/', label: 'Instagram' },
+                    { icon: Youtube, color: '#FF0000', href: 'https://www.youtube.com/@shashikiransrirangam', label: 'YouTube' }
                   ].map((social, i) => (
-                    <motion.a key={i} href="#" whileHover={{ y: -5, scale: 1.1 }}
+                    <motion.a key={i} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label} whileHover={{ y: -5, scale: 1.1 }}
                       className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center border border-slate-100 hover:shadow-lg transition-all">
                       <social.icon size={20} style={{ color: social.color }} />
                     </motion.a>

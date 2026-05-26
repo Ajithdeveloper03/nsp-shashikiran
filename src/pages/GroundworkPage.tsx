@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { blogPosts } from '../data/blogs';
-import heroBg from '../assets/ground work.jpg';
+import heroBg from '../assets/ground work.png';
+import heroBgTab from '../assets/ground work tab.png';
+import heroBgMobile from '../assets/ground work mobile.png';
 
 const GroundworkPage = ({ lang = 'en' }: { lang?: string }) => {
   const t = {
@@ -30,9 +32,13 @@ const GroundworkPage = ({ lang = 'en' }: { lang?: string }) => {
   return (
     <div className={`bg-white min-h-screen text-slate-900 font-sans ${lang === 'ta' ? 'font-tamil' : ''}`}>
       {/* ── HERO ── */}
-      <section className="relative h-[60vh] w-full flex flex-col items-center justify-center overflow-hidden bg-black">
+      <section className="relative h-[70vh] w-full flex flex-col items-center justify-center overflow-hidden bg-black">
         <div className="absolute inset-0 z-0">
-          <img src={heroBg} alt="" style={{backgroundPosition: "top"}} className="w-full h-full object-cover opacity-60" />
+          <picture className="w-full h-full opacity-60">
+            <source media="(max-width: 767px)" srcSet={heroBgMobile} />
+            <source media="(max-width: 1023px)" srcSet={heroBgTab} />
+            <img src={heroBg} alt="" className="w-full h-full object-cover object-top" />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90" />
         </div>
 

@@ -52,7 +52,9 @@ const translations = {
       ]
     },
     conclusion: "Srirangam gave us our roots. Now it is our duty to give Srirangam its wings.",
-    cta: "Join The Movement"
+    cta: "Join The Movement",
+    blueprintLabel: "Blueprint 2041",
+    roadmapDesc: "Beyond the immediate goals, a future built on innovation."
   },
   ta: {
     hero: {
@@ -62,14 +64,14 @@ const translations = {
       quote: '"எனது வாக்குறுதி வெறும் வார்த்தைகள் அல்ல, அது செயல்பாட்டிற்கான ஒரு அர்ப்பணிப்பு."'
     },
     items: [
-      { id: "01", icon: Landmark, title: "ஸ்மார்ட் கோயில் திட்டம்", subtitle: "தெய்வீக பாரம்பரியம்", desc: "AI தொழில்நுட்பத்தைப் பயன்படுத்தி கூட்ட மேலாண்மை மற்றும் கோயில் பராமரிப்பு.", img: shashi1, accent: "#CC0000" },
-      { id: "02", icon: Target, title: "அக்கரவடிசல் திட்டம்", subtitle: "உள்ளூர் பொருளாதாரம்", desc: "பாரம்பரிய கலைஞர்கள் மற்றும் சிறு வணிகர்களுக்கு ஆதரவு அளிப்பதன் மூலம் உள்ளூர் பொருளாதாரத்தை மேம்படுத்துதல்.", img: shashi2, accent: "#FF8C00" },
-      { id: "03", icon: GraduationCap, title: "வேலைவாய்ப்பு மற்றும் பயிற்சி", subtitle: "50 முக்கிய இடங்கள்", desc: "ஐடி மற்றும் பிற துறைகளில் பயிற்சி அளிக்க 50 திறன் மேம்பாட்டு மையங்கள்.", img: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg", accent: "#CC0000" },
+      { id: "01", icon: Landmark, title: "ஸ்மார்ட் கோவில் திட்டம்", subtitle: "தெய்வீக பாரம்பரியம்", desc: "AI தொழில்நுட்பத்தைப் பயன்படுத்தி கூட்ட மேலாண்மை மற்றும் கோவில் பராமரிப்பு.", img: shashi1, accent: "#CC0000" },
+      { id: "02", icon: Target, title: "அக்கரவாடிசல் திட்டம்", subtitle: "உள்ளூர் பொருளாதாரம்", desc: "பாரம்பரியக் கலைஞர்கள் மற்றும் சிறு வணிகர்களுக்கு ஆதரவு அளிப்பதன் மூலம் உள்ளூர் பொருளாதாரத்தை மேம்படுத்துதல்.", img: shashi2, accent: "#FF8C00" },
+      { id: "03", icon: GraduationCap, title: "வேலைவாய்ப்பு மற்றும் பயிற்சி", subtitle: "50 முக்கிய இடங்கள்", desc: "ஐடி மற்றும் பிற துறைகளில் பயிற்சி அளிக்க 50 திறன் மேம்பாட்டு மையங்கள்.", img: shashi10, accent: "#CC0000" },
       { id: "04", icon: Rocket, title: "தொழில்முனைவோர் மையங்கள்", subtitle: "5 முக்கிய மையங்கள்", desc: "புதிய தொழில் தொடங்குவோருக்கு வழிகாட்ட 5 இன்குபேஷன் மையங்கள்.", img: shashi5, accent: "#FF8C00" },
-      { id: "05", icon: Droplets, title: "நீர் மற்றும் வடிகால் சீரமைப்பு", subtitle: "நவீன உள்கட்டமைப்பு", desc: "24/7 குடிநீர் மற்றும் நவீன பாதாள சாக்கடை திட்டம்.", img: "https://images.pexels.com/photos/1072824/pexels-photo-1072824.jpeg", accent: "#CC0000" },
-      { id: "06", icon: Recycle, title: "தூய்மை ஸ்ரீரங்கம் இயக்கம்", subtitle: "சுற்றுச்சூழல்", desc: "தானியங்கி தெரு சுத்தம் மற்றும் பிளாஸ்டிக் இல்லா ஸ்ரீரங்கம்.", img: "https://images.pexels.com/photos/1549528/pexels-photo-1549528.jpeg", accent: "#FF8C00" },
-      { id: "07", icon: Shield, title: "பெண்கள் பாதுகாப்பு ரோந்து", subtitle: "CCTV மற்றும் பாதுகாப்பு", desc: "இரவு 7 மணிக்கு மேல் சிறப்பு பெண்கள் ரோந்து படை.", img: "https://images.pexels.com/photos/3760263/pexels-photo-3760263.jpeg", accent: "#CC0000" },
-      { id: "08", icon: Waves, title: "வெள்ளத் தடுப்பு தொழில்நுட்பம்", subtitle: "தடுப்பு நடவடிக்கை", desc: "வெள்ள அபாயத்தைக் கண்காணிக்க நவீன சென்சார்கள் மற்றும் தடுப்பு இயந்திரங்கள்.", img: shashi6, accent: "#FF8C00" },
+      { id: "05", icon: Droplets, title: "நீர் மற்றும் வடிகால் சீரமைப்பு", subtitle: "நவீன உள்கட்டமைப்பு", desc: "24/7 குடிநீர் மற்றும் நவீன பாதாள சாக்கடை திட்டம்.", img: shashi6, accent: "#CC0000" },
+      { id: "06", icon: Recycle, title: "தூய்மை ஸ்ரீரங்கம் இயக்கம்", subtitle: "சுற்றுச்சூழல்", desc: "தானியங்கி தெரு சுத்தம் மற்றும் பிளாஸ்டிக் இல்லா ஸ்ரீரங்கம்.", img: shashi7, accent: "#FF8C00" },
+      { id: "07", icon: Shield, title: "பெண்கள் பாதுகாப்பு ரோந்து", subtitle: "CCTV மற்றும் பாதுகாப்பு", desc: "இரவு 7 மணிக்கு மேல் சிறப்பு பெண்கள் ரோந்து படை.", img: shashi8, accent: "#CC0000" },
+      { id: "08", icon: Waves, title: "வெள்ளத் தடுப்பு தொழில்நுட்பம்", subtitle: "தடுப்பு நடவடிக்கை", desc: "வெள்ள அபாயத்தைக் கண்காணிக்க நவீன சென்சார்கள் மற்றும் தடுப்பு இயந்திரங்கள்.", img: shashi9, accent: "#FF8C00" },
       { id: "09", icon: Smartphone, title: "டிஜிட்டல் நிர்வாகம்", subtitle: "உங்கள் எம்.எல்.ஏ உங்கள் கையில்", desc: "மொபைல் ஆப் மூலம் அரசு சேவைகள் மற்றும் குறைகளைத் தீர்க்கும் வசதி.", img: shashi4, accent: "#CC0000" },
       { id: "10", icon: Wheat, title: "விவசாய மறுமலர்ச்சி", subtitle: "அக்ரி-டெக்", desc: "விவசாயிகளுக்கு நேரடி டிஜிட்டல் சந்தை மற்றும் தொழில்நுட்ப கருவிகள்.", img: "https://images.pexels.com/photos/235925/pexels-photo-235925.jpeg", accent: "#FF8C00" }
     ],
@@ -78,12 +80,14 @@ const translations = {
       subtitle: 'எதிர்கால வரைபடம்',
       points: [
         { icon: Sun, title: "பசுமை ஆற்றல்", desc: "தெருவிளக்குகள் மற்றும் அரசு கட்டிடங்களில் சூரிய சக்தி பயன்பாடு.", img: "https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg" },
-        { icon: Library, title: "பாரம்பரிய கல்வி", desc: "ஸ்ரீரங்கத்தின் வரலாற்றைக் கற்பிக்க டிஜிட்டல் நூலகம்.", img: shashi7 },
-        { icon: Truck, title: "நடமாடும் மருத்துவம்", desc: "கிராமப்புறங்களுக்கு வாரந்தோறும் வரும் நடமாடும் மருத்துவ வாகனங்கள்.", img: "https://images.pexels.com/photos/263402/pexels-photo-263402.jpeg" }
+        { icon: Library, title: "பாரம்பரிய கல்வி", desc: "ஸ்ரீரங்கத்தின் வரலாற்றைக் கற்பிக்க டிஜிட்டல் நூலகம்.", img: shashi11 },
+        { icon: Truck, title: "நடமாடும் மருத்துவம்", desc: "கிராமப்புறங்களுக்கு வாரந்தோறும் வரும் நடமாடும் மருத்துவ வாகனங்கள்.", img: shashi12 }
       ]
     },
     conclusion: "ஸ்ரீரங்கம் நமக்கு வேர்களைக் கொடுத்தது. இப்போது ஸ்ரீரங்கத்திற்கு இறக்கைகளை வழங்குவது நமது கடமை.",
-    cta: "இயக்கத்தில் இணையுங்கள்"
+    cta: "இயக்கத்தில் இணையுங்கள்",
+    blueprintLabel: "வரைபடம் 2041",
+    roadmapDesc: "உடனடி இலக்குகளுக்கு அப்பால், புதுமையின் அடிப்படையில் அமைந்த எதிர்காலம்."
   }
 };
 
@@ -97,7 +101,7 @@ const ManifestoPage = ({ lang = 'en' }: { lang?: string }) => {
       {/* ── HERO WITH BLACK OVERLAY ── */}
       <section className="relative h-[70vh] flex items-center justify-center text-center px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={heroBg} className="w-full h-full object-cover" />
+          <img src={heroBg} className="w-full h-full object-cover object-top" />
           {/* Strengthened Black Overlay for better text separation */}
           <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
         </div>
@@ -153,7 +157,7 @@ const ManifestoPage = ({ lang = 'en' }: { lang?: string }) => {
                     </p>
                     <div className="flex items-center gap-2 pt-6 border-t border-white/10 w-full justify-center">
                        <CheckCircle2 size={16} className="text-[#CC0000]" />
-                       <span className="text-[0.6rem] font-black uppercase tracking-widest text-white/40">Blueprint 2041</span>
+                       <span className="text-[0.6rem] font-black uppercase tracking-widest text-white/40">{t.blueprintLabel}</span>
                     </div>
                   </div>
 
@@ -181,7 +185,7 @@ const ManifestoPage = ({ lang = 'en' }: { lang?: string }) => {
             </Reveal>
             <Reveal delay={0.3}>
                <p className="text-white/40 text-sm max-w-xs uppercase font-black tracking-widest leading-relaxed">
-                 Beyond the immediate goals, a future built on innovation.
+                 {t.roadmapDesc}
                </p>
             </Reveal>
           </div>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Outfit:wght@300;400;500;600;700;800;900&family=Hind+Madurai:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Mukta+Malar:wght@300;400;500;600;700;800&family=Catamaran:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Chakra+Petch:wght@500;600;700&family=Baloo+Thambi+2:wght@400..800&family=Hind+Madurai:wght@300;400;500;600;700&family=Anek+Tamil:wght@100..800&family=Arima:wght@100..700&family=Noto+Sans+Tamil:wght@100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -27,7 +27,111 @@
   }
 
   .font-tamil {
-    font-family: 'Hind Madurai', sans-serif;
+    font-family: 'Noto Sans Tamil', 'Hind Madurai', 'Mukta Malar', sans-serif !important;
+    font-weight: 500;
+    letter-spacing: 0px !important;
+    line-height: 1.75;
+    word-break: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-rendering: optimizeLegibility;
+  }
+
+  .font-tamil h1,
+  .font-tamil h2,
+  .font-tamil h3,
+  .font-tamil h4,
+  .font-tamil h5,
+  .font-tamil h6 {
+    font-family: 'Noto Sans Tamil', 'Anek Tamil', sans-serif !important;
+    font-weight: 800 !important;
+    letter-spacing: 0px !important;
+    line-height: 1.28 !important;
+    word-break: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  /* Global letter-spacing override for anything inside Tamil layouts */
+  .font-tamil,
+  .font-tamil *,
+  .font-tamil [class*="tracking-"] {
+    letter-spacing: 0px !important;
+  }
+
+  /* Tamil Heading sizes - override both default and responsive sizes for headings */
+  .font-tamil h1.text-lg, .font-tamil h2.text-lg, .font-tamil h3.text-lg, .font-tamil h4.text-lg, .font-tamil h5.text-lg, .font-tamil h6.text-lg,
+  .font-tamil h1.sm\:text-lg, .font-tamil h2.sm\:text-lg, .font-tamil h3.sm\:text-lg, .font-tamil h4.sm\:text-lg, .font-tamil h5.sm\:text-lg, .font-tamil h6.sm\:text-lg,
+  .font-tamil h1.md\:text-lg, .font-tamil h2.md\:text-lg, .font-tamil h3.md\:text-lg, .font-tamil h4.md\:text-lg, .font-tamil h5.md\:text-lg, .font-tamil h6.md\:text-lg,
+  .font-tamil h1.lg\:text-lg, .font-tamil h2.lg\:text-lg, .font-tamil h3.lg\:text-lg, .font-tamil h4.lg\:text-lg, .font-tamil h5.lg\:text-lg, .font-tamil h6.lg\:text-lg,
+  .font-tamil h1.xl\:text-lg, .font-tamil h2.xl\:text-lg, .font-tamil h3.xl\:text-lg, .font-tamil h4.xl\:text-lg, .font-tamil h5.xl\:text-lg, .font-tamil h6.xl\:text-lg {
+    font-size: 1.0rem !important;
+  }
+
+  .font-tamil h1.text-xl, .font-tamil h2.text-xl, .font-tamil h3.text-xl, .font-tamil h4.text-xl, .font-tamil h5.text-xl, .font-tamil h6.text-xl,
+  .font-tamil h1.sm\:text-xl, .font-tamil h2.sm\:text-xl, .font-tamil h3.sm\:text-xl, .font-tamil h4.sm\:text-xl, .font-tamil h5.sm\:text-xl, .font-tamil h6.sm\:text-xl,
+  .font-tamil h1.md\:text-xl, .font-tamil h2.md\:text-xl, .font-tamil h3.md\:text-xl, .font-tamil h4.md\:text-xl, .font-tamil h5.md\:text-xl, .font-tamil h6.md\:text-xl,
+  .font-tamil h1.lg\:text-xl, .font-tamil h2.lg\:text-xl, .font-tamil h3.lg\:text-xl, .font-tamil h4.lg\:text-xl, .font-tamil h5.lg\:text-xl, .font-tamil h6.lg\:text-xl,
+  .font-tamil h1.xl\:text-xl, .font-tamil h2.xl\:text-xl, .font-tamil h3.xl\:text-xl, .font-tamil h4.xl\:text-xl, .font-tamil h5.xl\:text-xl, .font-tamil h6.xl\:text-xl {
+    font-size: 1.15rem !important;
+  }
+
+  .font-tamil h1.text-2xl, .font-tamil h2.text-2xl, .font-tamil h3.text-2xl, .font-tamil h4.text-2xl, .font-tamil h5.text-2xl, .font-tamil h6.text-2xl,
+  .font-tamil h1.sm\:text-2xl, .font-tamil h2.sm\:text-2xl, .font-tamil h3.sm\:text-2xl, .font-tamil h4.sm\:text-2xl, .font-tamil h5.sm\:text-2xl, .font-tamil h6.sm\:text-2xl,
+  .font-tamil h1.md\:text-2xl, .font-tamil h2.md\:text-2xl, .font-tamil h3.md\:text-2xl, .font-tamil h4.md\:text-2xl, .font-tamil h5.md\:text-2xl, .font-tamil h6.md\:text-2xl,
+  .font-tamil h1.lg\:text-2xl, .font-tamil h2.lg\:text-2xl, .font-tamil h3.lg\:text-2xl, .font-tamil h4.lg\:text-2xl, .font-tamil h5.lg\:text-2xl, .font-tamil h6.lg\:text-2xl,
+  .font-tamil h1.xl\:text-2xl, .font-tamil h2.xl\:text-2xl, .font-tamil h3.xl\:text-2xl, .font-tamil h4.xl\:text-2xl, .font-tamil h5.xl\:text-2xl, .font-tamil h6.xl\:text-2xl {
+    font-size: 1.35rem !important;
+  }
+
+  .font-tamil h1.text-3xl, .font-tamil h2.text-3xl, .font-tamil h3.text-3xl, .font-tamil h4.text-3xl, .font-tamil h5.text-3xl, .font-tamil h6.text-3xl,
+  .font-tamil h1.sm\:text-3xl, .font-tamil h2.sm\:text-3xl, .font-tamil h3.sm\:text-3xl, .font-tamil h4.sm\:text-3xl, .font-tamil h5.sm\:text-3xl, .font-tamil h6.sm\:text-3xl,
+  .font-tamil h1.md\:text-3xl, .font-tamil h2.md\:text-3xl, .font-tamil h3.md\:text-3xl, .font-tamil h4.md\:text-3xl, .font-tamil h5.md\:text-3xl, .font-tamil h6.md\:text-3xl,
+  .font-tamil h1.lg\:text-3xl, .font-tamil h2.lg\:text-3xl, .font-tamil h3.lg\:text-3xl, .font-tamil h4.lg\:text-3xl, .font-tamil h5.lg\:text-3xl, .font-tamil h6.lg\:text-3xl,
+  .font-tamil h1.xl\:text-3xl, .font-tamil h2.xl\:text-3xl, .font-tamil h3.xl\:text-3xl, .font-tamil h4.xl\:text-3xl, .font-tamil h5.xl\:text-3xl, .font-tamil h6.xl\:text-3xl {
+    font-size: 1.65rem !important;
+  }
+
+  .font-tamil h1.text-4xl, .font-tamil h2.text-4xl, .font-tamil h3.text-4xl, .font-tamil h4.text-4xl, .font-tamil h5.text-4xl, .font-tamil h6.text-4xl,
+  .font-tamil h1.sm\:text-4xl, .font-tamil h2.sm\:text-4xl, .font-tamil h3.sm\:text-4xl, .font-tamil h4.sm\:text-4xl, .font-tamil h5.sm\:text-4xl, .font-tamil h6.sm\:text-4xl,
+  .font-tamil h1.md\:text-4xl, .font-tamil h2.md\:text-4xl, .font-tamil h3.md\:text-4xl, .font-tamil h4.md\:text-4xl, .font-tamil h5.md\:text-4xl, .font-tamil h6.md\:text-4xl,
+  .font-tamil h1.lg\:text-4xl, .font-tamil h2.lg\:text-4xl, .font-tamil h3.lg\:text-4xl, .font-tamil h4.lg\:text-4xl, .font-tamil h5.lg\:text-4xl, .font-tamil h6.lg\:text-4xl,
+  .font-tamil h1.xl\:text-4xl, .font-tamil h2.xl\:text-4xl, .font-tamil h3.xl\:text-4xl, .font-tamil h4.xl\:text-4xl, .font-tamil h5.xl\:text-4xl, .font-tamil h6.xl\:text-4xl {
+    font-size: 2.0rem !important;
+  }
+
+  .font-tamil h1.text-5xl, .font-tamil h2.text-5xl, .font-tamil h3.text-5xl, .font-tamil h4.text-5xl, .font-tamil h5.text-5xl, .font-tamil h6.text-5xl,
+  .font-tamil h1.sm\:text-5xl, .font-tamil h2.sm\:text-5xl, .font-tamil h3.sm\:text-5xl, .font-tamil h4.sm\:text-5xl, .font-tamil h5.sm\:text-5xl, .font-tamil h6.sm\:text-5xl,
+  .font-tamil h1.md\:text-5xl, .font-tamil h2.md\:text-5xl, .font-tamil h3.md\:text-5xl, .font-tamil h4.md\:text-5xl, .font-tamil h5.md\:text-5xl, .font-tamil h6.md\:text-5xl,
+  .font-tamil h1.lg\:text-5xl, .font-tamil h2.lg\:text-5xl, .font-tamil h3.lg\:text-5xl, .font-tamil h4.lg\:text-5xl, .font-tamil h5.lg\:text-5xl, .font-tamil h6.lg\:text-5xl,
+  .font-tamil h1.xl\:text-5xl, .font-tamil h2.xl\:text-5xl, .font-tamil h3.xl\:text-5xl, .font-tamil h4.xl\:text-5xl, .font-tamil h5.xl\:text-5xl, .font-tamil h6.xl\:text-5xl {
+    font-size: 2.6rem !important;
+  }
+
+  .font-tamil h1.text-6xl, .font-tamil h2.text-6xl, .font-tamil h3.text-6xl, .font-tamil h4.text-6xl, .font-tamil h5.text-6xl, .font-tamil h6.text-6xl,
+  .font-tamil h1.sm\:text-6xl, .font-tamil h2.sm\:text-6xl, .font-tamil h3.sm\:text-6xl, .font-tamil h4.sm\:text-6xl, .font-tamil h5.sm\:text-6xl, .font-tamil h6.sm\:text-6xl,
+  .font-tamil h1.md\:text-6xl, .font-tamil h2.md\:text-6xl, .font-tamil h3.md\:text-6xl, .font-tamil h4.md\:text-6xl, .font-tamil h5.md\:text-6xl, .font-tamil h6.md\:text-6xl,
+  .font-tamil h1.lg\:text-6xl, .font-tamil h2.lg\:text-6xl, .font-tamil h3.lg\:text-6xl, .font-tamil h4.lg\:text-6xl, .font-tamil h5.lg\:text-6xl, .font-tamil h6.lg\:text-6xl,
+  .font-tamil h1.xl\:text-6xl, .font-tamil h2.xl\:text-6xl, .font-tamil h3.xl\:text-6xl, .font-tamil h4.xl\:text-6xl, .font-tamil h5.xl\:text-6xl, .font-tamil h6.xl\:text-6xl {
+    font-size: 3.2rem !important;
+  }
+
+  .font-tamil h1.text-7xl, .font-tamil h2.text-7xl, .font-tamil h3.text-7xl, .font-tamil h4.text-7xl, .font-tamil h5.text-7xl, .font-tamil h6.text-7xl,
+  .font-tamil h1.sm\:text-7xl, .font-tamil h2.sm\:text-7xl, .font-tamil h3.sm\:text-7xl, .font-tamil h4.sm\:text-7xl, .font-tamil h5.sm\:text-7xl, .font-tamil h6.sm\:text-7xl,
+  .font-tamil h1.md\:text-7xl, .font-tamil h2.md\:text-7xl, .font-tamil h3.md\:text-7xl, .font-tamil h4.md\:text-7xl, .font-tamil h5.md\:text-7xl, .font-tamil h6.md\:text-7xl,
+  .font-tamil h1.lg\:text-7xl, .font-tamil h2.lg\:text-7xl, .font-tamil h3.lg\:text-7xl, .font-tamil h4.lg\:text-7xl, .font-tamil h5.lg\:text-7xl, .font-tamil h6.lg\:text-7xl,
+  .font-tamil h1.xl\:text-7xl, .font-tamil h2.xl\:text-7xl, .font-tamil h3.xl\:text-7xl, .font-tamil h4.xl\:text-7xl, .font-tamil h5.xl\:text-7xl, .font-tamil h6.xl\:text-7xl {
+    font-size: 4.0rem !important;
+  }
+
+  .font-popup-phone {
+    font-family: 'Chakra Petch', 'Rajdhani', 'Segoe UI', sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+    font-size: 1.125rem;
+    letter-spacing: 0.08em;
+    color: #0a0a0a;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* Global paragraph justification */
@@ -35,6 +139,134 @@
     text-align: justify;
     hyphens: auto;
   }
+
+  .font-tamil p {
+    text-align: justify;
+    hyphens: none;
+  }
+
+  /* About Me — left-aligned copy, no justify */
+  #about-me p,
+  #about-me h3 {
+    text-align: left;
+    hyphens: none;
+  }
+}
+
+/* Nav — active item glow */
+@keyframes nav-active-glow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(255, 140, 0, 0.35), 0 0 4px rgba(204, 0, 0, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(255, 140, 0, 0.55), 0 0 8px rgba(204, 0, 0, 0.4);
+  }
+}
+
+.nav-link-active-pill {
+  animation: nav-active-glow 2.5s ease-in-out infinite;
+}
+
+.nav-link-active-text {
+  color: #ff8c00 !important;
+  text-shadow: 0 0 14px rgba(255, 140, 0, 0.65), 0 0 4px rgba(204, 0, 0, 0.35);
+}
+
+/* Journey timeline — carousel arrows (both always styled) */
+@keyframes journey-arrow-glow-prev {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(204, 0, 0, 0.65), 0 0 4px rgba(255, 140, 0, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(204, 0, 0, 0.85), 0 0 10px rgba(255, 140, 0, 0.5);
+  }
+}
+
+@keyframes journey-arrow-glow-next {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(255, 140, 0, 0.65), 0 0 4px rgba(204, 0, 0, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(255, 140, 0, 0.9), 0 0 10px rgba(204, 0, 0, 0.45);
+  }
+}
+
+@keyframes journey-arrow-nudge-left {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
+}
+
+@keyframes journey-arrow-nudge-right {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+.journey-carousel-btn {
+  color: #fff;
+  border-width: 2px;
+  border-style: solid;
+  cursor: pointer;
+}
+
+.journey-carousel-btn--prev {
+  background: linear-gradient(145deg, #e63900 0%, #cc0000 55%, #8f0000 100%);
+  border-color: #ff8c00;
+  animation: journey-arrow-glow-prev 2s ease-in-out infinite, journey-arrow-nudge-left 2.6s ease-in-out infinite;
+}
+
+.journey-carousel-btn--next {
+  background: linear-gradient(145deg, #ffb347 0%, #ff8c00 45%, #cc0000 100%);
+  border-color: #ffe0a8;
+  animation: journey-arrow-glow-next 2s ease-in-out infinite, journey-arrow-nudge-right 2.6s ease-in-out infinite;
+}
+
+.journey-carousel-btn--dimmed {
+  opacity: 0.42;
+  cursor: not-allowed;
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+.journey-carousel-btn--prev:not(.journey-carousel-btn--dimmed):hover {
+  background: linear-gradient(145deg, #ff6a1a 0%, #cc0000 50%, #990000 100%);
+  transform: scale(1.08);
+  animation: none;
+}
+
+.journey-carousel-btn--next:not(.journey-carousel-btn--dimmed):hover {
+  background: linear-gradient(145deg, #ffd080 0%, #ff8c00 50%, #e63900 100%);
+  transform: scale(1.08);
+  animation: none;
+}
+
+/* About Me — premium visuals */
+#about-me .about-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+#about-me .about-premium-photo {
+  filter: contrast(1.06) saturate(1.12) brightness(1.02);
+  transition: filter 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#about-me .group:hover .about-premium-photo {
+  filter: contrast(1.1) saturate(1.2) brightness(1.04);
+}
+
+#about-me .about-shine {
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.35) 48%,
+    rgba(255, 255, 255, 0.08) 52%,
+    transparent 62%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#about-me .group:hover .about-shine {
+  transform: translateX(120%);
 }
 
 /* Custom Scrollbar */
@@ -44,6 +276,87 @@
 
 ::-webkit-scrollbar-track {
   background: #F3F3F3;
+}
+
+/* Constituency voice FAB — 2-layer glow + eye-focus spotlight */
+@keyframes voice-fab-ring-inner {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes voice-fab-ring-outer {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.07);
+  }
+}
+
+@keyframes voice-fab-spotlight {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes voice-fab-focus-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.95),
+      0 0 12px rgba(255, 140, 0, 0.5),
+      0 6px 20px rgba(204, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px rgba(255, 140, 0, 0.5),
+      0 0 18px rgba(255, 140, 0, 0.65),
+      0 0 24px rgba(204, 0, 0, 0.3),
+      0 8px 24px rgba(204, 0, 0, 0.5);
+  }
+}
+
+.voice-fab-wrap .voice-fab-spotlight {
+  position: absolute;
+  inset: -8px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(255, 140, 0, 0.45) 0%, rgba(204, 0, 0, 0.22) 42%, transparent 70%);
+  animation: voice-fab-spotlight 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.voice-fab-wrap .voice-fab-ring-inner {
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 140, 0, 0.8);
+  animation: voice-fab-ring-inner 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.voice-fab-wrap .voice-fab-ring-outer {
+  position: absolute;
+  inset: -7px;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(204, 0, 0, 0.55);
+  animation: voice-fab-ring-outer 4.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.voice-fab-focus {
+  animation: voice-fab-focus-pulse 3.2s ease-in-out infinite;
 }
 
 ::-webkit-scrollbar-thumb {

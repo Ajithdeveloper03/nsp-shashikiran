@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { blogPosts, type BlogPost } from '../data/blogs';
-import { Clock, User, ArrowLeft, Share2, MessageCircle, Camera, Globe } from 'lucide-react';
+import { Clock, User, ArrowLeft } from 'lucide-react';
+import { Facebook, Instagram, Youtube } from '../components/SocialIcons';
 
 const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
   const { slug } = useParams<{ slug: string }>();
@@ -43,24 +44,45 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
       toc: "Table of Contents",
       share: "Share Story",
       faq: "Frequently Asked Questions",
-      author: "Shashikiran KN",
-      readTime: "8 min read"
+      author: "Shanthini",
+      readTime: "8 min read",
+      authorLabel: "Author",
+      publishedLabel: "Published",
+      sectionDetailLabel: "Section Detail",
+      resourcesLabel: "RESOURCES",
+      joinMovementTitle: "Join the movement for a Smarter Srirangam",
+      joinMovementDesc: "Be part of the change you want to see in our constituency.",
+      joinNow: "Join Now"
     },
     ta: {
       back: "களப்பணிக்குத் திரும்பு",
       toc: "பொருளடக்கம்",
       share: "பகிர்",
       faq: "அடிக்கடி கேட்கப்படும் கேள்விகள்",
-      author: "சசிகிரண் கே.என்",
-      readTime: "8 நிமிட வாசிப்பு"
+      author: "சாந்தினி",
+      readTime: "8 நிமிட வாசிப்பு",
+      authorLabel: "எழுதியவர்",
+      publishedLabel: "வெளியிடப்பட்டது",
+      sectionDetailLabel: "பிரிவின் விவரம்",
+      resourcesLabel: "வளங்கள்",
+      joinMovementTitle: "ஸ்மார்ட் ஸ்ரீரங்கத்திற்கான இயக்கத்தில் இணையுங்கள்",
+      joinMovementDesc: "நமது தொகுதியில் நீங்கள் காண விரும்பும் மாற்றத்தின் ஒரு பகுதியாக இருங்கள்.",
+      joinNow: "இப்போது இணையுங்கள்"
     }
   }[lang as 'en' | 'ta'] || {
     back: "Back to Groundwork",
     toc: "Table of Contents",
     share: "Share Story",
     faq: "Frequently Asked Questions",
-    author: "Shashikiran KN",
-    readTime: "8 min read"
+    author: "Shanthini",
+    readTime: "8 min read",
+    authorLabel: "Author",
+    publishedLabel: "Published",
+    sectionDetailLabel: "Section Detail",
+    resourcesLabel: "RESOURCES",
+    joinMovementTitle: "Join the movement for a Smarter Srirangam",
+    joinMovementDesc: "Be part of the change you want to see in our constituency.",
+    joinNow: "Join Now"
   };
 
   return (
@@ -103,7 +125,7 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
                   <User size={20} />
                 </div>
                 <div>
-                  <div className="text-sm font-black text-white/40 uppercase tracking-widest leading-none mb-1.5">Author</div>
+                  <div className="text-sm font-black text-white/40 uppercase tracking-widest leading-none mb-1.5">{t.authorLabel}</div>
                   <div className="text-sm font-black text-white uppercase tracking-wider">{t.author}</div>
                 </div>
               </div>
@@ -112,7 +134,7 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
                   <Clock size={20} />
                 </div>
                 <div>
-                  <div className="text-sm font-black text-white/40 uppercase tracking-widest leading-none mb-1.5">Published</div>
+                  <div className="text-sm font-black text-white/40 uppercase tracking-widest leading-none mb-1.5">{t.publishedLabel}</div>
                   <div className="text-sm font-black text-white uppercase tracking-wider">{post.date}</div>
                 </div>
               </div>
@@ -127,13 +149,22 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
         {/* ── LEFT SIDE: CONTENT ── */}
         <article className="max-w-none">
           <div className="mb-12 md:mb-20">
+            {post.slug === 'smarter-future-srirangam' && (
+              <div className="mt-8 mb-10 md:mb-14">
+                <div className="text-[#CC0000] text-sm font-black uppercase tracking-[5px] mb-4 flex items-center gap-4">
+                  <div className="w-12 h-px bg-[#CC0000]/30" />
+                  {lang === 'ta' ? "ஸ்மார்ட் திட்டம்" : "Smart Plan"}
+                </div>
+                <h2 className="text-2xl md:text-4xl font-black text-gray-900 leading-tight tracking-tight">
+                  {lang === 'ta' ? "ஸ்மார்ட் கோவில் திட்டம்" : "Smart Temple Plan"}
+                </h2>
+              </div>
+            )}
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl group">
               <img loading="lazy" src={post.image} alt={post.title} className="w-full h-auto transform transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-[2.5rem]" />
             </div>
-            {post.slug === 'smarter-future-srirangam' && (
-              <p className="text-center text-gray-500 font-bold uppercase tracking-widest text-xs mt-5">Smart Temple Plan</p>
-            )}
+            
           </div>
 
           <div className="text-sm md:text-base text-gray-700 leading-relaxed mb-8 md:mb-12 border-l-4 border-[#CC0000] pl-5 md:pl-8 py-2">
@@ -145,7 +176,7 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
               <div className="mb-10 md:mb-14">
                 <div className="text-[#CC0000] text-sm font-black uppercase tracking-[5px] mb-4 flex items-center gap-4">
                   <div className="w-12 h-px bg-[#CC0000]/30" />
-                  Section Detail
+                  {t.sectionDetailLabel}
                 </div>
                 <h2 className="text-2xl md:text-4xl font-black text-gray-900 leading-tight tracking-tight">
                   {section.title[lang as 'en' | 'ta']}
@@ -170,7 +201,7 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
           {post.faq && post.faq.length > 0 && (
             <section id="faq" className="scroll-mt-32 pt-12 md:pt-20 border-t border-gray-100 mb-12 md:mb-20">
               <div className="text-center mb-16">
-                <span className="text-[#CC0000] text-sm font-black uppercase tracking-[5px] block mb-4">RESOURCES</span>
+                <span className="text-[#CC0000] text-sm font-black uppercase tracking-[5px] block mb-4">{t.resourcesLabel}</span>
                 <h2 className="text-2xl md:text-4xl font-black text-gray-900 tracking-tight">{t.faq}</h2>
               </div>
               <div className="grid gap-6">
@@ -236,17 +267,20 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
               <h4 className="text-xs font-black text-gray-400 uppercase tracking-[4px] mb-4">{t.share}</h4>
               <div className="flex gap-3">
                 {[
-                  { icon: Camera, color: 'hover:bg-[#E1306C]' },
-                  { icon: Globe, color: 'hover:bg-[#0077B5]' },
-                  { icon: MessageCircle, color: 'hover:bg-[#25D366]' },
-                  { icon: Share2, color: 'hover:bg-[#CC0000]' }
+                  { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61570864402762', color: 'hover:bg-[#1877F2]', label: 'Facebook' },
+                  { icon: Instagram, href: 'https://instagram.com/shashikiran_srirangam/', color: 'hover:bg-[#E1306C]', label: 'Instagram' },
+                  { icon: Youtube, href: 'https://www.youtube.com/@shashikiransrirangam', color: 'hover:bg-[#FF0000]', label: 'YouTube' }
                 ].map((item, i) => (
-                  <button
+                  <a
                     key={i}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={item.label}
                     className={`w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 transition-all hover:text-white hover:border-transparent ${item.color}`}
                   >
                     <item.icon size={16} />
-                  </button>
+                  </a>
                 ))}
               </div>
             </div>
@@ -254,10 +288,10 @@ const BlogDetailPage = ({ lang = 'en' }: { lang?: string }) => {
             {/* Candidate CTA */}
             <div className="p-8 bg-black rounded-3xl text-white overflow-hidden relative group">
               <div className="relative z-10">
-                <h4 className="text-xl font-black mb-3 leading-tight tracking-tight">Join the movement for a Smarter Srirangam</h4>
-                <p className="text-white/60 text-xs mb-6 leading-relaxed">Be part of the change you want to see in our constituency.</p>
+                <h4 className="text-xl font-black mb-3 leading-tight tracking-tight">{t.joinMovementTitle}</h4>
+                <p className="text-white/60 text-xs mb-6 leading-relaxed">{t.joinMovementDesc}</p>
                 <button onClick={() => window.dispatchEvent(new CustomEvent('open-join-popup'))} className="inline-flex items-center justify-center whitespace-nowrap w-full bg-[#CC0000] text-white px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl">
-                  Join Now
+                  {t.joinNow}
                 </button>
               </div>
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#CC0000]/20 blur-3xl -translate-y-1/2 translate-x-1/2" />

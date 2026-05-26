@@ -1,7 +1,10 @@
 import { useRef } from 'react';
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import heroBg from '../assets/agenda-banner.jpg';
+import heroBg from '../assets/agenda-banner.png';
+import heroBgTab from '../assets/agenda tab.png';
+import heroBgMobile from '../assets/agenda mobile.png';
+
 import shashi1 from '../assets/FUTURE EDUCATION.jpg';
 import shashi2 from '../assets/DIGITAL HEALTH.jpg';
 import shashi3 from '../assets/SMART AGRICULTURE.jpg';
@@ -11,11 +14,9 @@ import shashi6 from '../assets/smart-city.jpg';
 
 const content = {
   en: {
-    eyebrow: "Vision 2031",
-    title1: "AGENDA", title2: "2031",
-    subtitle: "The Digital Transformation of Tamil Nadu",
-    quote: "Political power is a tool; technology is the force that operates it for the greater good.",
-    intro: "Shashikiran KN aims to transform Tamil Nadu into a fully digitized, transparent, and self-reliant state.",
+    visionTitle: "My Vision: Powering Progress with Technology",
+    agendaBadge: "AGENDA 2031",
+    visionDesc: "For me, political power is just a tool. Technology is the real force that operates it for the greater good of society. Through Agenda 2031, my vision is to combine power and technology to create a smarter, fairer, and better future for all of us.",
     points: [
       {
         id: "01",
@@ -67,14 +68,13 @@ const content = {
       }
     ],
     footerTitle: "A Model for India",
-    footerDesc: "By 2031, Tamil Nadu will be a model of digital democracy, transparent governance, and inclusive prosperity."
+    footerDesc: "By 2031, Tamil Nadu will be a model of digital democracy, transparent governance, and inclusive prosperity.",
+    milestone: "Target 2031 Milestone"
   },
   ta: {
-    eyebrow: "தொலைநோக்கு 2031",
-    title1: "திட்ட அறிக்கை", title2: "2031",
-    subtitle: "தமிழகத்தின் டிஜிட்டல் மாற்றம்",
-    quote: "அரசியல் அதிகாரம் என்பது ஒரு கருவி; தொழில்நுட்பம் என்பது அதை பொது நலனுக்காக இயக்கும் சக்தி.",
-    intro: "2031-க்குள் தமிழகத்தை முழுமையாக டிஜிட்டல் மயமாக்கப்பட்ட, வெளிப்படையான மற்றும் சுயசார்பு மாநிலமாக மாற்ற சசிகிரண் கே.என் இலக்கு கொண்டுள்ளார்.",
+    visionTitle: "எனது தொலைநோக்கு: தொழில்நுட்பத்துடன் முன்னேற்றம்",
+    agendaBadge: "அஜெண்டா 2031",
+    visionDesc: "எனக்கு அரசியல் அதிகாரம் ஒரு கருவி மட்டுமே. தொழில்நுட்பமே சமூகத்தின் நலனுக்காக அதை இயக்கும் உண்மையான சக்தி. அஜெண்டா 2031 மூலம், அதிகாரத்தையும் தொழில்நுட்பத்தையும் இணைத்து, அனைவருக்கும் புத்திசாலித்தனமான, நியாயமான, சிறந்த எதிர்காலத்தை உருவாக்குவதே எனது தொலைநோக்கு.",
     points: [
       {
         id: "01",
@@ -126,7 +126,8 @@ const content = {
       }
     ],
     footerTitle: "இந்தியாவிற்கான ஒரு மாதிரி",
-    footerDesc: "2031-க்குள், தமிழ்நாடு டிஜிட்டல் ஜனநாயகம் மற்றும் அனைவருக்குமான செழிப்பின் மாதிரியாக விளங்கும்."
+    footerDesc: "2031-க்குள், தமிழ்நாடு டிஜிட்டல் ஜனநாயகம் மற்றும் அனைவருக்குமான செழிப்பின் மாதிரியாக விளங்கும்.",
+    milestone: "2031 இலக்கு மைல்கல்"
   }
 };
 
@@ -154,20 +155,29 @@ const AgendaPage = ({ lang = 'en' }: { lang?: string }) => {
       {/* ── HERO (Consistent with About/Journey) ── */}
       <section ref={heroRef} className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden">
         <motion.div className="absolute inset-0 z-0" style={{ y: imgY }}>
-          <img src={heroBg} alt="" className="w-full h-[115%] object-cover" />
+          <picture className="w-full h-[115%]">
+            <source media="(max-width: 767px)" srcSet={heroBgMobile} />
+            <source media="(max-width: 1023px)" srcSet={heroBgTab} />
+            <img src={heroBg} alt="" className="w-full h-full object-cover" />
+          </picture>
         </motion.div>
         {/* Cinematic Overlay for visibility - Matched with About Page for maximum clarity */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90 z-10" />
 
         <div className="relative z-20 w-full px-6 md:px-16 pb-24 md:pb-32 flex flex-col justify-end items-start h-full">
-          <div className="max-w-4xl flex flex-col items-start gap-2 md:gap-3">
+          <div className="max-w-4xl flex flex-col items-start gap-3 md:gap-4">
             <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-              className="text-[#000000] text-sm md:text-sm font-black tracking-[3px] md:tracking-[5px] uppercase drop-shadow-lg">{c.eyebrow}</motion.span>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1] drop-shadow-2xl tracking-tight">
-              {c.title1} <br /><span className="text-[#CC0000]">{c.title2}</span>
-            </h1>
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
-              className="text-white/80 text-sm md:text-base leading-relaxed max-w-xl drop-shadow-md font-medium">"{c.quote}"</motion.p>
+              className="inline-block bg-[#FF8C00] text-black text-xs md:text-sm font-black tracking-[0.25em] md:tracking-[0.35em] uppercase px-4 py-1.5 rounded-full shadow-lg">
+              {c.agendaBadge}
+            </motion.span>
+            <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.8 }}
+              className="text-3xl md:text-4xl lg:text-6xl font-black text-white leading-[1.1] drop-shadow-2xl tracking-tight">
+              {c.visionTitle}
+            </motion.h1>
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65, duration: 0.9 }}
+              className="text-white/90 text-sm md:text-lg leading-relaxed max-w-2xl drop-shadow-md font-medium">
+              {c.visionDesc}
+            </motion.p>
           </div>
         </div>
       </section>
@@ -209,7 +219,7 @@ const AgendaPage = ({ lang = 'en' }: { lang?: string }) => {
                      <div className="w-6 h-6 rounded-full flex items-center justify-center border-2 border-gray-100 group-hover:border-[#CC0000] transition-colors">
                         <div className="w-1.5 h-1.5 rounded-full bg-[#CC0000]" />
                      </div>
-                     <span className="text-sm font-black uppercase tracking-widest text-gray-400 group-hover:text-gray-900 transition-colors">Target 2031 Milestone</span>
+                     <span className="text-sm font-black uppercase tracking-widest text-gray-400 group-hover:text-gray-900 transition-colors">{c.milestone}</span>
                   </motion.div>
                 </div>
               </div>
@@ -225,37 +235,6 @@ const AgendaPage = ({ lang = 'en' }: { lang?: string }) => {
           </div>
         </section>
       ))}
-
-      {/* ── FOOTER BANNER (Redesigned) ── */}
-      <section className="relative overflow-hidden group min-h-[50vh] flex items-center">
-        <div className="absolute inset-0 z-0">
-          <img src={heroBg} alt="" className="w-full h-full object-cover grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-20 transition-all duration-1000" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-white z-10" />
-        <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#CC0000] to-[#FF8C00] z-20" />
-
-        <div className="relative z-20 w-full py-16 px-6 text-center max-w-4xl mx-auto">
-          <FadeUp>
-            <div className="w-12 h-1 bg-gradient-to-r from-[#CC0000] to-[#FF8C00] mx-auto mb-10 rounded-full" />
-            <span className="text-[#CC0000] font-black text-sm tracking-[6px] uppercase mb-4 block">{c.footerTitle}</span>
-            <h2 className="text-xl md:text-3xl font-black text-gray-900 leading-[1.15] mb-8 tracking-tight">
-              {c.footerDesc}
-            </h2>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button 
-                onClick={() => window.dispatchEvent(new CustomEvent('open-join-popup'))}
-                whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-                className="bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition-all whitespace-nowrap inline-flex items-center justify-center">
-                Join The Movement
-              </motion.button>
-              <motion.a href="/journey" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-                className="bg-white border-2 border-gray-300 text-gray-800 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm hover:border-[#CC0000] hover:text-[#CC0000] transition-all">
-                See Full Roadmap
-              </motion.a>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
 
     </div>
   );

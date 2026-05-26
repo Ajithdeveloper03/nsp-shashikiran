@@ -1,13 +1,17 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+
+const MotionLink = motion(Link);
 import { Landmark, TreePine, Flower2, Building2, Waves, TrafficCone, Droplets, Wheat, Briefcase, AlertTriangle, MapPin } from 'lucide-react';
 import heroBg from '../assets/my cons.png';
+import heroBgTab from '../assets/my cons tab.png';
+import heroBgMobile from '../assets/my cons-mobile.png';
 import shashi1 from '../assets/The Temple Town.jpg';
 import shashi2 from '../assets/srirangam island.jpg';
 import shashi5 from '../assets/butter fly park.jpg';
 import shashi3 from '../assets/Mada Veedhis.jpg';
 import shashi4 from '../assets/riverfront.jpg';
-import shashi6 from '../assets/shashi6.png';
 import shashi7 from '../assets/Traffic & Parking.jpg';
 import sshashi8 from '../assets/Agriculture Crisis.jpg';
 import shashi9 from '../assets/youth-migration.jpg';
@@ -89,22 +93,22 @@ const translations = {
     cta: {
       tag: 'உறுதிமொழி',
       title: 'ஸ்ரீரங்கத்தின் ஆன்மாவைப் புரிந்துகொள்ளும் ஒரு பிரதிநிதி அதற்குத் தேவை.',
-      author: '— சஷிகிரண் கே.என்',
+      author: '— சசிகிரன் KN',
       agenda: 'அஜெண்டா 2031-ஐக் காண்க',
       join: 'இயக்கத்தில் இணையுங்கள்'
     },
     heritage: [
-      { icon: Landmark, tag: 'ஆன்மீக மையம்', title: 'கோயில் நகரம்', desc: 'உலகின் மிகப்பெரிய செயல்படும் இந்து கோயிலான ஸ்ரீ ரங்கநாதசுவாமி கோயிலின் இருப்பிடம் — 21 கோபுரங்கள் மற்றும் 7 சுற்றுச் சுவர்களைக் கொண்டது.', img: shashi1, accent: '#CC0000', stat: '21', statLabel: 'கோபுரங்கள்' },
+      { icon: Landmark, tag: 'ஆன்மீக மையம்', title: 'கோவில் நகரம்', desc: 'உலகின் மிகப்பெரிய செயல்படும் இந்துக் கோவிலான ஸ்ரீ ரங்கநாதசுவாமி கோவிலின் இருப்பிடம் — 21 கோபுரங்கள் மற்றும் 7 சுற்றுச் சுவர்களைக் கொண்டது.', img: shashi1, accent: '#CC0000', stat: '21', statLabel: 'கோபுரங்கள்' },
       { icon: TreePine, tag: 'இயற்கையின் கொடை', title: 'பசுமைத் தீவு', desc: 'காவிரி மற்றும் கொள்ளிடத்திற்கு இடையில் அமைந்துள்ளது — பசுமையான தென்னந்தோப்புகள், வளமான நெல் வயல்கள், பழமையான மாந்தோப்புகள் மற்றும் வேறெங்கும் இல்லாத ஆற்றுத் தென்றல்.', img: shashi2, accent: '#FF8C00', stat: '2', statLabel: 'புனித நதிகள்' },
-      { icon: Flower2, tag: "மேலூர் ரத்தினம்", title: 'பட்டாம்பூச்சி பூங்கா', desc: "ஆசியாவின் மிகப்பெரிய வெப்பமண்டல பட்டாம்பூச்சி பூங்காக்களில் ஒன்று — 25 ஏக்கர் பரப்பளவில் பாதுகாப்பகம், அல்லிக் குளங்கள் மற்றும் ஸ்கைவாக் ஆகியவற்றைக் கொண்டது. நமது நகரத்திற்கு ஒரு முக்கியமான பசுமை நுரையீரல்.", img: "https://images.pexels.com/photos/1146708/pexels-photo-1146708.jpeg", accent: '#CC0000', stat: '25', statLabel: 'ஏக்கர்கள்' },
-      { icon: Building2, tag: 'வாழும் வரலாறு', title: 'மாட வீதிகள்', desc: 'சித்திரை மற்றும் உத்திர வீதிகள் — ஆன்மீகமும் சமூக வாழ்க்கையும் சங்கமிக்கும் இடம். வண்ணமயமான வீடுகள், மல்லிகை நறுமணம் மற்றும் காலை நேர மந்திரங்கள்.', img: shashi5, accent: '#FF8C00', stat: '1000+', statLabel: 'ஆண்டுகள்' },
-      { icon: Waves, tag: 'வாழ்வாதாரங்கள்', title: 'ஆற்றங்கரை அமைதி', desc: 'அம்மா மண்டபம் படித்துறை மற்றும் ஆற்றங்கரை — மக்கள் கூடும் இடங்கள், சடங்குகள் மற்றும் அமைதியான இடங்கள், பிரமிக்க வைக்கும் சூரிய அஸ்தமனக் காட்சிகள்.', img: shashi6, accent: '#CC0000', stat: '∞', statLabel: 'ஆன்மீகம்' },
+      { icon: Flower2, tag: "மேலூர் ரத்தினம்", title: 'வண்ணத்துப்பூச்சி பூங்கா', desc: "ஆசியாவின் மிகப்பெரிய வெப்பமண்டல பட்டாம்பூச்சி பூங்காக்களில் ஒன்று — 25 ஏக்கர் பரப்பளவில் பாதுகாப்பகம், அல்லிக் குளங்கள் மற்றும் ஸ்கைவாக் ஆகியவற்றைக் கொண்டது. நமது நகரத்திற்கு ஒரு முக்கியமான பசுமை நுரையீரல்.", img: shashi5, accent: '#CC0000', stat: '25', statLabel: 'ஏக்கர்கள்' },
+      { icon: Building2, tag: 'வாழும் வரலாறு', title: 'மாட வீதிகள்', desc: 'சித்திரை மற்றும் உத்திர வீதிகள் — ஆன்மீகமும் சமூக வாழ்க்கையும் சங்கமிக்கும் இடம். வண்ணமயமான வீடுகள், மல்லிகை நறுமணம் மற்றும் காலை நேர மந்திரங்கள்.', img: shashi3, accent: '#FF8C00', stat: '1000+', statLabel: 'ஆண்டுகள்' },
+      { icon: Waves, tag: 'வாழ்வாதாரங்கள்', title: 'ஆற்றங்கரை அமைதி', desc: 'அம்மா மண்டபம் படித்துறை மற்றும் ஆற்றங்கரை — மக்கள் கூடும் இடங்கள், சடங்குகள் மற்றும் அமைதியான இடங்கள், பிரமிக்க வைக்கும் சூரிய அஸ்தமனக் காட்சிகள்.', img: shashi4, accent: '#CC0000', stat: '∞', statLabel: 'ஆன்மீகம்' },
     ],
     problems: [
-      { icon: TrafficCone, tag: 'ஸ்ரீரங்கம் நகரம்', title: 'போக்குவரத்து & நிறுத்தம்', issue: 'குறுகலான தெருக்கள் மற்றும் வாகன நிறுத்த வசதி இல்லாதது திருவிழாக்காலங்களில் பெரும் நெரிசலை உருவாக்குகிறது.', impact: 'அவசரக்கால வாகனங்கள் சிக்கிக் கொள்கின்றன. யாத்ரீகர்களும் குடியிருப்பாளர்களும் தினமும் அவதிப்படுகிறார்கள்.', accent: '#CC0000', img: 'https://images.pexels.com/photos/1755683/pexels-photo-1755683.jpeg?auto=compress&cs=tinysrgb&w=800', labelIssue: 'பிரச்சனை', labelImpact: 'விளைவு' },
-      { icon: Droplets, tag: 'திருவானைக்கோயில்', title: 'வடிகால் & கழிவு', issue: 'பழைய வடிகால் அமைப்பு ஒவ்வொரு பருவமழையின் போதும் கடுமையான வெள்ளத்தை ஏற்படுத்துகிறது.', impact: 'பாரம்பரிய சின்னங்களுக்கு அருகில் உள்ள குப்பைகள் நமது புனித நதிகளை மாசுபடுத்துகின்றன.', accent: '#FF8C00', img: 'https://images.pexels.com/photos/2480807/pexels-photo-2480807.jpeg?auto=compress&cs=tinysrgb&w=800', labelIssue: 'பிரச்சனை', labelImpact: 'விளைவு' },
-      { icon: Wheat, tag: 'கிராமப்புறங்கள்', title: 'விவசாய நெருக்கடி', issue: 'தூர்வாரப்படாத கால்வாய்கள் கடைமடை விவசாயிகளுக்குப் பயிர்களுக்குத் தண்ணீர் கிடைக்காமல் செய்கின்றன.', impact: 'சந்தைகள் அல்லது குளிர்பதனக் கிடங்குகள் இல்லை — அறுவடை இடைத்தரகர்களிடம் இழக்கப்படுகிறது.', accent: '#CC0000', img: 'https://images.pexels.com/photos/2132180/pexels-photo-2132180.jpeg?auto=compress&cs=tinysrgb&w=800', labelIssue: 'பிரச்சனை', labelImpact: 'விளைவு' },
-      { icon: Briefcase, tag: 'தொகுதி முழுவதும்', title: 'இளைஞர்கள் வெளியேற்றம்', issue: 'ஐடி பூங்காக்கள் அல்லது திறன் மையங்கள் இல்லை. உள்ளூர் வாய்ப்புகள் சுத்தமாக இல்லை.', impact: 'நமது சிறந்த திறமையாளர்கள் வெளியேறுகிறார்கள் — இந்த நிலத்தின் எதிர்காலத்தை இழக்கிறோம்.', accent: '#FF8C00', img: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800', labelIssue: 'பிரச்சனை', labelImpact: 'விளைவு' },
+      { icon: TrafficCone, tag: 'ஸ்ரீரங்கம் நகரம்', title: 'போக்குவரத்து & நிறுத்தம்', issue: 'குறுகலான தெருக்கள் மற்றும் வாகன நிறுத்த வசதி இல்லாதது திருவிழாக்காலங்களில் பெரும் நெரிசலை உருவாக்குகிறது.', impact: 'அவசரக்கால வாகனங்கள் சிக்கிக் கொள்கின்றன. யாத்ரீகர்களும் குடியிருப்பாளர்களும் தினமும் அவதிப்படுகிறார்கள்.', accent: '#CC0000', img: shashi7, labelIssue: 'பிரச்சனை', labelImpact: 'விளைவு' },
+      { icon: Droplets, tag: 'திருவானைக்கோவில்', title: 'வடிகால் & கழிவு', issue: 'பழைய வடிகால் அமைப்பு ஒவ்வொரு பருவமழையின் போதும் கடுமையான வெள்ளத்தை ஏற்படுத்துகிறது.', impact: 'பாரம்பரிய சின்னங்களுக்கு அருகில் உள்ள குப்பைகள் நமது புனித நதிகளை மாசுபடுத்துகின்றன.', accent: '#FF8C00', img: 'https://images.pexels.com/photos/2480807/pexels-photo-2480807.jpeg?auto=compress&cs=tinysrgb&w=800', labelIssue: 'பிரச்சனை', labelImpact: 'விளைவு' },
+      { icon: Wheat, tag: 'கிராமப்புறங்கள்', title: 'விவசாய நெருக்கடி', issue: 'தூர்வாரப்படாத கால்வாய்கள் கடைமடை விவசாயிகளுக்குப் பயிர்களுக்குத் தண்ணீர் கிடைக்காமல் செய்கின்றன.', impact: 'சந்தைகள் அல்லது குளிர்பதனக் கிடங்குகள் இல்லை — அறுவடை இடைத்தரகர்களிடம் இழக்கப்படுகிறது.', accent: '#CC0000', img: sshashi8, labelIssue: 'பிரச்சனை', labelImpact: 'விளைவு' },
+      { icon: Briefcase, tag: 'தொகுதி முழுவதும்', title: 'இளைஞர்கள் வெளியேற்றம்', issue: 'ஐடி பூங்காக்கள் அல்லது திறன் மையங்கள் இல்லை. உள்ளூர் வாய்ப்புகள் முற்றிலும் இல்லை.', impact: 'நமது சிறந்த திறமையாளர்கள் வெளியேறுகிறார்கள் — இந்த நிலத்தின் எதிர்காலத்தை இழக்கிறோம்.', accent: '#FF8C00', img: shashi9, labelIssue: 'பிரச்சனை', labelImpact: 'விளைவு' },
     ]
   }
 };
@@ -248,7 +252,11 @@ const ConstituencyPage = ({ lang = 'en' }: { lang?: string }) => {
       {/* ═══ HERO ═══ */}
       <section ref={heroRef} className="relative h-screen w-full overflow-hidden">
         <motion.div className="absolute inset-0 z-0" style={{ y: imgY }}>
-          <img src={heroBg} alt="" className="w-full h-[120%] object-cover" />
+          <picture className="w-full h-[120%]">
+            <source media="(max-width: 767px)" srcSet={heroBgMobile} />
+            <source media="(max-width: 1023px)" srcSet={heroBgTab} />
+            <img src={heroBg} alt="" className="w-full h-full object-cover" />
+          </picture>
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black z-10" />
 
@@ -291,20 +299,6 @@ const ConstituencyPage = ({ lang = 'en' }: { lang?: string }) => {
         </motion.div>
 
 
-      </section>
-
-      {/* ═══ MISSION ═══ */}
-      <section className="bg-black py-16 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5"><img src={heroBg} alt="" className="w-full h-full object-cover" /></div>
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <Reveal>
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#FF8C00] to-transparent mx-auto mb-8" />
-            <h2 className="text-2xl md:text-5xl font-black text-white leading-tight tracking-tight">
-              {t.mission.title}
-            </h2>
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#CC0000] to-transparent mx-auto mt-8" />
-          </Reveal>
-        </div>
       </section>
 
       {/* ═══ HERITAGE HEADER ═══ */}
@@ -359,10 +353,10 @@ const ConstituencyPage = ({ lang = 'en' }: { lang?: string }) => {
             </h2>
             <p className="text-gray-400 text-center font-bold text-lg mb-8">{t.cta.author}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a href="/agenda" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-                className="bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl">
+              <MotionLink to="/agenda" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+                className="bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl text-center">
                 {t.cta.agenda}
-              </motion.a>
+              </MotionLink>
               <motion.button onClick={() => window.dispatchEvent(new CustomEvent('open-join-popup'))} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
                 className="bg-[#CC0000] text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl hover:shadow-[0_0_40px_rgba(204,0,0,0.3)] transition-all whitespace-nowrap inline-flex items-center justify-center">
                 {t.cta.join}
