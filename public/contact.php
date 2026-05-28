@@ -30,19 +30,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mail->isSMTP();                           // Send using SMTP
         $mail->Host       = 'smtp.gmail.com';      // Set the SMTP server to send through
         $mail->SMTPAuth   = true;                  // Enable SMTP authentication
-        $mail->Username   = 'inymart@gmail.com';// SMTP username
-        $mail->Password   = 'uzwrizowxqouqefe';   // SMTP password (app password if using Gmail)
+        $mail->Username   = 'inymart@gmail.com';   // SMTP username
+        $mail->Password   = 'uzwrizowxqouqefe';    // SMTP password (app password if using Gmail)
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption
         $mail->Port       = 587;                   // TCP port to connect to
         
-        // Note: As per your previous context, we'll keep the basic setup, you should uncomment 
-        // and configure the SMTP settings above to use authenticated SMTP properly.
-        
-        // Fallback to PHP mail() function internally if SMTP isn't explicitly configured above
-        // Remove this if you configure SMTP above.
+        // Disable peer verification if local server environment doesn't have updated CA certs
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
         
         // Recipients
-        $mail->setFrom($email, $name);
+        // For Gmail SMTP, the From address must be the authenticated Gmail account
+        $mail->setFrom('inymart@gmail.com', $name);
         $mail->addAddress('inymart@gmail.com', 'InyMart Contact'); // Add a recipient
         $mail->addReplyTo($email, $name);
 

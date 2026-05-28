@@ -32,7 +32,7 @@ const translations = {
     },
     items: [
       { id: "01", icon: Landmark, title: "Smart Temple Term Plan", subtitle: "Divine Heritage", desc: "Srirangam is a global heritage site. We will implement a 'Smart Temple' framework using AI for crowd management, digital queue systems, and high-tech maintenance of our sacred gopurams.", img: shashi1, accent: "#CC0000" },
-      { id: "02", icon: Target, title: "The Akkaravadisal Project", subtitle: "Local Economy", desc: "Taking inspiration from our heritage, we will boost the local economy by supporting small businesses, traditional artisans, and street vendors — ensuring wealth stays within Srirangam.", img: shashi2, accent: "#FF8C00" },
+      { id: "02", icon: Target, title: "The Divine Gift Project", subtitle: "Community Uplift", desc: "Srirangam is a land of rich heritage and divine blessings. Every resident deserves a happy, safe, and secure life. Through this project, we are fully committed to uplifting our community and ensuring prosperity for all.", img: shashi2, accent: "#CC0000" },
       { id: "03", icon: GraduationCap, title: "Job & Skill Development", subtitle: "50 Key Locations", desc: "Establishing 50 Skill Development Centers across the constituency providing hands-on training in high-demand fields like IT, logistics, and creative arts.", img: shashi10, accent: "#CC0000" },
       { id: "04", icon: Rocket, title: "Entrepreneurship Hubs", subtitle: "5 Strategic Centers", desc: "Building 5 Incubation Centers to provide mentorship, technology, and financial guidance needed to turn local ideas into successful startups.", img: shashi5, accent: "#FF8C00" },
       { id: "05", icon: Droplets, title: "Water & Drainage Overhaul", subtitle: "Modern Infrastructure", desc: "Implementing a modern, underground drainage system and fixing the drinking water pipeline network to ensure 24/7 clean water access and a hygienic environment.", img: shashi6 },
@@ -65,7 +65,7 @@ const translations = {
     },
     items: [
       { id: "01", icon: Landmark, title: "ஸ்மார்ட் கோவில் திட்டம்", subtitle: "தெய்வீக பாரம்பரியம்", desc: "AI தொழில்நுட்பத்தைப் பயன்படுத்தி கூட்ட மேலாண்மை மற்றும் கோவில் பராமரிப்பு.", img: shashi1, accent: "#CC0000" },
-      { id: "02", icon: Target, title: "அக்கரவாடிசல் திட்டம்", subtitle: "உள்ளூர் பொருளாதாரம்", desc: "பாரம்பரியக் கலைஞர்கள் மற்றும் சிறு வணிகர்களுக்கு ஆதரவு அளிப்பதன் மூலம் உள்ளூர் பொருளாதாரத்தை மேம்படுத்துதல்.", img: shashi2, accent: "#FF8C00" },
+      { id: "02", icon: Target, title: "தெய்வீகக் கொடைத் திட்டம்", subtitle: "சமூக மேம்பாடு", desc: "ஸ்ரீரங்கம் செழுமையான பாரம்பரியமும் தெய்வீக அருளும் நிறைந்த ஒரு புனித பூமி. ஒவ்வொரு குடிமகனும் மகிழ்ச்சியான, பாதுகாப்பான மற்றும் நிம்மதியான வாழ்க்கைக்கு தகுதியானவர். நமது சமூகத்தை மேம்படுத்துவதில் நாங்கள் முழுமையாக அர்ப்பணிப்புடன் செயல்படுகிறோம்.", img: shashi2, accent: "#CC0000" },
       { id: "03", icon: GraduationCap, title: "வேலைவாய்ப்பு மற்றும் பயிற்சி", subtitle: "50 முக்கிய இடங்கள்", desc: "ஐடி மற்றும் பிற துறைகளில் பயிற்சி அளிக்க 50 திறன் மேம்பாட்டு மையங்கள்.", img: shashi10, accent: "#CC0000" },
       { id: "04", icon: Rocket, title: "தொழில்முனைவோர் மையங்கள்", subtitle: "5 முக்கிய மையங்கள்", desc: "புதிய தொழில் தொடங்குவோருக்கு வழிகாட்ட 5 இன்குபேஷன் மையங்கள்.", img: shashi5, accent: "#FF8C00" },
       { id: "05", icon: Droplets, title: "நீர் மற்றும் வடிகால் சீரமைப்பு", subtitle: "நவீன உள்கட்டமைப்பு", desc: "24/7 குடிநீர் மற்றும் நவீன பாதாள சாக்கடை திட்டம்.", img: shashi6, accent: "#CC0000" },

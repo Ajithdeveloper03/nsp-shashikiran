@@ -269,13 +269,19 @@
   transform: translateX(120%);
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Hidden */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0;
+  height: 0;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F3F3F3;
+  background: transparent;
+}
+
+/* Hide scrollbars for Firefox */
+* {
+  scrollbar-width: none;
 }
 
 /* Constituency voice FAB — 2-layer glow + eye-focus spotlight */
@@ -360,10 +366,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #DEE2E6;
+  background: transparent;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #F47216;
+  background: transparent;
 }

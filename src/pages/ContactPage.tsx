@@ -89,7 +89,7 @@ const ContactPage = ({ lang = 'en' }: { lang?: string }) => {
     setLoading(true);
     const formData = new FormData(e.currentTarget);
     try {
-      const response = await fetch('/contact.php', {
+      const response = await fetch(`${import.meta.env.BASE_URL}contact.php`, {
         method: 'POST',
         body: formData,
       });

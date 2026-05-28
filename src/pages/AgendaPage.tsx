@@ -5,129 +5,193 @@ import heroBg from '../assets/agenda-banner.png';
 import heroBgTab from '../assets/agenda tab.png';
 import heroBgMobile from '../assets/agenda mobile.png';
 
-import shashi1 from '../assets/FUTURE EDUCATION.jpg';
-import shashi2 from '../assets/DIGITAL HEALTH.jpg';
-import shashi3 from '../assets/SMART AGRICULTURE.jpg';
-import shashi4 from '../assets/DIGITAL GOVERNANCE.jpg';
-import shashi5 from '../assets/SKILLED BHARAT.jpg';
-import shashi6 from '../assets/smart-city.jpg';
+import shashi1 from '../assets/empowerment.png';
+import shashi3 from '../assets/employment.png';
+import shashi4 from '../assets/culture.png';
+import shashi5 from '../assets/basic rights.png';
+import shashi6 from '../assets/local growth.png';
+import shashi7 from '../assets/food security.png';
 
 const content = {
   en: {
-    visionTitle: "My Vision: Powering Progress with Technology",
+    visionTitle: "Agenda 2031: Our Vision, Our Promise",
     agendaBadge: "AGENDA 2031",
-    visionDesc: "For me, political power is just a tool. Technology is the real force that operates it for the greater good of society. Through Agenda 2031, my vision is to combine power and technology to create a smarter, fairer, and better future for all of us.",
+    visionDesc: "Our complete roadmap for building a hunger-free, skilled, safe, and prosperous Srirangam, preserving our cultural values while providing free education and healthcare for all.",
     points: [
       {
         id: "01",
-        tag: "Governance",
-        title: "100% Digital Governance",
-        desc: "To eliminate human bias and increase transparency, the administration will be overhauled using Blockchain for tenders, land records, and welfare distribution.",
+        tag: "Food Security",
+        title: "Food Insufficiency",
+        quote: "No one should go to sleep hungry. My goal is to build a hunger-free society by supporting our farmers and sharing food with every family.",
+        bullets: [
+          "Ensure zero hunger in our region.",
+          "Provide modern technology to local farmers.",
+          "Set up community kitchens and food banks."
+        ],
         accent: "#CC0000",
-        img: shashi4
+        img: shashi7
       },
       {
         id: "02",
-        tag: "Agriculture",
-        title: "AI-Driven Smart Agriculture",
-        desc: "Revolutionizing farmers' lives through Precision Farming using AI and IoT sensors to monitor soil health and a 'Unified Digital Marketplace' to eliminate middlemen.",
+        tag: "Employment",
+        title: "Skill Bharat",
+        quote: "Degrees alone cannot secure a future; practical skills do. My focus is to make our youth 100% ready for great jobs and successful businesses.",
+        bullets: [
+          "Free computer and technical skills training for youth.",
+          "Direct job placements through company partnerships.",
+          "Financial support for young startups and entrepreneurs."
+        ],
         accent: "#FF8C00",
         img: shashi3
       },
       {
         id: "03",
-        tag: "Education",
-        title: "Future-Ready Education",
-        desc: "Integrating Coding, Robotics, and Data Science from an early age. Bridging the urban-rural gap through Virtual Reality classrooms and high-speed internet.",
+        tag: "Empowerment",
+        title: "Women Safety & Empowerment",
+        quote: "A society is truly developed only when its women are safe and independent. I am committed to protecting and empowering every woman.",
+        bullets: [
+          "Build 24/7 safe zones with better street lights and helplines.",
+          "Give business loans and training for women self-help groups.",
+          "Provide free self-defense training in schools and colleges."
+        ],
         accent: "#CC0000",
         img: shashi1
       },
       {
         id: "04",
-        tag: "Healthcare",
-        title: "Digital Health Ecosystem",
-        desc: "Creating a secure 'Health Cloud' for state-wide digital records and enhancing Tele-Medicine for instant rural access to urban medical experts.",
+        tag: "Local Growth",
+        title: "Economy & Local Growth",
+        quote: "To build a stronger nation, we must first build a strong local economy. I will support our small shopkeepers and traders to create more jobs.",
+        bullets: [
+          "Create more local jobs so our youth don't have to move away.",
+          "Give easy resources and support to local small businesses (MSMEs).",
+          "Upgrade local markets to boost everyday business and trade."
+        ],
         accent: "#FF8C00",
-        img: shashi2
+        img: shashi6
       },
       {
         id: "05",
-        tag: "Economy",
-        title: "Skilled Bharat 2.0",
-        desc: "Training 1 million youth in AI, Blockchain, and Quantum Computing. Transforming job-seekers into job-creators through tech-entrepreneurship support.",
+        tag: "Culture",
+        title: "The Soul of Bharat",
+        quote: "While we grow towards the future, we must never lose our roots. I will work dedicatedly to protect our rich culture and traditional values.",
+        bullets: [
+          "Protect and renovate our local heritage sites and temples.",
+          "Support local artists, traditional weavers, and craftsmen.",
+          "Teach moral values to kids and celebrate our cultural festivals."
+        ],
         accent: "#CC0000",
-        img: shashi5
+        img: shashi4
       },
       {
         id: "06",
-        tag: "Infrastructure",
-        title: "Smart Cities & Green Tech",
-        desc: "Utilizing IoT for automated traffic and water systems, alongside advanced solar and wind energy for sustainable and affordable power for all.",
+        tag: "Basic Rights",
+        title: "Free Education & Medicine",
+        quote: "Quality education and healthcare are basic human rights, not a luxury. I will ensure they are completely free for everyone.",
+        bullets: [
+          "Upgrade local schools with modern smart-classroom facilities.",
+          "Provide free digital learning books and materials for students.",
+          "Open free check-up centers and give zero-cost emergency healthcare."
+        ],
         accent: "#FF8C00",
-        img: shashi6
+        img: shashi5
       }
     ],
-    footerTitle: "A Model for India",
-    footerDesc: "By 2031, Tamil Nadu will be a model of digital democracy, transparent governance, and inclusive prosperity.",
-    milestone: "Target 2031 Milestone"
+    divineGift: {
+      title: "The Divine Gift Project",
+      desc: "Srirangam is a land of rich heritage and divine blessings. I strongly believe that every resident here deserves a happy, safe, and secure life. Through 'The Divine Gift Project,' we are fully committed to uplifting our community."
+    },
+    milestone: ""
   },
   ta: {
-    visionTitle: "எனது தொலைநோக்கு: தொழில்நுட்பத்துடன் முன்னேற்றம்",
+    visionTitle: "அஜெண்டா 2031: எங்கள் தொலைநோக்கு, எங்கள் வாக்குறுதி",
     agendaBadge: "அஜெண்டா 2031",
-    visionDesc: "எனக்கு அரசியல் அதிகாரம் ஒரு கருவி மட்டுமே. தொழில்நுட்பமே சமூகத்தின் நலனுக்காக அதை இயக்கும் உண்மையான சக்தி. அஜெண்டா 2031 மூலம், அதிகாரத்தையும் தொழில்நுட்பத்தையும் இணைத்து, அனைவருக்கும் புத்திசாலித்தனமான, நியாயமான, சிறந்த எதிர்காலத்தை உருவாக்குவதே எனது தொலைநோக்கு.",
+    visionDesc: "பசியற்ற, தகுதியான, பாதுகாப்பான மற்றும் செழிப்பான ஸ்ரீரங்கத்தை உருவாக்குவதற்கும், நமது கலாச்சார விழுமியங்களைப் பாதுகாப்பதற்கும், அனைவருக்கும் இலவச கல்வி மற்றும் சுகாதாரத்தை வழங்குவதற்குமான எங்களது முழுமையான வரைபடம்.",
     points: [
       {
         id: "01",
-        tag: "நிர்வாகம்",
-        title: "100% டிஜிட்டல் நிர்வாகம்",
-        desc: "நிர்வாகத்தில் வெளிப்படைத்தன்மையை அதிகரிக்க டெண்டர்கள், நிலப் பதிவுகள் ஆகியவற்றிற்கு பிளாக்செயினைப் பயன்படுத்தி ஊழலற்ற முறையை உருவாக்குதல்.",
+        tag: "உணவுப் பாதுகாப்பு",
+        title: "உணவுப் பற்றாக்குறை ஒழிப்பு",
+        quote: "யாரும் பசியோடு உறங்கச் செல்லக்கூடாது. நமது விவசாயிகளுக்கு ஆதரவளிப்பதன் மூலமும், ஒவ்வொரு குடும்பத்திற்கும் உணவைப் பகிர்ந்து கொள்வதன் மூலமும் பசியற்ற சமூகத்தை உருவாக்குவதே எனது லட்சியம்.",
+        bullets: [
+          "நமது பகுதியில் பசி இல்லா நிலையை உறுதி செய்தல்.",
+          "உள்ளூர் விவசாயிகளுக்கு நவீன தொழில்நுட்பங்களை வழங்குதல்.",
+          "சமூகக் கூடங்கள் மற்றும் உணவு வங்கிகளை அமைத்தல்."
+        ],
         accent: "#CC0000",
-        img: shashi4
-      },
-      {
-        id: "02",
-        tag: "விவசாயம்",
-        title: "AI திறன்மிகு விவசாயம்",
-        desc: "செயற்கை நுண்ணறிவு மற்றும் IoT சென்சார்கள் மூலம் மண் வளத்தைக் கண்காணித்து, இடைத்தரகர்கள் இன்றி நேரடியாக விற்க டிஜிட்டல் சந்தையை உருவாக்குதல்.",
-        accent: "#FF8C00",
         img: shashi3
       },
       {
-        id: "03",
-        tag: "கல்வி",
-        title: "எதிர்காலத்திற்கான கல்வி",
-        desc: "கோடிங் மற்றும் ரோபாட்டிக்ஸை பள்ளிகளிலேயே அறிமுகப்படுத்துதல். மெய்நிகர் வகுப்பறைகள் மூலம் கிராமப்புற கல்வித் தரத்தை உயர்த்துதல்.",
-        accent: "#CC0000",
-        img: shashi1
-      },
-      {
-        id: "04",
-        tag: "சுகாதாரம்",
-        title: "டிஜிட்டல் சுகாதார அமைப்பு",
-        desc: "மாநில அளவிலான 'Health Cloud' மூலம் நோயாளி வரலாற்றைப் பாதுகாத்தல் மற்றும் டெலி-மெடிசின் மூலம் கிராமங்களுக்கு உடனடி சிகிச்சை அளித்தல்.",
+        id: "02",
+        tag: "வேலைவாய்ப்பு",
+        title: "திறன்மிகு பாரதம்",
+        quote: "பட்டங்கள் மட்டுமே எதிர்காலத்தைப் பாதுகாக்க முடியாது; நடைமுறைத் திறன்களே பாதுகாக்கும். நமது இளைஞர்களைச் சிறந்த வேலைகளுக்கும் வெற்றிகரமான தொழில்களுக்கும் 100% தயார்படுத்துவதே எனது நோக்கம்.",
+        bullets: [
+          "இலவச கணினி மற்றும் தொழில்நுட்ப திறன் பயிற்சிகள்.",
+          "நிறுவன கூட்டணிகள் மூலம் நேரடி வேலை வாய்ப்புகள்.",
+          "இளம் ஸ்டார்ட்அப்கள் மற்றும் தொழில்முனைவோருக்கு நிதி ஆதரவு."
+        ],
         accent: "#FF8C00",
-        img: shashi2
-      },
-      {
-        id: "05",
-        tag: "பொருளாதாரம்",
-        title: "திறன்மிகு பாரதம் 2.0",
-        desc: "1 மில்லியன் இளைஞர்களுக்கு AI மற்றும் பிளாக்செயினில் பயிற்சி. இளைஞர்களை வேலை உருவாக்குபவர்களாக மாற்ற ஸ்டார்ட்அப் ஆதரவு.",
-        accent: "#CC0000",
         img: shashi5
       },
       {
-        id: "06",
-        tag: "உள்கட்டமைப்பு",
-        title: "ஸ்மார்ட் நகரங்கள் & பசுமை ஆற்றல்",
-        desc: "போக்குவரத்து மற்றும் நீர் விநியோகத்தை தானியக்கமாக்க IoT-ஐப் பயன்படுத்துதல் மற்றும் பசுமை எரிசக்தி மூலம் மலிவான மின்சாரத்தை உறுதி செய்தல்.",
+        id: "03",
+        tag: "மகளிர் பாதுகாப்பு",
+        title: "பெண்கள் பாதுகாப்பு & அதிகாரமளித்தல்",
+        quote: "பெண்கள் பாதுகாப்பாகவும் சுதந்திரமாகவும் இருக்கும்போதுதான் ஒரு சமமூக வளர்ச்சி அடைகிறது. ஒவ்வொரு பெண்ணையும் பாதுகாக்கவும் அவர்களுக்கு அதிகாரம் அளிக்கவும் நான் கடமைப்பட்டுள்ளேன்.",
+        bullets: [
+          "சிறந்த தெருவிளக்குகள் மற்றும் உதவி எண்களுடன் 24/7 பாதுகாப்பான மண்டலங்களை உருவாக்குதல்.",
+          "மகளிர் சுயஉதவிக் குழுக்களுக்கு தொழில் கடன்கள் மற்றும் பயிற்சிகள் வழங்குதல்.",
+          "பள்ளிகள் மற்றும் கல்லூரிகளில் இலவச தற்காப்புப் பயிற்சி அளித்தல்."
+        ],
+        accent: "#CC0000",
+        img: shashi7
+      },
+      {
+        id: "04",
+        tag: "உள்ளூர் வளர்ச்சி",
+        title: "பொருளாதாரம் & உள்ளூர் வளர்ச்சி",
+        quote: "வலுவான தேசத்தை உருவாக்க, முதலில் வலுவான உள்ளூர் பொருளாதாரத்தை உருவாக்க வேண்டும். அதிக வேலைகளை உருவாக்க உள்ளூர் சிறு கடைக்காரர்கள் மற்றும் வியாபாரிகளுக்கு நான் ஆதரவளிப்பேன்.",
+        bullets: [
+          "நமது இளைஞர்கள் வெளியேறாமல் இருக்க அதிக உள்ளூர் வேலைகளை உருவாக்குதல்.",
+          "உள்ளூர் சிறு தொழில்களுக்கு (MSME) எளிய ஆதாரங்களையும் ஆதரவையும் வழங்குதல்.",
+          "அன்றாட வணிகம் மற்றும் வர்த்தகத்தை மேம்படுத்த உள்ளூர் சந்தைகளை தரம் உயர்த்துதல்."
+        ],
         accent: "#FF8C00",
+        img: shashi4
+      },
+      {
+        id: "05",
+        tag: "கலாச்சாரம்",
+        title: "பாரதத்தின் ஆன்மா",
+        quote: "எதிர்காலத்தை நோக்கி நாம் வளரும்போது, நமது வேர்களை நாம் ஒருபோதும் இழக்கக்கூடாது. நமது வளமான கலாச்சாரம் மற்றும் பாரம்பரிய விழுமியங்களைப் பாதுகாக்க நான் அர்ப்பணிப்புடன் பணியாற்றுவேன்.",
+        bullets: [
+          "நமது உள்ளூர் பாரம்பரிய தளங்கள் மற்றும் கோயில்களைப் பாதுகாத்து புதுப்பித்தல்.",
+          "உள்ளூர் கலைஞர்கள், பாரம்பரிய நெசவாளர்கள் மற்றும் கைவினைஞர்களுக்கு ஆதரவளித்தல்.",
+          "குழந்தைகளுக்கு ஒழுக்க விழுமியங்களைக் கற்றுக்கொடுத்து, நமது கலாச்சார விழாக்களிக் கொண்டாடுதல்."
+        ],
+        accent: "#CC0000",
         img: shashi6
+      },
+      {
+        id: "06",
+        tag: "அடிப்படை உரிமைகள்",
+        title: "இலவச கல்வி & மருத்துவம்",
+        quote: "தரமான கல்வியும் சுகாதாரமும் அடிப்படை மனித உரிமைகள், ஆடம்பரம் அல்ல. அவை அனைவருக்கும் முற்றிலும் இலவசமாக கிடைப்பதை நான் உறுதி செய்வேன்.",
+        bullets: [
+          "நவீன ஸ்மார்ட் வகுப்பறை வசதிகளுடன் உள்ளூர் பள்ளிகளைத் தரம் உயர்த்துதல்.",
+          "மாணவர்களுக்கு இலவச டிஜிட்டல் கற்றல் புத்தகங்கள் மற்றும் பொருட்களை வழங்குதல்.",
+          "இலவச பரிசோதனை மையங்களைத் திறந்து, பூஜ்ஜிய செலவில் அவசர சுகாதார சேவைகளை வழங்குதல்."
+        ],
+        accent: "#FF8C00",
+        img: shashi1
       }
     ],
-    footerTitle: "இந்தியாவிற்கான ஒரு மாதிரி",
-    footerDesc: "2031-க்குள், தமிழ்நாடு டிஜிட்டல் ஜனநாயகம் மற்றும் அனைவருக்குமான செழிப்பின் மாதிரியாக விளங்கும்.",
-    milestone: "2031 இலக்கு மைல்கல்"
+    divineGift: {
+      title: "தெய்வீகக் கொடைத் திட்டம்",
+      desc: "ஸ்ரீரங்கம் செழுமையான பாரம்பரியமும் தெய்வீக அருளும் நிறைந்த ஒரு புனித பூமி. இங்கு வாழும் ஒவ்வொரு குடிமகனும் மகிழ்ச்சியான, பாதுகாப்பான மற்றும் நிம்மதியான வாழ்க்கைக்கு தகுதியானவர்கள் என்று நான் உறுதியாக நம்புகிறேன். 'தெய்வீகக் கொடைத் திட்டம்' (The Divine Gift Project) மூலம், நமது சமூகத்தை மேம்படுத்துவதில் நாங்கள் முழுமையாக அர்ப்பணிப்புடன் செயல்படுகிறோம்."
+    },
+    milestone: ""
   }
 };
 
@@ -211,17 +275,27 @@ const AgendaPage = ({ lang = 'en' }: { lang?: string }) => {
                     {point.title}
                   </h3>
                 </div>
-                <p className="text-base text-gray-600 leading-relaxed">
-                  {point.desc}
+                <p className="text-base text-slate-700 leading-relaxed font-semibold italic border-l-4 border-orange-500 pl-4 bg-orange-50/50 py-2.5 pr-2 rounded-r-xl">
+                  "{point.quote}"
                 </p>
-                <div className="pt-4">
+                {point.bullets && (
+                  <ul className="space-y-3 mt-4">
+                    {point.bullets.map((bullet, bIdx) => (
+                      <li key={bIdx} className="flex items-start gap-3 text-slate-700 text-sm md:text-base leading-relaxed font-semibold">
+                        <div className="w-2 h-2 rounded-full bg-[#FF8C00] mt-2 shrink-0 shadow-[0_0_8px_#FF8C00]" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {/* <div className="pt-4">
                   <motion.div whileHover={{ x: 5 }} className="flex items-center gap-2 cursor-default group">
                      <div className="w-6 h-6 rounded-full flex items-center justify-center border-2 border-gray-100 group-hover:border-[#CC0000] transition-colors">
                         <div className="w-1.5 h-1.5 rounded-full bg-[#CC0000]" />
                      </div>
                      <span className="text-sm font-black uppercase tracking-widest text-gray-400 group-hover:text-gray-900 transition-colors">{c.milestone}</span>
                   </motion.div>
-                </div>
+                </div> */}
               </div>
             </FadeUp>
 

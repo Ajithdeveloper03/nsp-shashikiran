@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import {
   Phone, MessageCircle,
@@ -37,8 +37,10 @@ import shashi8 from './assets/home 2015.png';
 import shashi9 from './assets/home 2018.png';
 import shashi10 from './assets/home 2019.png';
 import shashi11 from './assets/home 2020.png';
+import shashi2024 from './assets/2024.png';
 import shashi12 from './assets/home 2026.png';
-import agendaBanner from './assets/agenda-banner.png';
+
+import agendaBanner from './assets/2031.png';
 
 
 // ─── TRANSLATIONS ────────────────────────────────────────────────────────────
@@ -51,7 +53,7 @@ const translations = {
         chapter: "01",
         title: "Leading with Culture & Dharma",
         subtitle: "ETHICS & CULTURE",
-        text: "Guided by my roots at Ramakrishna School, I have a deep love for our culture and farming. As a devotee of Lord Krishna, my mission is simple: to bring true 'Dharma'—honesty and duty—into the world of politics.",
+        text: "Guided by my roots at Ramakrishna School, I have a deep love for our culture and identity. As a devotee of Bhagavan Krishna, my mission is simple: to bring true 'Dharma'—honesty and duty—into the world of politics.",
         bg: about3,
         accent: "#CC0000"
       },
@@ -141,9 +143,10 @@ const translations = {
       { year: "2008", tag: "BOOKS & FOCUS", title: "Clear Mind, Strong Leadership", desc: "Yoga and books changed my life. They trained my mind to stay calm and helped me understand the world's problems clearly. Today, because of this focus, I have a clear blueprint to lead and serve you.", img: shashi6 },
       { year: "2011", tag: "MY LIFE'S MISSION", title: "A Decision Made at Age 17", desc: "When I was just 17 years old, I made a choice that changed my whole life. I promised myself to give up personal desires and dedicate my entire life to serving this nation and helping you.", img: shashi7 },
       { year: "2015", tag: "ACADEMIC EXCELLENCE", title: "Trained to Govern, Ready to Lead", desc: "I wanted to understand exactly how our government works, so I joined the IAS Academy. There, I deeply studied History, Politics, and Economics. Today, I have the legal knowledge to design and draft laws that will truly help the common people.", img: shashi8 },
-      { year: "2018", tag: "PROFESSIONAL MASTERY", title: "How to Build and Lead", desc: "I didn't just study; I proved myself globally as a Financial Planner and Investment Banker. By founding Sarathi Groups, I showed that I am a self-reliant leader who knows how to plan, build, and run successful organizations.", img: shashi9 },
-      { year: "2019", tag: "SOCIAL WELFARE TRUST", title: "Serving You on the Ground", desc: "I believe that helping people is more important than getting political power. That is why I started the NS Social Welfare Trust. Through this, I am already working directly on the ground to solve your day-to-day problems.", img: shashi10 },
+      { year: "2017", tag: "PROFESSIONAL MASTERY", title: "How to Build and Lead", desc: "I didn't just study; I proved myself globally as a Financial Planner and Investment Banker. By founding Sarathi Groups, I showed that I am a self-reliant leader who knows how to plan, build, and run successful organizations.", img: shashi9 },
+      { year: "2019", tag: "SOCIAL WELFARE TRUST", title: "Serving You on the Ground", desc: "I believe that helping people is more important than getting political power. That is why I started the NSR Social Welfare Trust. Through this, I am already working directly on the ground to solve your day-to-day problems.", img: shashi10 },
       { year: "2020", tag: "POLITICAL LAUNCH", title: "A New Journey for the Nation", desc: "Netaji Subhash Chandra Bose's fearless vision for our country is my biggest inspiration. Following his footsteps, I am launching my political journey with a simple goal—to stand for true nationalism, serve the people, and build a better society for everyone.", img: shashi11 },
+      { year: "2024", tag: "NDA ENGAGEMENT", title: "Learning National Politics", desc: "In 2024, I worked closely with the NDA (National Democratic Alliance). It was a great opportunity for me to learn real politics from top national leaders. This valuable experience helped me understand our people's ground realities and taught me how to solve local issues effectively.", img: shashi2024 },
       { year: "2026", tag: "SRIRANGAM MISSION", title: "Standing with the People of Srirangam", desc: "Srirangam is my field of action. I have stepped directly into the constituency to meet you, understand your needs, and work at the grassroots level. My only goal is to work hard and bring real, positive change to your lives.", img: shashi12 },
       { year: "2031", tag: "AGENDA 2031", title: "My Vision: Powering Progress with Technology", desc: "For me, political power is just a tool. Technology is the real force that operates it for the greater good of society. Through Agenda 2031, my vision is to combine power and technology to create a smarter, fairer, and better future for all of us.", img: agendaBanner }
     ],
@@ -302,6 +305,7 @@ const translations = {
       { year: "2018", tag: "தொழில்முறை தேர்ச்சி", title: "எப்படி கட்டி, தலைமை தாங்குவது", desc: "நான் படித்தது மட்டுமல்ல; உலக அளவில் நிதி ஆலோசகர் மற்றும் முதலீட்டு வங்கியாளராக என்னை நிரூபித்தேன். சாரதி குரூப்ஸை நிறுவுவதன் மூலம், திட்டமிடவும், கட்டவும், வெற்றிகரமான அமைப்புகளை நடத்தவும் தெரிந்த சுயசார்பு தலைவர் என்பதைக் காட்டினேன்.", img: shashi9 },
       { year: "2019", tag: "சமூக நல அறக்கட்டளை", title: "களத்தில் உங்களுக்குச் சேவை", desc: "அரசியல் அதிகாரத்தை விட மக்களுக்கு உதவுவது முக்கியம் என்று நம்புகிறேன். அதனால்தான் என்.எஸ் சமூக நல அறக்கட்டளையைத் தொடங்கினேன். இதன் மூலம், உங்கள் அன்றாடப் பிரச்சினைகளைத் தீர்க்க நேரடியாகக் களத்தில் ஏற்கனவே பணியாற்றி வருகிறேன்.", img: shashi10 },
       { year: "2020", tag: "அரசியல் தொடக்கம்", title: "நாட்டிற்கான புதிய பயணம்", desc: "நேதாஜி சுபாஷ் சந்திர போஸின் தைரியமான தொலைநோக்குப் பார்வை எனக்கு மிகப்பெரிய ஊக்கம். அவரின் அடிச்சுவடுகளில், உண்மையான தேசியவாதத்திற்காக நிற்கவும், மக்களுக்குச் சேவை செய்யவும், அனைவருக்கும் சிறந்த சமூகத்தை உருவாக்கவும் என் அரசியல் பயணத்தைத் தொடங்குகிறேன்.", img: shashi11 },
+      { year: "2024", tag: "தே.ஜ.கூ கூட்டணி", title: "தேசிய அரசியல் கற்றல்", desc: "2024 ஆம் ஆண்டில், நான் தே.ஜ.கூ (தேசிய ஜனநாயகக் கூட்டணி) உடன் நெருக்கமாகப் பணியாற்றினேன். தேசிய அளவிலான சிறந்த தலைவர்களிடமிருந்து உண்மையான அரசியலைக் கற்றுக்கொள்ள இது எனக்கு ஒரு சிறந்த வாய்ப்பாக அமைந்தது. இந்த மதிப்புமிக்க அனுபவம் நமது மக்களின் அடிமட்ட யதார்த்தங்களைப் புரிந்துகொள்ள உதவியதுடன், உள்ளூர் பிரச்சினைகளை எவ்வாறு திறம்படத் தீர்ப்பது என்பதையும் எனக்குக் கற்றுக் கொடுத்தது.", img: shashi2024 },
       { year: "2026", tag: "ஸ்ரீரங்கம் லட்சியம்", title: "ஸ்ரீரங்கம் மக்களுடன் நிற்பது", desc: "ஸ்ரீரங்கம் என் செயல்பாட்டுக் களம். தொகுதியில் நேரடியாக இறங்கி, உங்களைச் சந்தித்து, உங்கள் தேவைகளைப் புரிந்துகொண்டு, அடிமட்ட அளவில் பணியாற்றுகிறேன். கடினமாக உழைத்து, உங்கள் வாழ்க்கையில் உண்மையான, நேர்மறையான மாற்றத்தைக் கொண்டுவருவதே என் ஒரே லட்சியம்.", img: shashi12 },
       { year: "2031", tag: "அஜெண்டா 2031", title: "தொழில்நுட்பத்தால் முன்னேற்றம்: என் தொலைநோக்கு", desc: "எனக்கு அரசியல் அதிகாரம் ஒரு கருவி மட்டுமே. தொழில்நுட்பமே சமூகத்தின் நலனுக்காக அதை இயக்கும் உண்மையான சக்தி. அஜெண்டா 2031 மூலம், அதிகாரத்தையும் தொழில்நுட்பத்தையும் இணைத்து, அனைவருக்கும் புத்திசாலித்தனமான, நியாயமான, சிறந்த எதிர்காலத்தை உருவாக்குவதே எனது தொலைநோக்கு.", img: agendaBanner }
     ],
