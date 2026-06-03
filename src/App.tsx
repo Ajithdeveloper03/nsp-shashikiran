@@ -1,11 +1,12 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import {
-  Phone, MessageCircle,
   ArrowUp, Menu, X, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { Facebook, Instagram, Youtube } from './components/SocialIcons';
 import ConstituencyVoiceWidget from './components/ConstituencyVoiceWidget';
+import JoinMovementModal from './components/JoinMovementModal';
+import DonateModal from './components/DonateModal';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 const AgendaPage = React.lazy(() => import('./pages/AgendaPage'));
 const ConstituencyPage = React.lazy(() => import('./pages/ConstituencyPage'));
@@ -26,7 +27,7 @@ import heroMobileImg3 from './assets/hero-mobile3.jpeg';
 import heroTabImg1 from './assets/hero-tab1.jpeg';
 import heroTabImg2 from './assets/hero-tab2.jpeg';
 import heroTabImg3 from './assets/hero-tab3.jpeg';
-import joinHeaderImg from './assets/join-header.png';
+// import joinHeaderImg from './assets/join-header.png';
 import about1 from './assets/about1.jpeg';
 import about2 from './assets/about2.jpeg';
 import about3 from './assets/about3.jpeg';
@@ -143,7 +144,7 @@ const translations = {
       { year: "2008", tag: "BOOKS & FOCUS", title: "Clear Mind, Strong Leadership", desc: "Yoga and books changed my life. They trained my mind to stay calm and helped me understand the world's problems clearly. Today, because of this focus, I have a clear blueprint to lead and serve you.", img: shashi6 },
       { year: "2011", tag: "MY LIFE'S MISSION", title: "A Decision Made at Age 17", desc: "When I was just 17 years old, I made a choice that changed my whole life. I promised myself to give up personal desires and dedicate my entire life to serving this nation and helping you.", img: shashi7 },
       { year: "2015", tag: "ACADEMIC EXCELLENCE", title: "Trained to Govern, Ready to Lead", desc: "I wanted to understand exactly how our government works, so I joined the IAS Academy. There, I deeply studied History, Politics, and Economics. Today, I have the legal knowledge to design and draft laws that will truly help the common people.", img: shashi8 },
-      { year: "2017", tag: "PROFESSIONAL MASTERY", title: "How to Build and Lead", desc: "I didn't just study; I proved myself globally as a Financial Planner and Investment Banker. By founding Sarathi Groups, I showed that I am a self-reliant leader who knows how to plan, build, and run successful organizations.", img: shashi9 },
+      { year: "2017", tag: "PROFESSIONAL MASTERY", title: "How to Build and Lead", desc: "I didn't just study; I proved myself globally as a Financial Planner and Investment Banker. By founding Sarathi Groups with co-founders, I showed that I am a self-reliant leader who knows how to plan, build, and run successful organizations.", img: shashi9 },
       { year: "2019", tag: "SOCIAL WELFARE TRUST", title: "Serving You on the Ground", desc: "I believe that helping people is more important than getting political power. That is why I started the NSR Social Welfare Trust. Through this, I am already working directly on the ground to solve your day-to-day problems.", img: shashi10 },
       { year: "2020", tag: "POLITICAL LAUNCH", title: "A New Journey for the Nation", desc: "Netaji Subhash Chandra Bose's fearless vision for our country is my biggest inspiration. Following his footsteps, I am launching my political journey with a simple goal—to stand for true nationalism, serve the people, and build a better society for everyone.", img: shashi11 },
       { year: "2024", tag: "NDA ENGAGEMENT", title: "Learning National Politics", desc: "In 2024, I worked closely with the NDA (National Democratic Alliance). It was a great opportunity for me to learn real politics from top national leaders. This valuable experience helped me understand our people's ground realities and taught me how to solve local issues effectively.", img: shashi2024 },
@@ -377,89 +378,7 @@ const FadeIn = ({ children, delay = 0, y = 40 }: { children: React.ReactNode; de
   </motion.div>
 );
 
-// ─── FULL SCREEN JOIN VIEW ──────────────────────────────────────────────────
-const FullScreenJoin = ({ isOpen, onClose, t }: { isOpen: boolean; onClose: () => void; t: any }) => {
-  const resetJoin = () => {
-    onClose();
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
-      onClick={resetJoin}
-    >
-      {/* Blurred backdrop */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-md" />
-
-      {/* Modal card */}
-      <motion.div
-        className="relative z-10 w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl"
-        initial={{ scale: 0.88, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.88, opacity: 0, y: 20 }}
-        transition={{ type: "spring", damping: 26, stiffness: 260 }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header image strip */}
-        <div className="relative h-28 w-full">
-          <img src={joinHeaderImg} alt="Movement" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/30 to-transparent" />
-          {/* Close button */}
-          <button
-            onClick={resetJoin}
-            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/50 transition-colors"
-          >
-            <X size={16} />
-          </button>
-          {/* Logo badge */}
-          <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-14 h-14 bg-black rounded-full shadow-lg border-2 border-white flex items-center justify-center z-10">
-            <img src={logoImg} alt="Logo" className="w-full h-auto" />
-          </div>
-        </div>
-
-        {/* Body */}
-        <div className="px-6 pt-10 pb-6 flex flex-col items-center gap-4">
-          <h2 className="text-xl font-black text-gray-800 text-center tracking-tight">{t.joinTitle}</h2>
-
-          {/* Missed Call */}
-          <div className="w-full flex flex-col items-center gap-2">
-            <p className="text-[0.7rem] font-black text-[#FF8C00] uppercase tracking-widest">{t.giveMissedCall}</p>
-            <div className="w-full bg-orange-50/80 border border-dashed border-[#FF8C00]/40 rounded-2xl py-4 px-5 text-center">
-              <a href="tel:+919688162147" className="inline-flex items-center justify-center gap-2 group">
-                <Phone size={16} className="text-[#FF8C00] shrink-0" fill="currentColor" />
-                <span className="font-popup-phone">+91 96881 62147</span>
-              </a>
-            </div>
-          </div>
-
-          {/* OR divider */}
-          <div className="flex items-center gap-3 w-full">
-            <div className="flex-1 h-px bg-gray-100" />
-            <span className="text-[0.6rem] font-black text-gray-400 uppercase tracking-widest">{t.or}</span>
-            <div className="flex-1 h-px bg-gray-100" />
-          </div>
-
-          {/* WhatsApp */}
-          <div className="w-full flex flex-col items-center gap-2">
-            <p className="text-[0.7rem] font-black text-green-600 uppercase tracking-widest">{t.whatsappToNumber}</p>
-            <a
-              href="https://wa.me/919688162147"
-              className="w-full bg-green-50/80 border border-dashed border-green-500/40 rounded-2xl py-4 px-5 text-center flex items-center justify-center gap-2 hover:bg-green-100 transition-colors"
-            >
-              <MessageCircle size={16} className="text-green-600 shrink-0" fill="currentColor" />
-              <span className="font-popup-phone">+91 96881 62147</span>
-            </a>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-};
+// JoinMovementModal is imported from ./components/JoinMovementModal to handle voter and supporter registration step-by-step.
 
 // ─── NAV LINK (active highlight) ─────────────────────────────────────────────
 const NavLinkHighlight = ({
@@ -713,15 +632,15 @@ const Navbar = ({ t, lang, setLang, onJoin, onDonate }: any) => {
 
             <button onClick={onDonate}
               className={`hidden lg:block ${
-                lang === 'ta' ? 'px-2.5 py-2 text-[0.62rem] tracking-wider' : 'px-4 py-2 text-[0.65rem] tracking-widest'
-              } font-black uppercase transition-all border border-[#CC0000] text-[#CC0000] bg-black/50 shadow-sm hover:bg-[#CC0000] hover:text-white hover:border-[#CC0000]`}>
+                lang === 'ta' ? 'px-3.5 py-2 text-[0.62rem] tracking-wider' : 'px-5 py-2 text-[0.65rem] tracking-widest'
+              } font-black uppercase rounded-xl transition-all border border-[#CC0000] text-[#CC0000] bg-black/50 shadow-sm hover:bg-[#CC0000] hover:text-white hover:border-[#CC0000]`}>
               {t.donate}
             </button>
 
             <button onClick={onJoin}
               className={`text-white ${
-                lang === 'ta' ? 'px-3 md:px-4 py-2 text-[0.62rem] md:text-[0.65rem] tracking-[0.02em]' : 'px-4 md:px-6 py-2 text-[0.65rem] md:text-[0.7rem] tracking-[0.05em]'
-              } font-black border border-[#CC0000] transition-all shadow-md hover:scale-105 active:scale-95 bg-[#CC0000] whitespace-nowrap`}>
+                lang === 'ta' ? 'px-4 md:px-5 py-2 text-[0.62rem] md:text-[0.65rem] tracking-[0.02em]' : 'px-5 md:px-7 py-2 text-[0.65rem] md:text-[0.7rem] tracking-[0.05em]'
+              } font-black rounded-xl border border-[#CC0000] transition-all shadow-md hover:scale-105 active:scale-95 bg-[#CC0000] whitespace-nowrap`}>
               <span className="hidden sm:inline">{t.joinMovement}</span>
               <span className="sm:hidden">{t.joinShort}</span>
             </button>
@@ -866,7 +785,7 @@ const HeroSection = ({ t }: any) => {
             <img
               src={slides[current].mobileBg}
               alt="Hero"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain md:object-cover bg-white md:bg-transparent"
             />
           </picture>
         </motion.div>
@@ -900,66 +819,111 @@ const AboutSection = ({ t }: any) => {
   const xTranslate = useTransform(scrollYProgress, [0, 1], ["0%", `-${(t.story.length - 1) * 100}%`]);
 
   return (
-    <section id="about" ref={containerRef} style={{ height: `${t.story.length * 200}vh` }} className="relative bg-black z-0 scroll-mt-24">
-      <div className="sticky top-0 h-screen overflow-hidden bg-black">
-        <motion.div style={{ x: xTranslate }} className="flex h-full">
-          {t.story.map((item: any, i: number) => (
-            <div key={i} className="relative flex-shrink-0 w-screen h-full flex items-center overflow-hidden">
-              <div className="absolute inset-0">
-                <img loading="lazy" src={item.bg} alt={item.title} className="w-full h-full object-cover grayscale" />
-                <div className="absolute inset-0 bg-black/80"></div>
-                <div className="absolute left-0 top-0 bottom-0 w-1.5" style={{ backgroundColor: '#FF8C00' }}></div>
-              </div>
+    <div id="about" className="scroll-mt-24">
+      {/* Desktop horizontal scroll layout */}
+      <section ref={containerRef} style={{ height: `${t.story.length * 200}vh` }} className="hidden lg:block relative bg-black z-0">
+        <div className="sticky top-0 h-screen overflow-hidden bg-black">
+          <motion.div style={{ x: xTranslate }} className="flex h-full">
+            {t.story.map((item: any, i: number) => (
+              <div key={i} className="relative flex-shrink-0 w-screen h-full flex items-center overflow-hidden">
+                <div className="absolute inset-0">
+                  <img loading="lazy" src={item.bg} alt={item.title} className="w-full h-full object-cover grayscale" />
+                  <div className="absolute inset-0 bg-black/80"></div>
+                  <div className="absolute left-0 top-0 bottom-0 w-1.5" style={{ backgroundColor: '#FF8C00' }}></div>
+                </div>
 
-              <div className="relative z-10 w-full h-full flex items-center px-5 sm:px-8 md:px-10 lg:px-14 xl:px-16">
-                <div className="w-full pt-20 pb-16 md:pt-0 md:pb-0 lg:w-[50%] lg:max-w-[40%] pr-2 sm:pr-6">
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, margin: "-100px" }}
-                    transition={{ duration: 0.8, delay: 0.1 }}
-                  >
-                    <div className="flex items-center gap-3 mb-3 md:mb-5">
-                      <span className="text-[#CC0000] font-black text-[0.65rem] md:text-xs tracking-[5px] uppercase">{item.chapter}</span>
-                      <div className="flex-1 max-w-[100px] md:max-w-[120px] h-px bg-white/10"></div>
-                    </div>
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-[0.95] mb-3 md:mb-5 tracking-tight">
-                      {item.title}
-                    </h2>
-                    <p className="font-bold text-[0.65rem] sm:text-xs md:text-sm tracking-[2px] md:tracking-[3px] uppercase mb-4 md:mb-8" style={{ color: '#FF8C00' }}>{item.subtitle}</p>
-                    <p className="text-white/70 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
-                      {item.text}
-                    </p>
-                  </motion.div>
+                <div className="relative z-10 w-full h-full flex items-center px-5 sm:px-8 md:px-10 lg:px-14 xl:px-16">
+                  <div className="w-full pt-20 pb-16 md:pt-0 md:pb-0 lg:w-[50%] lg:max-w-[40%] pr-2 sm:pr-6">
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: false, margin: "-100px" }}
+                      transition={{ duration: 0.8, delay: 0.1 }}
+                    >
+                      <div className="flex items-center gap-3 mb-3 md:mb-5">
+                        <span className="text-[#CC0000] font-black text-[0.65rem] md:text-xs tracking-[5px] uppercase">{item.chapter}</span>
+                        <div className="flex-1 max-w-[100px] md:max-w-[120px] h-px bg-white/10"></div>
+                      </div>
+                      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-[0.95] mb-3 md:mb-5 tracking-tight">
+                        {item.title}
+                      </h2>
+                      <p className="font-bold text-[0.65rem] sm:text-xs md:text-sm tracking-[2px] md:tracking-[3px] uppercase mb-4 md:mb-8" style={{ color: '#FF8C00' }}>{item.subtitle}</p>
+                      <p className="text-white/70 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
+                        {item.text}
+                      </p>
+                    </motion.div>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-6 right-5 sm:bottom-8 sm:right-8 md:bottom-12 md:right-12 text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[8rem] font-black text-white/5 leading-none pointer-events-none select-none">
+                  {String(i + 1).padStart(2, '0')}
                 </div>
               </div>
+            ))}
+          </motion.div>
 
-              <div className="absolute bottom-6 right-5 sm:bottom-8 sm:right-8 md:bottom-12 md:right-12 text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[8rem] font-black text-white/5 leading-none pointer-events-none select-none">
-                {String(i + 1).padStart(2, '0')}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+            {t.story.map((_: any, i: number) => {
+              const start = i / t.story.length;
+              const end = (i + 1) / t.story.length;
+              const scaleX = useTransform(scrollYProgress, [start, end], [0, 1]);
+              const opacity = useTransform(scrollYProgress, [start, start + 0.01, end - 0.01, end], [0.3, 1, 1, 0.3]);
+
+              return (
+                <div key={i} className="relative w-12 h-1 bg-white/10 rounded-full overflow-hidden" style={{ width: '3rem' }}>
+                  <motion.div
+                    style={{ scaleX, opacity, backgroundColor: '#FF8C00' }}
+                    className="absolute inset-0 origin-left"
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Mobile/Tablet vertical layout: separate container for every point story */}
+      <section className="lg:hidden bg-black py-16 px-4 sm:px-6 md:px-8 space-y-8 z-0 relative">
+        {t.story.map((item: any, i: number) => (
+          <FadeIn key={i} delay={0.05}>
+            <div className="relative bg-gradient-to-br from-[#111111] to-[#060606] border border-white/5 rounded-2xl overflow-hidden shadow-2xl p-6 sm:p-8 flex flex-col gap-6">
+              {/* Decorative vertical accent bar */}
+              <div className="absolute left-0 top-0 bottom-0 w-1.5" style={{ backgroundColor: '#FF8C00' }}></div>
+              
+              {/* Image container inside the card */}
+              <div className="relative w-full h-52 sm:h-72 rounded-xl overflow-hidden group">
+                <img loading="lazy" src={item.bg} alt={item.title} className="w-full h-full object-cover grayscale transition-transform duration-500 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                {/* Large chapter number inside image */}
+                <div className="absolute bottom-4 right-4 text-4xl sm:text-5xl font-black text-white/10 leading-none">
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+              </div>
+              
+              {/* Text content */}
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-[#CC0000] font-black text-xs tracking-[4px] uppercase">{item.chapter}</span>
+                  <div className="flex-1 h-px bg-white/10"></div>
+                </div>
+                
+                <h2 className="text-xl sm:text-2xl font-black text-white leading-tight mb-2">
+                  {item.title}
+                </h2>
+                
+                <p className="font-bold text-[0.7rem] sm:text-xs tracking-[2px] uppercase mb-4" style={{ color: '#FF8C00' }}>
+                  {item.subtitle}
+                </p>
+                
+                <p className="text-white/70 text-sm sm:text-base leading-relaxed">
+                  {item.text}
+                </p>
               </div>
             </div>
-          ))}
-        </motion.div>
-
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
-          {t.story.map((_: any, i: number) => {
-            const start = i / t.story.length;
-            const end = (i + 1) / t.story.length;
-            const scaleX = useTransform(scrollYProgress, [start, end], [0, 1]);
-            const opacity = useTransform(scrollYProgress, [start, start + 0.01, end - 0.01, end], [0.3, 1, 1, 0.3]);
-
-            return (
-              <div key={i} className="relative w-12 h-1 bg-white/10 rounded-full overflow-hidden" style={{ width: '3rem' }}>
-                <motion.div
-                  style={{ scaleX, opacity, backgroundColor: '#FF8C00' }}
-                  className="absolute inset-0 origin-left"
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+          </FadeIn>
+        ))}
+      </section>
+    </div>
   );
 };
 
@@ -1247,6 +1211,7 @@ const LoadingFallback = ({ t }: { t: any }) => (
 const App = () => {
   const [lang, setLang] = useState<'en' | 'ta'>('en');
   const [showPopup, setShowPopup] = useState(false);
+  const [showDonatePopup, setShowDonatePopup] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const t = translations[lang];
   const location = useLocation();
@@ -1258,7 +1223,9 @@ const App = () => {
 
     // Listen for custom popup open event
     const handleOpenPopup = () => setShowPopup(true);
+    const handleOpenDonatePopup = () => setShowDonatePopup(true);
     window.addEventListener('open-join-popup', handleOpenPopup);
+    window.addEventListener('open-donate-popup', handleOpenDonatePopup);
 
     // Only show popup automatically on homepage
     let timer: ReturnType<typeof setTimeout>;
@@ -1269,6 +1236,7 @@ const App = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('open-join-popup', handleOpenPopup);
+      window.removeEventListener('open-donate-popup', handleOpenDonatePopup);
       if (timer) clearTimeout(timer);
     };
   }, [lang, location.pathname]);
@@ -1281,9 +1249,10 @@ const App = () => {
 
   return (
     <div className={`w-full bg-white text-black min-h-screen ${lang === 'ta' ? 'font-tamil' : ''}`}>
-      <Navbar t={t} lang={lang} setLang={setLang} onJoin={() => setShowPopup(true)} onDonate={() => setShowPopup(true)} />
+      <Navbar t={t} lang={lang} setLang={setLang} onJoin={() => setShowPopup(true)} onDonate={() => setShowDonatePopup(true)} />
       <AnimatePresence>
-        {showPopup && <FullScreenJoin isOpen={showPopup} onClose={() => setShowPopup(false)} t={t} />}
+        {showPopup && <JoinMovementModal isOpen={showPopup} onClose={() => setShowPopup(false)} lang={lang} />}
+        {showDonatePopup && <DonateModal isOpen={showDonatePopup} onClose={() => setShowDonatePopup(false)} lang={lang} />}
       </AnimatePresence>
 
       <React.Suspense fallback={<LoadingFallback t={t} />}>

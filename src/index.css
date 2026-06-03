@@ -65,7 +65,7 @@
   .font-tamil h1.md\:text-lg, .font-tamil h2.md\:text-lg, .font-tamil h3.md\:text-lg, .font-tamil h4.md\:text-lg, .font-tamil h5.md\:text-lg, .font-tamil h6.md\:text-lg,
   .font-tamil h1.lg\:text-lg, .font-tamil h2.lg\:text-lg, .font-tamil h3.lg\:text-lg, .font-tamil h4.lg\:text-lg, .font-tamil h5.lg\:text-lg, .font-tamil h6.lg\:text-lg,
   .font-tamil h1.xl\:text-lg, .font-tamil h2.xl\:text-lg, .font-tamil h3.xl\:text-lg, .font-tamil h4.xl\:text-lg, .font-tamil h5.xl\:text-lg, .font-tamil h6.xl\:text-lg {
-    font-size: 1.0rem !important;
+    font-size: 0.9rem !important;
   }
 
   .font-tamil h1.text-xl, .font-tamil h2.text-xl, .font-tamil h3.text-xl, .font-tamil h4.text-xl, .font-tamil h5.text-xl, .font-tamil h6.text-xl,
@@ -73,7 +73,7 @@
   .font-tamil h1.md\:text-xl, .font-tamil h2.md\:text-xl, .font-tamil h3.md\:text-xl, .font-tamil h4.md\:text-xl, .font-tamil h5.md\:text-xl, .font-tamil h6.md\:text-xl,
   .font-tamil h1.lg\:text-xl, .font-tamil h2.lg\:text-xl, .font-tamil h3.lg\:text-xl, .font-tamil h4.lg\:text-xl, .font-tamil h5.lg\:text-xl, .font-tamil h6.lg\:text-xl,
   .font-tamil h1.xl\:text-xl, .font-tamil h2.xl\:text-xl, .font-tamil h3.xl\:text-xl, .font-tamil h4.xl\:text-xl, .font-tamil h5.xl\:text-xl, .font-tamil h6.xl\:text-xl {
-    font-size: 1.15rem !important;
+    font-size: 1.0rem !important;
   }
 
   .font-tamil h1.text-2xl, .font-tamil h2.text-2xl, .font-tamil h3.text-2xl, .font-tamil h4.text-2xl, .font-tamil h5.text-2xl, .font-tamil h6.text-2xl,
@@ -81,7 +81,7 @@
   .font-tamil h1.md\:text-2xl, .font-tamil h2.md\:text-2xl, .font-tamil h3.md\:text-2xl, .font-tamil h4.md\:text-2xl, .font-tamil h5.md\:text-2xl, .font-tamil h6.md\:text-2xl,
   .font-tamil h1.lg\:text-2xl, .font-tamil h2.lg\:text-2xl, .font-tamil h3.lg\:text-2xl, .font-tamil h4.lg\:text-2xl, .font-tamil h5.lg\:text-2xl, .font-tamil h6.lg\:text-2xl,
   .font-tamil h1.xl\:text-2xl, .font-tamil h2.xl\:text-2xl, .font-tamil h3.xl\:text-2xl, .font-tamil h4.xl\:text-2xl, .font-tamil h5.xl\:text-2xl, .font-tamil h6.xl\:text-2xl {
-    font-size: 1.35rem !important;
+    font-size: 1.2rem !important;
   }
 
   .font-tamil h1.text-3xl, .font-tamil h2.text-3xl, .font-tamil h3.text-3xl, .font-tamil h4.text-3xl, .font-tamil h5.text-3xl, .font-tamil h6.text-3xl,
@@ -89,7 +89,7 @@
   .font-tamil h1.md\:text-3xl, .font-tamil h2.md\:text-3xl, .font-tamil h3.md\:text-3xl, .font-tamil h4.md\:text-3xl, .font-tamil h5.md\:text-3xl, .font-tamil h6.md\:text-3xl,
   .font-tamil h1.lg\:text-3xl, .font-tamil h2.lg\:text-3xl, .font-tamil h3.lg\:text-3xl, .font-tamil h4.lg\:text-3xl, .font-tamil h5.lg\:text-3xl, .font-tamil h6.lg\:text-3xl,
   .font-tamil h1.xl\:text-3xl, .font-tamil h2.xl\:text-3xl, .font-tamil h3.xl\:text-3xl, .font-tamil h4.xl\:text-3xl, .font-tamil h5.xl\:text-3xl, .font-tamil h6.xl\:text-3xl {
-    font-size: 1.65rem !important;
+    font-size: 1.45rem !important;
   }
 
   .font-tamil h1.text-4xl, .font-tamil h2.text-4xl, .font-tamil h3.text-4xl, .font-tamil h4.text-4xl, .font-tamil h5.text-4xl, .font-tamil h6.text-4xl,
@@ -97,7 +97,7 @@
   .font-tamil h1.md\:text-4xl, .font-tamil h2.md\:text-4xl, .font-tamil h3.md\:text-4xl, .font-tamil h4.md\:text-4xl, .font-tamil h5.md\:text-4xl, .font-tamil h6.md\:text-4xl,
   .font-tamil h1.lg\:text-4xl, .font-tamil h2.lg\:text-4xl, .font-tamil h3.lg\:text-4xl, .font-tamil h4.lg\:text-4xl, .font-tamil h5.lg\:text-4xl, .font-tamil h6.lg\:text-4xl,
   .font-tamil h1.xl\:text-4xl, .font-tamil h2.xl\:text-4xl, .font-tamil h3.xl\:text-4xl, .font-tamil h4.xl\:text-4xl, .font-tamil h5.xl\:text-4xl, .font-tamil h6.xl\:text-4xl {
-    font-size: 2.0rem !important;
+    font-size: 1.75rem !important;
   }
 
   .font-tamil h1.text-5xl, .font-tamil h2.text-5xl, .font-tamil h3.text-5xl, .font-tamil h4.text-5xl, .font-tamil h5.text-5xl, .font-tamil h6.text-5xl,
@@ -105,7 +105,7 @@
   .font-tamil h1.md\:text-5xl, .font-tamil h2.md\:text-5xl, .font-tamil h3.md\:text-5xl, .font-tamil h4.md\:text-5xl, .font-tamil h5.md\:text-5xl, .font-tamil h6.md\:text-5xl,
   .font-tamil h1.lg\:text-5xl, .font-tamil h2.lg\:text-5xl, .font-tamil h3.lg\:text-5xl, .font-tamil h4.lg\:text-5xl, .font-tamil h5.lg\:text-5xl, .font-tamil h6.lg\:text-5xl,
   .font-tamil h1.xl\:text-5xl, .font-tamil h2.xl\:text-5xl, .font-tamil h3.xl\:text-5xl, .font-tamil h4.xl\:text-5xl, .font-tamil h5.xl\:text-5xl, .font-tamil h6.xl\:text-5xl {
-    font-size: 2.6rem !important;
+    font-size: 2.2rem !important;
   }
 
   .font-tamil h1.text-6xl, .font-tamil h2.text-6xl, .font-tamil h3.text-6xl, .font-tamil h4.text-6xl, .font-tamil h5.text-6xl, .font-tamil h6.text-6xl,
@@ -113,7 +113,7 @@
   .font-tamil h1.md\:text-6xl, .font-tamil h2.md\:text-6xl, .font-tamil h3.md\:text-6xl, .font-tamil h4.md\:text-6xl, .font-tamil h5.md\:text-6xl, .font-tamil h6.md\:text-6xl,
   .font-tamil h1.lg\:text-6xl, .font-tamil h2.lg\:text-6xl, .font-tamil h3.lg\:text-6xl, .font-tamil h4.lg\:text-6xl, .font-tamil h5.lg\:text-6xl, .font-tamil h6.lg\:text-6xl,
   .font-tamil h1.xl\:text-6xl, .font-tamil h2.xl\:text-6xl, .font-tamil h3.xl\:text-6xl, .font-tamil h4.xl\:text-6xl, .font-tamil h5.xl\:text-6xl, .font-tamil h6.xl\:text-6xl {
-    font-size: 3.2rem !important;
+    font-size: 2.7rem !important;
   }
 
   .font-tamil h1.text-7xl, .font-tamil h2.text-7xl, .font-tamil h3.text-7xl, .font-tamil h4.text-7xl, .font-tamil h5.text-7xl, .font-tamil h6.text-7xl,
@@ -121,7 +121,7 @@
   .font-tamil h1.md\:text-7xl, .font-tamil h2.md\:text-7xl, .font-tamil h3.md\:text-7xl, .font-tamil h4.md\:text-7xl, .font-tamil h5.md\:text-7xl, .font-tamil h6.md\:text-7xl,
   .font-tamil h1.lg\:text-7xl, .font-tamil h2.lg\:text-7xl, .font-tamil h3.lg\:text-7xl, .font-tamil h4.lg\:text-7xl, .font-tamil h5.lg\:text-7xl, .font-tamil h6.lg\:text-7xl,
   .font-tamil h1.xl\:text-7xl, .font-tamil h2.xl\:text-7xl, .font-tamil h3.xl\:text-7xl, .font-tamil h4.xl\:text-7xl, .font-tamil h5.xl\:text-7xl, .font-tamil h6.xl\:text-7xl {
-    font-size: 4.0rem !important;
+    font-size: 3.4rem !important;
   }
 
   .font-popup-phone {

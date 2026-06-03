@@ -250,7 +250,7 @@ const ConstituencyPage = ({ lang = 'en' }: { lang?: string }) => {
     <div className={`bg-white min-h-screen text-slate-900 font-sans ${lang === 'ta' ? 'font-tamil' : ''}`}>
 
       {/* ═══ HERO ═══ */}
-      <section ref={heroRef} className="relative h-screen w-full overflow-hidden">
+      <section ref={heroRef} className="relative h-[60vh] md:h-screen w-full overflow-hidden">
         <motion.div className="absolute inset-0 z-0" style={{ y: imgY }}>
           <picture className="w-full h-[120%]">
             <source media="(max-width: 767px)" srcSet={heroBgMobile} />
@@ -270,7 +270,7 @@ const ConstituencyPage = ({ lang = 'en' }: { lang?: string }) => {
         </div>
 
         <motion.div style={{ y: textY, opacity: heroOp }}
-          className="relative z-20 h-full flex flex-col justify-end px-6 md:px-16 pb-24 md:pb-32">
+          className="relative z-20 h-full flex flex-col justify-end px-6 md:px-16 pb-12 md:pb-32">
           <motion.div initial={{ width: 0 }} animate={{ width: 80 }}
             transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="h-1 bg-[#FF8C00] rounded-full mb-6" />

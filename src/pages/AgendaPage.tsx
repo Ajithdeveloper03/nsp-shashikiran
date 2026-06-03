@@ -217,7 +217,7 @@ const AgendaPage = ({ lang = 'en' }: { lang?: string }) => {
     <div className={`bg-slate-50 min-h-screen text-slate-900 font-sans ${lang === 'ta' ? 'font-tamil' : ''}`}>
       
       {/* ── HERO (Consistent with About/Journey) ── */}
-      <section ref={heroRef} className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative h-[60vh] md:h-screen w-full flex flex-col items-center justify-center overflow-hidden">
         <motion.div className="absolute inset-0 z-0" style={{ y: imgY }}>
           <picture className="w-full h-[115%]">
             <source media="(max-width: 767px)" srcSet={heroBgMobile} />
@@ -228,7 +228,7 @@ const AgendaPage = ({ lang = 'en' }: { lang?: string }) => {
         {/* Cinematic Overlay for visibility - Matched with About Page for maximum clarity */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90 z-10" />
 
-        <div className="relative z-20 w-full px-6 md:px-16 pb-24 md:pb-32 flex flex-col justify-end items-start h-full">
+        <div className="relative z-20 w-full px-6 md:px-16 pb-12 md:pb-32 flex flex-col justify-end items-start h-full">
           <div className="max-w-4xl flex flex-col items-start gap-3 md:gap-4">
             <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
               className="inline-block bg-[#FF8C00] text-black text-xs md:text-sm font-black tracking-[0.25em] md:tracking-[0.35em] uppercase px-4 py-1.5 rounded-full shadow-lg">
