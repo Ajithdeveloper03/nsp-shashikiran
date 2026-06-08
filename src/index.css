@@ -269,7 +269,7 @@
   transform: translateX(120%);
 }
 
-/* Custom Scrollbar - Hidden */
+/* Custom Scrollbar - Hidden by default */
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -279,9 +279,33 @@
   background: transparent;
 }
 
-/* Hide scrollbars for Firefox */
+/* Hide scrollbars for Firefox by default */
 * {
   scrollbar-width: none;
+}
+
+/* Custom Visible Scrollbar Utility */
+.has-scrollbar {
+  scrollbar-width: thin !important;
+  scrollbar-color: #d6d3d1 transparent !important;
+}
+
+.has-scrollbar::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+.has-scrollbar::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.has-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #d6d3d1 !important;
+  border-radius: 10px !important;
+}
+
+.has-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #a8a29e !important;
 }
 
 /* Constituency voice FAB — 2-layer glow + eye-focus spotlight */
@@ -365,6 +389,7 @@
   animation: voice-fab-focus-pulse 3.2s ease-in-out infinite;
 }
 
+/* Default webkit scrollbar thumb (invisible by default, overridden by has-scrollbar) */
 ::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 10px;

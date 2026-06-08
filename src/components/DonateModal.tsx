@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShieldCheck, Copy, Check, Info, QrCode, Smartphone, ArrowLeft, Send } from 'lucide-react';
-import { QRCodeSVG } from 'qrcode.react';
+import qrCodeImage from '../assets/qr-code.png';
 
 // ─── SECURITY INTEGRITY LOCK ──────────────────────────────────────────────────
 // Freezing the payment destination config to prevent runtime javascript injection
@@ -349,11 +349,10 @@ export default function DonateModal({ isOpen, onClose, lang = 'en' }: DonateModa
               >
                 {/* QR Code Container */}
                 <div className="relative p-5 bg-white border-2 border-[#FF8C00]/25 rounded-3xl shadow-sm inline-flex justify-center items-center select-none">
-                  <QRCodeSVG
-                    value={upiLink}
-                    size={200}
-                    level="H"
-                    includeMargin={false}
+                  <img 
+                    src={qrCodeImage} 
+                    alt="Donate QR Code" 
+                    className="w-[200px] h-[200px] object-contain"
                   />
                   <div className="absolute -bottom-2 px-3.5 py-0.5 bg-[#FF8C00] text-black text-[0.6rem] font-black uppercase tracking-widest rounded-full border border-white shadow-sm flex items-center gap-1.5">
                     <QrCode size={11} />

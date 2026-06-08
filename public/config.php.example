@@ -1,0 +1,22 @@
+<?php
+// Database and SMTP configuration template.
+// Copy this file to 'config.php' in the same folder and fill in your actual credentials.
+
+return [
+    // Database credentials
+    'DB_HOST' => 'localhost',
+    'DB_NAME' => 'your_database_name',
+    'DB_USER' => 'your_database_user',
+    'DB_PASS' => 'your_database_password',
+
+    // SMTP configuration
+    'SMTP_HOST' => 'smtp.gmail.com',
+    'SMTP_USER' => 'your_smtp_username@gmail.com',
+    'SMTP_PASS' => 'your_smtp_app_password',
+    'SMTP_PORT' => 587,
+    'SMTP_SECURE' => 'tls', // 'tls' or 'ssl'
+
+    // Mail configurations
+    'MAIL_FROM_EMAIL' => 'your_smtp_username@gmail.com',
+    'MAIL_TO_EMAIL' => 'recipient_email@gmail.com',
+];

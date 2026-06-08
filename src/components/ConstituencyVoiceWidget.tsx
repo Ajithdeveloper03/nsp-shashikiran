@@ -232,7 +232,7 @@ const ConstituencyVoiceWidget = ({ lang = 'en' }: { lang?: string }) => {
                 </div>
               </div>
 
-              <div className="overflow-y-auto flex-1 px-5 py-5 sm:px-6 sm:py-6">
+              <div className="overflow-y-auto flex-1 px-5 py-5 sm:px-6 sm:py-6 has-scrollbar">
                 {submitted ? (
                   <div className="text-center py-12 px-2">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 mb-4">

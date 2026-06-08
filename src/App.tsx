@@ -112,7 +112,7 @@ const translations = {
     candidateName: "Shashikiran KN",
     candidateInfo: "BE, MBA | National Socialist Party",
     candidateSubtitle: "Dedicated to National Development since 2011",
-    election: "SRIRANGAM 2026",
+    election: "TAMILNADU 2026",
     ctaJoin: "Join Movement",
     ctaVision: "Our Vision",
     issuesTitle: "SRIRANGAM CONSTITUENCY",

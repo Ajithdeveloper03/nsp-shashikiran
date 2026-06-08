@@ -38,7 +38,7 @@ function safe_pdf_string($str) {
 /**
  * Draw a standardized section header in the PDF
  */
-function draw_section_header($pdf, $title, &$y) {
+function draw_section_header($pdf, $title, &$y, $lineWidth = 180) {
     $pdf->SetFont('Arial', 'B', 11);
     $pdf->SetTextColor(204, 0, 0); // Primary red theme
     $pdf->SetXY(15, $y);
@@ -48,8 +48,84 @@ function draw_section_header($pdf, $title, &$y) {
     // Bottom border under title
     $pdf->SetDrawColor(226, 232, 240); // slate-200
     $pdf->SetLineWidth(0.4);
-    $pdf->Line(15, $y, 195, $y);
+    $pdf->Line(15, $y, 15 + $lineWidth, $y);
     $y += 4;
+}
+
+/**
+ * Generates a styled HTML-based Excel spreadsheet (.xls) containing all registered volunteers.
+ * The newly registered volunteer is highlighted with a yellow background and a 'NEW MEMBER' badge.
+ */
+function generate_volunteers_excel($pdo, $newVolunteerId) {
+    $stmt = $pdo->query("SELECT * FROM volunteers ORDER BY id DESC");
+    $rows = $stmt->fetchAll();
+
+    $html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+    $html .= '<head><meta charset="UTF-8">';
+    $html .= '<style>';
+    $html .= 'table { border-collapse: collapse; width: 100%; }';
+    $html .= 'th { background-color: #FF8C00; color: white; font-family: Arial, sans-serif; font-size: 10pt; font-weight: bold; border: 0.5pt solid #cccccc; padding: 6px; text-align: left; }';
+    $html .= 'td { font-family: Arial, sans-serif; font-size: 10pt; border: 0.5pt solid #cccccc; padding: 6px; }';
+    $html .= '.new-member-row { background-color: #FFFF99; font-weight: bold; }';
+    $html .= '.new-member-badge { background-color: #CC0000; color: white; font-weight: bold; padding: 2px 6px; border-radius: 4px; text-align: center; }';
+    $html .= '</style>';
+    $html .= '</head>';
+    $html .= '<body>';
+    $html .= '<h2>Registered Volunteers List</h2>';
+    $html .= '<p>Generated on: ' . date('d-m-Y H:i:s') . '</p>';
+    $html .= '<table>';
+    $html .= '<thead>';
+    $html .= '<tr>';
+    $html .= '<th>Status</th>';
+    $html .= '<th>ID</th>';
+    $html .= '<th>Full Name</th>';
+    $html .= '<th>Joining As</th>';
+    $html .= '<th>Mobile</th>';
+    $html .= '<th>Email</th>';
+    $html .= '<th>Occupation</th>';
+    $html .= '<th>Education</th>';
+    $html .= '<th>Voter ID Number</th>';
+    $html .= '<th>Aadhaar Number</th>';
+    $html .= '<th>DOB / Age</th>';
+    $html .= '<th>Gender</th>';
+    $html .= '<th>District</th>';
+    $html .= '<th>Pincode</th>';
+    $html .= '<th>Registration Date</th>';
+    $html .= '</tr>';
+    $html .= '</thead>';
+    $html .= '<tbody>';
+
+    foreach ($rows as $row) {
+        $isNew = ($row['id'] == $newVolunteerId);
+        $rowClass = $isNew ? ' class="new-member-row"' : '';
+        $statusVal = $isNew ? 'NEW MEMBER' : 'Active';
+
+        $html .= '<tr' . $rowClass . '>';
+        $html .= '<td>' . htmlspecialchars($statusVal) . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['id']) . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['full_name']) . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['joining_as']) . '</td>';
+        // Force string type in Excel to avoid formatting numbers as scientific notation or dropping leading zeroes
+        $html .= '<td style="vnd.ms-excel.numberformat:@">' . htmlspecialchars($row['mobile']) . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['email'] ? $row['email'] : 'N/A') . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['occupation'] ? $row['occupation'] : 'N/A') . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['education'] ? $row['education'] : 'N/A') . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['voter_id_number']) . '</td>';
+        $html .= '<td style="vnd.ms-excel.numberformat:@">' . htmlspecialchars($row['aadhaar_number'] ? $row['aadhaar_number'] : 'N/A') . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['dob']) . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['gender']) . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['district']) . '</td>';
+        $html .= '<td style="vnd.ms-excel.numberformat:@">' . htmlspecialchars($row['pincode']) . '</td>';
+        $html .= '<td>' . htmlspecialchars($row['created_at']) . '</td>';
+        $html .= '</tr>';
+    }
+
+    $html .= '</tbody>';
+    $html .= '</table>';
+    $html .= '</body>';
+    $html .= '</html>';
+
+    return $html;
 }
 
 try {
@@ -59,11 +135,15 @@ try {
         exit;
     }
 
+    // Load local configuration if exists
+    $configPath = __DIR__ . '/config.php';
+    $config = file_exists($configPath) ? include($configPath) : [];
+
     // Database credentials configuration
-    $dbHost = 'localhost';
-    $dbName = 'u508480125_shashikiran';
-    $dbUser = 'u508480125_shashikiran';
-    $dbPass = 'Inymart@Shield#58!';
+    $dbHost = isset($config['DB_HOST']) ? $config['DB_HOST'] : (getenv('DB_HOST') ?: 'localhost');
+    $dbName = isset($config['DB_NAME']) ? $config['DB_NAME'] : (getenv('DB_NAME') ?: 'u508480125_shashikiran');
+    $dbUser = isset($config['DB_USER']) ? $config['DB_USER'] : (getenv('DB_USER') ?: 'u508480125_shashikiran');
+    $dbPass = isset($config['DB_PASS']) ? $config['DB_PASS'] : (getenv('DB_PASS') ?: 'Inymart@Shield#58!');
 
     try {
         $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8mb4", $dbUser, $dbPass, [
@@ -105,6 +185,7 @@ try {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
+
         // Auto-create donations table
         $pdo->exec("CREATE TABLE IF NOT EXISTS donations (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -124,38 +205,62 @@ try {
     $formType = isset($_POST['formType']) ? $_POST['formType'] : 'contact';
 
     if ($formType === 'join_movement') {
+        $newVolunteerId = 0;
         // Parse fields
         $fullName = isset($_POST['fullName']) ? strip_tags(trim($_POST['fullName'])) : '';
-        $parentName = isset($_POST['parentName']) ? strip_tags(trim($_POST['parentName'])) : '';
         $dob = isset($_POST['dob']) ? strip_tags(trim($_POST['dob'])) : '';
         $gender = isset($_POST['gender']) ? strip_tags(trim($_POST['gender'])) : '';
         $mobile = isset($_POST['mobile']) ? strip_tags(trim($_POST['mobile'])) : '';
         $email = isset($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL) : '';
-        $occupation = isset($_POST['occupation']) ? strip_tags(trim($_POST['occupation'])) : '';
-        $education = isset($_POST['education']) ? strip_tags(trim($_POST['education'])) : '';
-        
-        $currentAddress = isset($_POST['currentAddress']) ? strip_tags(trim($_POST['currentAddress'])) : '';
-        $permanentAddress = isset($_POST['permanentAddress']) ? strip_tags(trim($_POST['permanentAddress'])) : '';
-        $district = isset($_POST['district']) ? strip_tags(trim($_POST['district'])) : '';
-        $state = isset($_POST['state']) ? strip_tags(trim($_POST['state'])) : 'Tamil Nadu';
-        $pincode = isset($_POST['pincode']) ? strip_tags(trim($_POST['pincode'])) : '';
-        
-        $voterIdNumber = isset($_POST['voterIdNumber']) ? strip_tags(trim($_POST['voterIdNumber'])) : '';
-        $aadhaarNumber = isset($_POST['aadhaarNumber']) ? strip_tags(trim($_POST['aadhaarNumber'])) : '';
-        
-        $emergencyName = isset($_POST['emergencyName']) ? strip_tags(trim($_POST['emergencyName'])) : '';
-        $emergencyRelationship = isset($_POST['emergencyRelationship']) ? strip_tags(trim($_POST['emergencyRelationship'])) : '';
-        $emergencyMobile = isset($_POST['emergencyMobile']) ? strip_tags(trim($_POST['emergencyMobile'])) : '';
-        
-        $joiningAs = isset($_POST['joiningAs']) ? strip_tags(trim($_POST['joiningAs'])) : 'Volunteer';
-        $areaOfInterest = isset($_POST['areaOfInterest']) ? strip_tags(trim($_POST['areaOfInterest'])) : '';
-        $skills = isset($_POST['skills']) ? strip_tags(trim($_POST['skills'])) : '';
-        $preferredWorkingArea = isset($_POST['preferredWorkingArea']) ? strip_tags(trim($_POST['preferredWorkingArea'])) : '';
-        $availableTime = isset($_POST['availableTime']) ? strip_tags(trim($_POST['availableTime'])) : '';
 
-        if (empty($fullName) || empty($mobile) || empty($voterIdNumber)) {
+        $state = isset($_POST['state']) ? strip_tags(trim($_POST['state'])) : 'Tamil Nadu';
+        $constituency = isset($_POST['constituency']) ? strip_tags(trim($_POST['constituency'])) : 'N/A';
+        $district = $constituency; // District stores constituency
+
+        // Other fields have default fallback values
+        $parentName = 'N/A';
+        $occupation = 'N/A';
+        $education = 'N/A';
+        $currentAddress = 'N/A';
+        $permanentAddress = 'N/A';
+        $pincode = '000000';
+        $voterIdNumber = 'N/A';
+        $aadhaarNumber = 'N/A';
+        $emergencyName = 'N/A';
+        $emergencyRelationship = 'N/A';
+        $emergencyMobile = '0000000000';
+        $joiningAs = 'Digital Member';
+        $areaOfInterest = 'N/A';
+        $skills = 'N/A';
+        $preferredWorkingArea = $constituency;
+        $availableTime = 'N/A';
+
+        $validationErrors = [];
+
+        // Required text fields check
+        if (empty($fullName)) $validationErrors['fullName'] = "Full Name is required.";
+        if (empty($dob)) $validationErrors['dob'] = "Date of Birth / Age is required.";
+        if (empty($gender)) $validationErrors['gender'] = "Gender is required.";
+        if (empty($constituency) || $constituency === 'N/A') $validationErrors['constituency'] = "Constituency is required.";
+
+        
+        if (empty($mobile)) {
+            $validationErrors['mobile'] = "Mobile Number is required.";
+        } else if (!preg_match('/^[0-9]{10}$/', $mobile)) {
+            $validationErrors['mobile'] = "Mobile Number must be a valid 10-digit number.";
+        }
+
+        if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $validationErrors['email'] = "Please enter a valid email address.";
+        }
+
+        if (!empty($validationErrors)) {
             http_response_code(400);
-            echo json_encode(["status" => "error", "message" => "Please fill in all mandatory fields (Name, Mobile, Voter ID)."]);
+            echo json_encode([
+                "status" => "error",
+                "message" => "Please correct the errors highlighted in the form.",
+                "errors" => $validationErrors
+            ]);
             exit;
         }
 
@@ -169,33 +274,11 @@ try {
             mkdir($uploadDir, 0755, true);
         }
 
-        // Save Uploaded Files First (so we can render the permanent paths inside FPDF if needed)
+
+        // No uploaded files
         $voterIdProofPath = '';
-        if (isset($_FILES['voterIdProof']) && $_FILES['voterIdProof']['error'] == UPLOAD_ERR_OK) {
-            $ext = pathinfo($_FILES['voterIdProof']['name'], PATHINFO_EXTENSION);
-            $filename = uniqid('voter_') . '.' . $ext;
-            if (move_uploaded_file($_FILES['voterIdProof']['tmp_name'], $uploadDir . $filename)) {
-                $voterIdProofPath = 'uploads/' . $filename;
-            }
-        }
-
         $passportPhotoPath = '';
-        if (isset($_FILES['passportPhoto']) && $_FILES['passportPhoto']['error'] == UPLOAD_ERR_OK) {
-            $ext = pathinfo($_FILES['passportPhoto']['name'], PATHINFO_EXTENSION);
-            $filename = uniqid('photo_') . '.' . $ext;
-            if (move_uploaded_file($_FILES['passportPhoto']['tmp_name'], $uploadDir . $filename)) {
-                $passportPhotoPath = 'uploads/' . $filename;
-            }
-        }
-
         $signaturePath = '';
-        if (isset($_FILES['signature']) && $_FILES['signature']['error'] == UPLOAD_ERR_OK) {
-            $ext = pathinfo($_FILES['signature']['name'], PATHINFO_EXTENSION);
-            $filename = uniqid('sig_') . '.' . $ext;
-            if (move_uploaded_file($_FILES['signature']['tmp_name'], $uploadDir . $filename)) {
-                $signaturePath = 'uploads/' . $filename;
-            }
-        }
 
         // Initialize FPDF
         $pdf = new FPDF();
@@ -230,247 +313,55 @@ try {
         }
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->SetTextColor(255, 140, 0);
-        $pdf->Cell(120, 6, safe_pdf_string('SRIRANGAM 2026 - VOLUNTEER REGISTRATION RECORD'), 0, 1, 'L');
+        $pdf->Cell(120, 6, safe_pdf_string('TAMILNADU 2026 - MEMBERSHIP REGISTRATION RECORD'), 0, 1, 'L');
         
-        // Passport Photo Frame (Top Right alignment using moved file path)
-        if (!empty($passportPhotoPath) && file_exists($uploadDir . basename($passportPhotoPath))) {
-            $pdf->Image($uploadDir . basename($passportPhotoPath), 155, 45, 38, 46);
-            $pdf->SetDrawColor(226, 232, 240);
-            $pdf->Rect(155, 45, 38, 46, 'D');
-        } else {
-            $pdf->SetDrawColor(200, 200, 200);
-            $pdf->Rect(155, 45, 38, 46, 'D');
-            $pdf->SetXY(155, 65);
-            $pdf->SetFont('Arial', 'I', 7);
-            $pdf->Cell(38, 6, '[ Photo Placeholder ]', 0, 0, 'C');
+        $currentY = 50;
+        
+        // SECTION 1: Member Registration Details
+        draw_section_header($pdf, 'Membership Registration Record', $currentY, 180);
+        
+        $fields = [
+            'Full Name' => $fullName,
+            'Mobile Number' => $mobile,
+            'Email Address' => $email ? $email : 'N/A',
+            'Date of Birth' => $dob,
+            'Gender' => $gender,
+            'State' => $state,
+            'Assembly Constituency' => $constituency,
+            'Role' => $joiningAs,
+            'Registration Date' => date('d-m-Y H:i:s')
+        ];
+
+        foreach ($fields as $label => $value) {
+            $pdf->SetXY(15, $currentY);
+            $pdf->SetFont('Arial', 'B', 10);
+            $pdf->SetTextColor(70, 70, 70);
+            $pdf->Cell(50, 8, safe_pdf_string($label) . ':', 0, 0);
+            $pdf->SetFont('Arial', '', 10);
+            $pdf->SetTextColor(30, 30, 30);
+            $pdf->Cell(130, 8, safe_pdf_string($value), 0, 1);
+            $currentY += 8;
         }
         
-        $currentY = 45;
-        
-        // SECTION 1: Personal Information
-        draw_section_header($pdf, '1. Personal Information', $currentY);
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Full Name') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(95, 6, safe_pdf_string($fullName), 0, 1);
-        $currentY += 6;
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Parent/Spouse Name') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(95, 6, safe_pdf_string($parentName ? $parentName : 'N/A'), 0, 1);
-        $currentY += 6;
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('DOB / Age') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(35, 6, safe_pdf_string($dob), 0, 0);
-        
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(20, 6, safe_pdf_string('Gender') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(40, 6, safe_pdf_string($gender), 0, 1);
-        $currentY += 6;
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Mobile') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(35, 6, safe_pdf_string($mobile), 0, 0);
-        
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(20, 6, safe_pdf_string('Email') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(40, 6, safe_pdf_string($email ? $email : 'N/A'), 0, 1);
-        $currentY += 6;
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Occupation') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(35, 6, safe_pdf_string($occupation ? $occupation : 'N/A'), 0, 0);
-        
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(20, 6, safe_pdf_string('Education') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(40, 6, safe_pdf_string($education ? $education : 'N/A'), 0, 1);
         $currentY += 10;
-        
-        // SECTION 2: Address details
-        $currentY = max($currentY, 96); // Keep clean separation from top layout
-        draw_section_header($pdf, '2. Address Details', $currentY);
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Current Address') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->MultiCell(145, 6, safe_pdf_string($currentAddress), 0, 'L');
-        $currentY = $pdf->GetY();
+
+        // SECTION 2: Declaration
+        draw_section_header($pdf, 'Declaration & Guidelines', $currentY, 180);
         
         $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Permanent Address') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->MultiCell(145, 6, safe_pdf_string($permanentAddress), 0, 'L');
-        $currentY = $pdf->GetY();
+        $pdf->SetFont('Arial', 'I', 9.5);
+        $pdf->SetTextColor(80, 80, 80);
+        $pdf->MultiCell(180, 6, safe_pdf_string('Declaration: I hereby voluntarily join the movement and confirm that all details provided are correct. I will support the organization and its campaigns to build a modern, digital, and dharma-driven Srirangam.'), 0, 'L');
+        $currentY = $pdf->GetY() + 15;
         
         $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('District') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(45, 6, safe_pdf_string($district), 0, 0);
-        
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(15, 6, safe_pdf_string('State') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(35, 6, safe_pdf_string($state), 0, 0);
-        
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(20, 6, safe_pdf_string('Pincode') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(30, 6, safe_pdf_string($pincode), 0, 1);
-        $currentY += 8;
-        
-        // SECTION 3: Identity & Emergency Contact details
-        draw_section_header($pdf, '3. Identity & Emergency Details', $currentY);
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Voter ID Number') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(45, 6, safe_pdf_string($voterIdNumber), 0, 0);
-        
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Aadhaar Number') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(65, 6, safe_pdf_string($aadhaarNumber ? $aadhaarNumber : 'N/A'), 0, 1);
-        $currentY += 6;
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Emergency Contact') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(45, 6, safe_pdf_string($emergencyName), 0, 0);
-        
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(20, 6, safe_pdf_string('Relation') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(25, 6, safe_pdf_string($emergencyRelationship), 0, 0);
-        
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(20, 6, safe_pdf_string('Mobile') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(35, 6, safe_pdf_string($emergencyMobile), 0, 1);
-        $currentY += 8;
-        
-        // SECTION 4: Role & Joining Details
-        draw_section_header($pdf, '4. Role & Preferences Details', $currentY);
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Joining As') . ':', 0, 0);
         $pdf->SetFont('Arial', 'B', 10);
-        $pdf->SetTextColor(204, 0, 0);
-        $pdf->Cell(145, 6, safe_pdf_string($joiningAs), 0, 1);
-        $pdf->SetTextColor(30, 30, 30);
-        $currentY += 6;
+        $pdf->Cell(90, 5, 'Date: ' . date('d-m-Y'), 0, 0, 'L');
         
-        $pdf->SetXY(15, $currentY);
+        $pdf->Line(130, $currentY, 185, $currentY);
+        $pdf->SetXY(130, $currentY + 1);
         $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Area of Interest') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(145, 6, safe_pdf_string($areaOfInterest ? $areaOfInterest : 'N/A'), 0, 1);
-        $currentY += 6;
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Skills / Experience') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->MultiCell(145, 6, safe_pdf_string($skills ? $skills : 'N/A'), 0, 'L');
-        $currentY = $pdf->GetY();
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(35, 6, safe_pdf_string('Preferred Work Area') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(45, 6, safe_pdf_string($preferredWorkingArea ? $preferredWorkingArea : 'N/A'), 0, 0);
-        
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->SetTextColor(70, 70, 70);
-        $pdf->Cell(30, 6, safe_pdf_string('Available Time') . ':', 0, 0);
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->SetTextColor(30, 30, 30);
-        $pdf->Cell(70, 6, safe_pdf_string($availableTime ? $availableTime : 'N/A'), 0, 1);
-        $currentY += 8;
-        
-        // SECTION 5: Declaration & Signature
-        draw_section_header($pdf, '5. Declaration & Signature', $currentY);
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'I', 8.5);
-        $pdf->MultiCell(180, 4.5, safe_pdf_string('Declaration: I hereby voluntarily join/support the organization and confirm that all submitted details are genuine and correct. I will adhere to the rules and guidelines of the movement.'), 0, 'L');
-        $currentY = $pdf->GetY() + 8;
-        
-        $pdf->SetXY(15, $currentY);
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->Cell(80, 5, 'Date: ' . date('d-m-Y'), 0, 0, 'L');
-        
-        // Embed signature if uploaded (from permanent uploads/ path)
-        if (!empty($signaturePath) && file_exists($uploadDir . basename($signaturePath))) {
-            $pdf->Image($uploadDir . basename($signaturePath), 140, $currentY - 10, 45, 10);
-        }
-        
-        $pdf->Line(140, $currentY, 185, $currentY);
-        $pdf->SetXY(140, $currentY + 1);
-        $pdf->SetFont('Arial', 'B', 8);
-        $pdf->Cell(45, 4, 'Signature of Applicant', 0, 0, 'C');
+        $pdf->Cell(55, 4, 'Signature of Member', 0, 0, 'C');
         
         // Red bottom bar
         $pdf->SetFillColor(204, 0, 0);
@@ -528,14 +419,17 @@ try {
             ':pdf_path' => $pdfPath
         ]);
         
-        $emailSubject = "Join Movement Form: $fullName ($joiningAs)";
-        $emailBody = "A new volunteer has registered through the Srirangam 2026 website.\n\n" . 
-                     "All registration details and uploaded proofs have been securely saved to the database.\n\n" .
-                     "Please find the attached registration details PDF and raw uploaded files for verification.\n\n" . 
-                     "Volunteer Name: $fullName\n" . 
+        $newVolunteerId = $pdo->lastInsertId();
+        
+        $emailSubject = "New Member Joined: $fullName ($constituency)";
+        $emailBody = "A new member has joined the movement through the website.\n\n" . 
+                     "All registration details have been securely saved to the database.\n\n" .
+                     "Please find the attached registration details PDF for verification.\n\n" . 
+                     "Member Name: $fullName\n" . 
                      "Mobile Number: $mobile\n" . 
                      "Email: " . ($email ? $email : 'N/A') . "\n" .
-                     "Role Selected: $joiningAs\n";
+                     "State: $state\n" .
+                     "Constituency: $constituency\n";
 
     } else if ($formType === 'record_donation') {
         // Record payment form parameters
@@ -598,15 +492,35 @@ try {
 
     $mail = new PHPMailer(true);
     
+    // Load config if not already loaded
+    if (!isset($config)) {
+        $configPath = __DIR__ . '/config.php';
+        $config = file_exists($configPath) ? include($configPath) : [];
+    }
+
+    $smtpHost = isset($config['SMTP_HOST']) ? $config['SMTP_HOST'] : (getenv('SMTP_HOST') ?: 'smtp.gmail.com');
+    $smtpUser = isset($config['SMTP_USER']) ? $config['SMTP_USER'] : (getenv('SMTP_USER') ?: 'inymartlabs@gmail.com');
+    $smtpPass = isset($config['SMTP_PASS']) ? $config['SMTP_PASS'] : (getenv('SMTP_PASS') ?: 'ombt pjxo ccve afhq');
+    $smtpPort = isset($config['SMTP_PORT']) ? (int)$config['SMTP_PORT'] : (getenv('SMTP_PORT') ? (int)getenv('SMTP_PORT') : 587);
+    $smtpSecureStr = isset($config['SMTP_SECURE']) ? $config['SMTP_SECURE'] : (getenv('SMTP_SECURE') ?: 'tls');
+    
+    $mailFromEmail = isset($config['MAIL_FROM_EMAIL']) ? $config['MAIL_FROM_EMAIL'] : (getenv('MAIL_FROM_EMAIL') ?: $smtpUser);
+    $mailToEmail = isset($config['MAIL_TO_EMAIL']) ? $config['MAIL_TO_EMAIL'] : (getenv('MAIL_TO_EMAIL') ?: 'nsptn2031@gmail.com');
+
     // Server settings
     $mail->SMTPDebug = 0;                      // Enable verbose debug output (0 = off)
     $mail->isSMTP();                           // Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';      // Set the SMTP server to send through
+    $mail->Host       = $smtpHost;             // Set the SMTP server to send through
     $mail->SMTPAuth   = true;                  // Enable SMTP authentication
-    $mail->Username   = 'inymartlabs@gmail.com';   // SMTP username
-    $mail->Password   = 'ombt pjxo ccve afhq';    // SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption
-    $mail->Port       = 587;                   // TCP port to connect to
+    $mail->Username   = $smtpUser;             // SMTP username
+    $mail->Password   = $smtpPass;             // SMTP password
+    
+    if (strtolower($smtpSecureStr) === 'ssl') {
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    } else {
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    }
+    $mail->Port       = $smtpPort;             // TCP port to connect to
     
     // Disable peer verification if local server environment doesn't have updated CA certs
     $mail->SMTPOptions = array(
@@ -618,10 +532,10 @@ try {
     );
     
     // Recipients
-    $mail->setFrom('inymartlabs@gmail.com', ($formType === 'join_movement' ? $fullName : ($formType === 'record_donation' ? $donorName : $name)));
-    $mail->addAddress('nsptn2031@gmail.com', 'Website Notification'); // Recipient
+    $mail->setFrom($mailFromEmail, ($formType === 'join_movement' ? $fullName : ($formType === 'record_donation' ? $donorName : $name)));
+    $mail->addAddress($mailToEmail, 'Website Notification'); // Recipient
     $mail->addReplyTo(
-        ($formType === 'join_movement' ? ($email ? $email : 'nsptn2031@gmail.com') : ($formType === 'record_donation' ? ($donorEmail ? $donorEmail : 'nsptn2031@gmail.com') : $email)),
+        ($formType === 'join_movement' ? ($email ? $email : $mailToEmail) : ($formType === 'record_donation' ? ($donorEmail ? $donorEmail : $mailToEmail) : $email)),
         ($formType === 'join_movement' ? $fullName : ($formType === 'record_donation' ? $donorName : $name))
     );
 
@@ -630,6 +544,14 @@ try {
         // Attach generated PDF
         $safePdfName = str_replace(' ', '_', $fullName) . "_Registration.pdf";
         $mail->addStringAttachment($pdfDoc, $safePdfName, 'base64', 'application/pdf');
+        
+        // Generate and attach Excel list of all volunteers with new member highlighted
+        try {
+            $excelData = generate_volunteers_excel($pdo, $newVolunteerId);
+            $mail->addStringAttachment($excelData, 'All_Registered_Volunteers.xls', 'base64', 'application/vnd.ms-excel');
+        } catch (Exception $excelEx) {
+            error_log("Failed to generate/attach Excel sheet: " . $excelEx->getMessage());
+        }
         
         // Attach files if they are uploaded (using relocated folder files)
         if (!empty($voterIdProofPath) && file_exists($uploadDir . basename($voterIdProofPath))) {
@@ -653,7 +575,14 @@ try {
     // Clear buffer and send successful response
     ob_end_clean();
     http_response_code(200);
-    echo json_encode(["status" => "success", "message" => "Thank You! Your submission has been processed and saved successfully."]);
+    $formattedMemberId = isset($newVolunteerId) && $newVolunteerId > 0
+        ? 'NSP-' . str_pad($newVolunteerId, 6, '0', STR_PAD_LEFT)
+        : null;
+    $responsePayload = ["status" => "success", "message" => "Thank You! Your submission has been processed and saved successfully."];
+    if ($formattedMemberId) {
+        $responsePayload["member_id"] = $formattedMemberId;
+    }
+    echo json_encode($responsePayload);
 
 } catch (Exception $e) {
     ob_end_clean();

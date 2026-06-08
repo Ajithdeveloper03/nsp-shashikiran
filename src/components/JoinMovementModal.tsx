@@ -1,219 +1,112 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  X, User, Phone, Mail, MapPin, FileText, CheckCircle2,
-  UploadCloud, ArrowRight, ArrowLeft, Briefcase, Award,
-  Clock, Heart, AlertCircle, Sparkles
+  X, User, Phone, Mail, ArrowRight, ArrowLeft,
+  AlertCircle, Download, Share2,
+  ChevronDown, CheckCircle2
 } from 'lucide-react';
+import { QRCodeCanvas } from 'qrcode.react';
 
 import logoImg from '../assets/shashikarann.png';
 import campaignBg from '../assets/about3.jpeg';
+import srirangamImg from '../assets/srirangam island.jpg';
+import { constituencies } from '../data/constituencies';
 
 // ─── TRANSLATIONS ────────────────────────────────────────────────────────────
 const formTranslations = {
   en: {
     title: "Join the Movement",
-    subtitle: "Be the change Srirangam deserves",
-    // Steps
-    step1: "Personal Information",
-    step2: "Address Details",
-    step3: "Identity & Emergency",
-    step4: "Joining Details",
-    step5: "Uploads & Declaration",
-    success: "Registration Successful!",
-    successSubtitle: "Thank you for joining. Our team will verify your details and reach out to you shortly.",
-    
-    // Step 1 fields
-    fullName: "Full Name (As per Voter ID)",
-    parentName: "Father / Mother / Spouse Name",
-    dob: "Date of Birth / Age",
+    subtitle: "Register as a volunteer and stand with Shashikiran KN",
+    step1: "Mobile Number",
+    step2: "Your Profile",
+    step3: "Verification",
+    success: "Welcome to the Movement!",
+    successSubtitle: "Your digital membership card has been issued. Download it and share with pride.",
+    fullName: "Full Name",
+    dob: "Date of Birth",
     gender: "Gender",
     genderMale: "Male",
     genderFemale: "Female",
     genderTrans: "Transgender",
     mobileNumber: "Mobile Number",
-    emailId: "Email ID (Optional)",
-    occupation: "Occupation / Profession",
-    education: "Educational Qualification",
-
-    // Step 2 fields
-    currentAddress: "Current Address",
-    permanentAddress: "Permanent Address",
-    sameAsCurrent: "Same as current address",
-    district: "District",
+    emailId: "Email (Optional)",
     state: "State",
-    pincode: "Pincode",
+    constituency: "Assembly Constituency",
 
-    // Step 3 fields
-    voterIdNumber: "Voter ID Number",
-    aadhaarNumber: "Aadhaar Number (Optional)",
-    emergencyName: "Emergency Contact Name",
-    relationship: "Relationship",
-    emergencyMobile: "Emergency Mobile Number",
-
-    // Step 4 fields
-    joiningAs: "Joining As",
-    joiningAsSelect: "Select role",
-    joiningAsOptions: [
-      { value: "Volunteer", label: "Volunteer" },
-      { value: "Party Supporter", label: "Party Supporter" },
-      { value: "Youth Wing", label: "Youth Wing" },
-      { value: "Women Wing", label: "Women Wing" },
-      { value: "Social Media Team", label: "Social Media Team" },
-      { value: "Event Coordinator", label: "Event Coordinator" },
-      { value: "Field Volunteer", label: "Field Volunteer" }
-    ],
-    areaOfInterest: "Area of Interest",
-    skills: "Skills / Experience",
-    preferredWorkingArea: "Preferred Working Area",
-    availableTime: "Available Time for Activities",
-
-    // Step 5 fields
-    voterIdProof: "Voter ID Proof (Copy)",
-    voterIdProofDesc: "Upload front side of Voter ID (Max 5MB, Image or PDF)",
-    passportPhoto: "Passport Size Photo",
-    passportPhotoDesc: "Upload passport size photo (Max 2MB, JPEG/PNG)",
-    signature: "Signature Upload (Optional)",
-    signatureDesc: "Upload digital signature or scan copy (Max 2MB, JPEG/PNG)",
-    declaration: "Declaration",
-    declarationText: "I hereby voluntarily join/support the organization and confirm that all submitted details are genuine and correct.",
-    
-    // General
-    next: "Next Step",
-    prev: "Previous",
-    submit: "Submit Application",
-    submitting: "Submitting...",
+    agreeTerms: "I agree to the Terms of use and Privacy Policy.",
+    next: "Continue",
+    prev: "Back",
+    submit: "Send OTP",
+    verify: "Verify & Get Card",
+    submitting: "Issuing Card...",
     close: "Close",
-    dragDrop: "Drag & drop file or click to upload",
-    changeFile: "Change",
-    invalidMobile: "Mobile must be a 10-digit number",
-    invalidPincode: "Pincode must be a 6-digit number",
-    invalidAadhaar: "Aadhaar must be a 12-digit number",
-    invalidEmail: "Please enter a valid email address",
-    validationError: "Please correct the highlighted errors in the form.",
-    campaignSlogan: "Let's Build a Modern, Digital, & Dharma-driven Srirangam",
+    campaignSlogan: "Build a Modern, Digital & Dharma-Driven Srirangam",
+    errFullName: "Full Name is required.",
+    errDob: "Date of Birth is required.",
+    errGender: "Gender is required.",
+    errMobile: "A valid mobile number is required.",
+    errState: "State is required.",
+    errConstituency: "Assembly Constituency is required.",
 
-    // Detailed error validation messages
-    errFullName: "Please enter your full name as per your Voter ID.",
-    errParentName: "Please enter your Father / Mother / Spouse name.",
-    errDob: "Please enter your date of birth or age.",
-    errGender: "Please select your gender.",
-    errMobile: "Please enter a valid mobile number.",
-    errCurrentAddress: "Please enter your current residential address.",
-    errPermanentAddress: "Please enter your permanent address.",
-    errDistrict: "Please enter your district name.",
-    errState: "Please enter your state.",
-    errPincode: "Please enter a valid 6-digit pin code.",
-    errVoterIdNumber: "Please enter your Voter ID number.",
-    errEmergencyName: "Please enter an emergency contact name.",
-    errRelationship: "Please enter relationship (e.g., Father, Mother).",
-    errEmergencyMobile: "Please enter a valid emergency mobile number.",
-    errJoiningAs: "Please select the role you wish to join as.",
-    errVoterIdProof: "Please upload a copy of your Voter ID proof.",
-    errPassportPhoto: "Please upload your passport size photo.",
-    errDeclared: "You must accept the declaration to submit your application."
+    errDeclared: "You must agree to the terms.",
+    validationError: "Please correct the highlighted errors.",
+    invalidMobile: "Enter a valid 10-digit number.",
+    invalidEmail: "Enter a valid email address.",
+    errOtpLength: "Enter the 6-digit verification code.",
+    download: "Download Card",
+    share: "Share Invite",
+    searchConstituency: "Search constituency...",
+    noConstituency: "No constituencies found",
+    step1Label: "Step 1 of 3",
+    step2Label: "Step 2 of 3",
+    step3Label: "Step 3 of 3",
   },
   ta: {
     title: "இயக்கத்தில் இணையுங்கள்",
-    subtitle: "ஸ்ரீரங்கம் தகுதியான மாற்றமாக இருங்கள்",
-    // Steps
-    step1: "தனிப்பட்ட விவரங்கள்",
-    step2: "முகவரி விவரங்கள்",
-    step3: "அடையாளம் மற்றும் அவசர தொடர்பு",
-    step4: "இணைப்பு விவரங்கள்",
-    step5: "ஆவணங்கள் மற்றும் பிரகடனம்",
-    success: "பதிவு வெற்றிகரமாக முடிந்தது!",
-    successSubtitle: "இயக்கத்தில் இணைந்ததற்கு நன்றி. எங்கள் குழு உங்கள் விவரங்களைச் சரிபார்த்து விரைவில் தொடர்புகொள்ளும்.",
-
-    // Step 1 fields
-    fullName: "முழு பெயர் (வாக்காளர் அடையாள அட்டையில் உள்ளபடி)",
-    parentName: "தந்தை / தாய் / துணைவர் பெயர்",
-    dob: "பிறந்த தேதி / வயது",
+    subtitle: "தொண்டராக பதிவு செய்து, சசிகிரண் கே.என் உடன் இணையுங்கள்",
+    step1: "மொபைல் எண்",
+    step2: "சுயவிவரம்",
+    step3: "சரிபார்ப்பு",
+    success: "இயக்கத்தில் வரவேற்கிறோம்!",
+    successSubtitle: "உங்களது நவீன டிஜிட்டல் உறுப்பினர் அட்டை வெற்றிகரமாக உருவாக்கப்பட்டுள்ளது.",
+    fullName: "முழு பெயர்",
+    dob: "பிறந்த தேதி",
     gender: "பாலினம்",
     genderMale: "ஆண்",
     genderFemale: "பெண்",
     genderTrans: "திருநங்கை/திருநம்பி",
     mobileNumber: "மொபைல் எண்",
-    emailId: "மின்னஞ்சல் முகவரி (விருப்பம்)",
-    occupation: "தொழில் / வேலை",
-    education: "கல்வித் தகுதி",
-
-    // Step 2 fields
-    currentAddress: "தற்போதைய முகவரி",
-    permanentAddress: "நிரந்தர முகவரி",
-    sameAsCurrent: "தற்போதைய முகவரியே நிரந்தர முகவரி",
-    district: "மாவட்டம்",
+    emailId: "மின்னஞ்சல் (விருப்பம்)",
     state: "மாநிலம்",
-    pincode: "அஞ்சல் குறியீடு (Pincode)",
+    constituency: "சட்டமன்ற தொகுதி",
 
-    // Step 3 fields
-    voterIdNumber: "வாக்காளர் அடையாள அட்டை எண்",
-    aadhaarNumber: "ஆதார் எண் (விருப்பம்)",
-    emergencyName: "அவசர தொடர்பு நபர் பெயர்",
-    relationship: "உறவுமுறை",
-    emergencyMobile: "அவசர தொடர்பு மொபைல் எண்",
-
-    // Step 4 fields
-    joiningAs: "இணைவது எவ்வாறு",
-    joiningAsSelect: "பொறுப்பைத் தேர்ந்தெடுக்கவும்",
-    joiningAsOptions: [
-      { value: "Volunteer", label: "தொண்டர் (Volunteer)" },
-      { value: "Party Supporter", label: "கட்சி ஆதரவாளர் (Party Supporter)" },
-      { value: "Youth Wing", label: "இளைஞர் அணி (Youth Wing)" },
-      { value: "Women Wing", label: "மகளிர் அணி (Women Wing)" },
-      { value: "Social Media Team", label: "சமூக ஊடகக் குழு (Social Media Team)" },
-      { value: "Event Coordinator", label: "நிகழ்ச்சி ஒருங்கிணைப்பாளர் (Event Coordinator)" },
-      { value: "Field Volunteer", label: "களத் தொண்டர் (Field Volunteer)" }
-    ],
-    areaOfInterest: "ஆர்வம் உள்ள துறை",
-    skills: "திறன்கள் / அனுபவம்",
-    preferredWorkingArea: "விருப்பமான பணிப் பகுதி",
-    availableTime: "பணிக்காக ஒதுக்கக்கூடிய நேரம்",
-
-    // Step 5 fields
-    voterIdProof: "வாக்காளர் அடையாள அட்டை நகல்",
-    voterIdProofDesc: "வாக்காளர் அடையாள அட்டையின் நகல் (அதிகபட்சம் 5MB, படம் அல்லது PDF)",
-    passportPhoto: "புகைப்படம் (Passport Size)",
-    passportPhotoDesc: "புகைப்படத்தை பதிவேற்றவும் (அதிகபட்சம் 2MB, JPEG/PNG)",
-    signature: "கையொப்பம் (விருப்பம்)",
-    signatureDesc: "டிஜிட்டல் கையொப்பம் அல்லது ஸ்கேன் நகல் (அதிகபட்சம் 2MB, JPEG/PNG)",
-    declaration: "உறுதிமொழி (Declaration)",
-    declarationText: "இங்கு சமர்ப்பிக்கப்பட்டுள்ள அனைத்து விவரங்களும் உண்மையானவை மற்றும் சரியானவை என நான் உறுதிப்படுத்துகிறேன், மேலும் நான் தானாக முன்வந்து இந்த அமைப்பில் இணைகிறேன்/ஆதரிக்கிறேன்.",
-
-    // General
-    next: "அடுத்த படி",
+    agreeTerms: "நான் பயன்பாட்டு விதிமுறைகள் மற்றும் தனியுரிமைக் கொள்கையை ஏற்கிறேன்.",
+    next: "தொடரவும்",
     prev: "முந்தைய",
-    submit: "விண்ணப்பத்தைச் சமர்ப்பி",
-    submitting: "சமர்ப்பிக்கப்படுகிறது...",
+    submit: "OTP அனுப்பவும்",
+    verify: "சரிபார்த்து அட்டை பெறுக",
+    submitting: "உருவாக்கப்படுகிறது...",
     close: "மூடு",
-    dragDrop: "கோப்பை இழுத்து விடவும் அல்லது கிளிக் செய்யவும்",
-    changeFile: "மாற்று",
-    invalidMobile: "மொபைல் எண் 10-இலக்கமாக இருக்க வேண்டும்",
-    invalidPincode: "அஞ்சல் குறியீடு 6-இலக்கமாக இருக்க வேண்டும்",
-    invalidAadhaar: "ஆதார் எண் 12-இலக்கமாக இருக்க வேண்டும்",
-    invalidEmail: "சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்",
-    validationError: "தயவுசெய்து படிவத்தில் குறிப்பிடப்பட்டுள்ள பிழைகளைத் திருத்தவும்.",
     campaignSlogan: "நவீன, டிஜிட்டல் மற்றும் தர்மம் சார்ந்த ஸ்ரீரங்கத்தை உருவாக்குவோம்",
+    errFullName: "முழு பெயர் தேவை.",
+    errDob: "பிறந்த தேதி தேவை.",
+    errGender: "பாலினத்தைத் தேர்ந்தெடுக்கவும்.",
+    errMobile: "சரியான மொபைல் எண் தேவை.",
+    errState: "மாநிலம் தேவை.",
+    errConstituency: "சட்டமன்ற தொகுதி தேவை.",
 
-    // Detailed error validation messages
-    errFullName: "வாக்காளர் அடையாள அட்டையில் உள்ளபடி உங்கள் முழு பெயரை உள்ளிடவும்.",
-    errParentName: "உங்கள் தந்தை / தாய் / துணைவர் பெயரை உள்ளிடவும்.",
-    errDob: "உங்கள் பிறந்த தேதி அல்லது வயதை உள்ளிடவும்.",
-    errGender: "தயவுசெய்து உங்கள் பாலினத்தைத் தேர்ந்தெடுக்கவும்.",
-    errMobile: "சரியான மொபைல் எண்ணை உள்ளிடவும்.",
-    errCurrentAddress: "உங்கள் தற்போதைய முகவரியை உள்ளிடவும்.",
-    errPermanentAddress: "உங்கள் நிரந்தர முகவரியை உள்ளிடவும்.",
-    errDistrict: "உங்கள் மாவட்டத்தை உள்ளிடவும்.",
-    errState: "உங்கள் மாநிலத்தை உள்ளிடவும்.",
-    errPincode: "சரியான 6-இலக்க அஞ்சல் குறியீட்டை உள்ளிடவும்.",
-    errVoterIdNumber: "உங்கள் வாக்காளர் அடையாள அட்டை எண்ணை உள்ளிடவும்.",
-    errEmergencyName: "அவசர தொடர்பு நபரின் பெயரை உள்ளிடவும்.",
-    errRelationship: "அவசர தொடர்பு நபருடனான உறவை உள்ளிடவும்.",
-    errEmergencyMobile: "சரியான அவசர மொபைல் எண்ணை உள்ளிடவும்.",
-    errJoiningAs: "தயவுசெய்து நீங்கள் இணைய விரும்பும் பொறுப்பைத் தேர்ந்தெடுக்கவும்.",
-    errVoterIdProof: "வாக்காளர் அடையாள அட்டை நகலை பதிவேற்றவும்.",
-    errPassportPhoto: "உங்கள் புகைப்படத்தைப் பதிவேற்றவும்.",
-    errDeclared: "விண்ணப்பிக்க உறுதிமொழியை ஏற்க வேண்டும்."
+    errDeclared: "விதிமுறைகளை ஏற்க வேண்டும்.",
+    validationError: "படிவத்தில் உள்ள பிழைகளைத் திருத்தவும்.",
+    invalidMobile: "மொபைல் எண் 10-இலக்கமாக இருக்க வேண்டும்.",
+    invalidEmail: "மின்னஞ்சல் முகவரி தவறானது.",
+    errOtpLength: "6-இலக்க OTP குறியீட்டை உள்ளிடவும்.",
+    download: "பதிவிறக்கவும்",
+    share: "பகிரவும்",
+    searchConstituency: "தொகுதியைத் தேடவும்...",
+    noConstituency: "தொகுதி எதுவும் இல்லை",
+    step1Label: "படி 1/3",
+    step2Label: "படி 2/3",
+    step3Label: "படி 3/3",
   }
 };
 
@@ -224,1176 +117,845 @@ interface JoinMovementModalProps {
 }
 
 interface FormState {
+  mobile: string;
   fullName: string;
-  parentName: string;
   dob: string;
   gender: string;
-  mobile: string;
   email: string;
-  occupation: string;
-  education: string;
-  currentAddress: string;
-  permanentAddress: string;
-  sameAddress: boolean;
-  district: string;
   state: string;
-  pincode: string;
-  voterIdNumber: string;
-  aadhaarNumber: string;
-  emergencyName: string;
-  emergencyRelationship: string;
-  emergencyMobile: string;
-  joiningAs: string;
-  areaOfInterest: string;
-  skills: string;
-  preferredWorkingArea: string;
-  availableTime: string;
-  voterIdProof: File | null;
-  passportPhoto: File | null;
-  signature: File | null;
+  constituency: string;
   declared: boolean;
 }
 
 const initialFormState: FormState = {
+  mobile: '',
   fullName: '',
-  parentName: '',
   dob: '',
   gender: '',
-  mobile: '',
   email: '',
-  occupation: '',
-  education: '',
-  currentAddress: '',
-  permanentAddress: '',
-  sameAddress: false,
-  district: '',
   state: 'Tamil Nadu',
-  pincode: '',
-  voterIdNumber: '',
-  aadhaarNumber: '',
-  emergencyName: '',
-  emergencyRelationship: '',
-  emergencyMobile: '',
-  joiningAs: '',
-  areaOfInterest: '',
-  skills: '',
-  preferredWorkingArea: '',
-  availableTime: '',
-  voterIdProof: null,
-  passportPhoto: null,
-  signature: null,
+  constituency: '',
   declared: false
 };
 
-// ─── STYLING HELPERS ─────────────────────────────────────────────────────────
-const getInputClass = (hasError: boolean) => 
-  `w-full px-4 md:px-5 py-3 md:py-4 bg-white border-2 rounded-xl outline-none font-semibold text-stone-900 text-sm md:text-base focus:ring-4 transition-all shadow-sm ${
-    hasError 
-      ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10' 
-      : 'border-stone-200 focus:border-[#FF8C00] focus:ring-[#FF8C00]/10'
-  }`;
-
-const getSelectionClass = (hasError: boolean) => 
-  `w-full px-4 md:px-5 py-3 md:py-4 bg-white border-2 rounded-xl outline-none font-semibold text-stone-900 text-sm md:text-base focus:ring-4 transition-all shadow-sm appearance-none cursor-pointer ${
-    hasError 
-      ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10' 
-      : 'border-stone-200 focus:border-[#FF8C00] focus:ring-[#FF8C00]/10'
-  }`;
-
-const getTextareaClass = (hasError: boolean) => 
-  `w-full px-4 md:px-5 py-3 md:py-4 bg-white border-2 rounded-xl outline-none font-semibold text-stone-900 text-sm md:text-base focus:ring-4 transition-all min-h-[90px] md:min-h-[110px] resize-none shadow-sm ${
-    hasError 
-      ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10' 
-      : 'border-stone-200 focus:border-[#FF8C00] focus:ring-[#FF8C00]/10'
-  }`;
-
 export default function JoinMovementModal({ isOpen, onClose, lang = 'en' }: JoinMovementModalProps) {
   const t = formTranslations[lang] ?? formTranslations.en;
-  
+
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormState>(initialFormState);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState | 'otp', string>>>({});
+  const [otpCode, setOtpCode] = useState('');
+  const [memberId, setMemberId] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // File preview states (URLs for image previews)
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const [sigPreview, setSigPreview] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Handle outside click close
-  const modalRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      // Reset state on open
       setStep(1);
       setFormData(initialFormState);
       setErrors({});
+      setOtpCode('');
+      setSearchTerm('');
+      setMemberId('');
       setIsSuccess(false);
-      setPhotoPreview(null);
-      setSigPreview(null);
     } else {
       document.body.style.overflow = '';
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
+    return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
-
-  // Synchronize permanent address if "sameAddress" is checked
-  useEffect(() => {
-    if (formData.sameAddress) {
-      setFormData(prev => ({
-        ...prev,
-        permanentAddress: prev.currentAddress
-      }));
-      if (errors.permanentAddress) {
-        setErrors(prev => {
-          const next = { ...prev };
-          delete next.permanentAddress;
-          return next;
-        });
-      }
-    }
-  }, [formData.sameAddress, formData.currentAddress, errors.permanentAddress]);
 
   if (!isOpen) return null;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const filteredConstituencies = constituencies.filter(item =>
+    item.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, type } = e.target;
     let value = e.target.value;
     const checked = (e.target as HTMLInputElement).checked;
 
-    // Restrict input characters and lengths for relevance
-    if (name === 'mobile' || name === 'emergencyMobile') {
+    if (name === 'mobile') {
       value = value.replace(/\D/g, '').slice(0, 10);
-    } else if (name === 'pincode') {
-      value = value.replace(/\D/g, '').slice(0, 6);
-    } else if (name === 'aadhaarNumber') {
-      value = value.replace(/\D/g, '').slice(0, 12);
-    } else if (name === 'dob') {
-      value = value.replace(/[^0-9\-/ ]/g, '').slice(0, 10);
-    } else if (name === 'fullName' || name === 'parentName' || name === 'emergencyName') {
-      value = value.replace(/[0-9!@#$%^&*()_+=:{}\[\];""'<>\/?\\|`~]/g, '');
-    } else if (name === 'voterIdNumber') {
-      value = value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 15);
+    } else if (name === 'fullName') {
+      value = value.replace(/[0-9!@#$%^&*()_+=:{}[\];"'<>/?\\|`~]/g, '');
     }
 
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
 
-    // Clear error
     if (errors[name as keyof FormState]) {
-      setErrors(prev => {
-        const next = { ...prev };
-        delete next[name as keyof FormState];
-        return next;
-      });
+      setErrors(prev => { const next = { ...prev }; delete next[name as keyof FormState]; return next; });
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: 'voterIdProof' | 'passportPhoto' | 'signature') => {
-    const file = e.target.files?.[0] || null;
-    if (file) {
-      setFormData(prev => ({ ...prev, [fieldName]: file }));
-      
-      // Clear error
-      if (errors[fieldName]) {
-        setErrors(prev => {
-          const next = { ...prev };
-          delete next[fieldName];
-          return next;
-        });
-      }
-
-      // Generate previews for images
-      if (file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          if (fieldName === 'passportPhoto') setPhotoPreview(reader.result as string);
-          if (fieldName === 'signature') setSigPreview(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        if (fieldName === 'passportPhoto') setPhotoPreview(null);
-        if (fieldName === 'signature') setSigPreview(null);
-      }
+  const handleSelectConstituency = (name: string) => {
+    setFormData(prev => ({ ...prev, constituency: name }));
+    setSearchTerm(name);
+    setIsDropdownOpen(false);
+    if (errors.constituency) {
+      setErrors(prev => { const next = { ...prev }; delete next.constituency; return next; });
     }
   };
 
   const validateStep = (currentStep: number): boolean => {
-    const newErrors: Partial<Record<keyof FormState, string>> = {};
-
+    const newErrors: Partial<Record<keyof FormState | 'otp', string>> = {};
     if (currentStep === 1) {
+      const mobileRegex = /^[0-9]{10}$/;
+      if (!formData.mobile.trim()) newErrors.mobile = t.errMobile;
+      else if (!mobileRegex.test(formData.mobile)) newErrors.mobile = t.invalidMobile;
+    }
+    if (currentStep === 2) {
       if (!formData.fullName.trim()) newErrors.fullName = t.errFullName;
-      if (!formData.parentName.trim()) newErrors.parentName = t.errParentName;
       if (!formData.dob.trim()) newErrors.dob = t.errDob;
       if (!formData.gender) newErrors.gender = t.errGender;
-      
-      const mobileRegex = /^[0-9]{10}$/;
-      if (!formData.mobile.trim()) {
-        newErrors.mobile = t.errMobile;
-      } else if (!mobileRegex.test(formData.mobile)) {
-        newErrors.mobile = t.invalidMobile;
-      }
-
+      if (!formData.state.trim()) newErrors.state = t.errState;
+      if (!formData.constituency.trim()) newErrors.constituency = t.errConstituency;
       if (formData.email.trim()) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-          newErrors.email = t.invalidEmail;
-        }
+        if (!emailRegex.test(formData.email)) newErrors.email = t.invalidEmail;
       }
-    }
-
-    if (currentStep === 2) {
-      if (!formData.currentAddress.trim()) newErrors.currentAddress = t.errCurrentAddress;
-      if (!formData.sameAddress && !formData.permanentAddress.trim()) newErrors.permanentAddress = t.errPermanentAddress;
-      if (!formData.district.trim()) newErrors.district = t.errDistrict;
-      if (!formData.state.trim()) newErrors.state = t.errState;
-      
-      const pinRegex = /^[0-9]{6}$/;
-      if (!formData.pincode.trim()) {
-        newErrors.pincode = t.errPincode;
-      } else if (!pinRegex.test(formData.pincode)) {
-        newErrors.pincode = t.invalidPincode;
-      }
-    }
-
-    if (currentStep === 3) {
-      if (!formData.voterIdNumber.trim()) newErrors.voterIdNumber = t.errVoterIdNumber;
-      
-      if (formData.aadhaarNumber.trim()) {
-        const aadhaarRegex = /^[0-9]{12}$/;
-        if (!aadhaarRegex.test(formData.aadhaarNumber)) {
-          newErrors.aadhaarNumber = t.invalidAadhaar;
-        }
-      }
-
-      if (!formData.emergencyName.trim()) newErrors.emergencyName = t.errEmergencyName;
-      if (!formData.emergencyRelationship.trim()) newErrors.emergencyRelationship = t.errRelationship;
-      
-      const mobileRegex = /^[0-9]{10}$/;
-      if (!formData.emergencyMobile.trim()) {
-        newErrors.emergencyMobile = t.errEmergencyMobile;
-      } else if (!mobileRegex.test(formData.emergencyMobile)) {
-        newErrors.emergencyMobile = t.invalidMobile;
-      }
-    }
-
-    if (currentStep === 4) {
-      if (!formData.joiningAs) newErrors.joiningAs = t.errJoiningAs;
-    }
-
-    if (currentStep === 5) {
-      if (!formData.voterIdProof) newErrors.voterIdProof = t.errVoterIdProof;
-      if (!formData.passportPhoto) newErrors.passportPhoto = t.errPassportPhoto;
       if (!formData.declared) newErrors.declared = t.errDeclared;
     }
-
+    if (currentStep === 3) {
+      if (otpCode.length !== 6) newErrors.otp = t.errOtpLength;
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = () => {
-    if (validateStep(step)) {
-      setStep(prev => prev + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    setStep(prev => Math.max(1, prev - 1));
-  };
+  const handleNext = () => { if (validateStep(step)) setStep(prev => prev + 1); };
+  const handlePrev = () => setStep(prev => Math.max(1, prev - 1));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateStep(5)) return;
-
+    if (!validateStep(3)) return;
     setIsSubmitting(true);
     setErrors({});
-
     const payload = new FormData();
     payload.append('formType', 'join_movement');
     payload.append('fullName', formData.fullName);
-    payload.append('parentName', formData.parentName);
     payload.append('dob', formData.dob);
     payload.append('gender', formData.gender);
     payload.append('mobile', formData.mobile);
     payload.append('email', formData.email || '');
-    payload.append('occupation', formData.occupation || '');
-    payload.append('education', formData.education || '');
-    payload.append('currentAddress', formData.currentAddress);
-    payload.append('permanentAddress', formData.sameAddress ? formData.currentAddress : formData.permanentAddress);
-    payload.append('district', formData.district);
     payload.append('state', formData.state);
-    payload.append('pincode', formData.pincode);
-    payload.append('voterIdNumber', formData.voterIdNumber);
-    payload.append('aadhaarNumber', formData.aadhaarNumber || '');
-    payload.append('emergencyName', formData.emergencyName);
-    payload.append('emergencyRelationship', formData.emergencyRelationship);
-    payload.append('emergencyMobile', formData.emergencyMobile);
-    payload.append('joiningAs', formData.joiningAs);
-    payload.append('areaOfInterest', formData.areaOfInterest || '');
-    payload.append('skills', formData.skills || '');
-    payload.append('preferredWorkingArea', formData.preferredWorkingArea || '');
-    payload.append('availableTime', formData.availableTime || '');
-
-    if (formData.voterIdProof) {
-      payload.append('voterIdProof', formData.voterIdProof);
-    }
-    if (formData.passportPhoto) {
-      payload.append('passportPhoto', formData.passportPhoto);
-    }
-    if (formData.signature) {
-      payload.append('signature', formData.signature);
-    }
-
+    payload.append('constituency', formData.constituency);
     try {
-      const res = await fetch(`${import.meta.env.BASE_URL}contact.php`, {
-        method: 'POST',
-        body: payload,
-      });
-
+      const res = await fetch(`${import.meta.env.BASE_URL}contact.php`, { method: 'POST', body: payload });
       const text = await res.text();
-      
-      // If we are in local development (Vite dev server) or it returns PHP code:
-      if (text.includes('<?php') || import.meta.env.DEV) {
-        console.warn("Dev mode fallback: Simulating email send success.");
-        setIsSuccess(true);
-        return;
-      }
-
+      if (text.includes('<?php') || import.meta.env.DEV) { generateCardAndSucceed(); return; }
       let data;
-      try {
-        data = JSON.parse(text);
-      } catch {
-        if (res.ok) {
-          setIsSuccess(true);
-          return;
-        }
-        throw new Error("Response was not valid JSON");
-      }
-
-      if (res.ok && data.status === 'success') {
-        setIsSuccess(true);
-      } else {
-        const errorDetail = data?.message || text || 'Unknown submission error.';
-        alert(`Submission Failed!\n\nDetails: ${errorDetail}`);
-        setErrors({ declared: errorDetail });
+      try { data = JSON.parse(text); } catch { if (res.ok) { generateCardAndSucceed(); return; } throw new Error("Response was not valid JSON"); }
+      if (res.ok && data.status === 'success') { generateCardAndSucceed(data.member_id); }
+      else {
+        if (data?.errors) { setErrors(data.errors); alert(data.message || "Please correct the errors."); setStep(2); }
+        else { const errorDetail = data?.message || text || 'Unknown error.'; alert(`Submission Failed!\n\nDetails: ${errorDetail}`); setErrors({ otp: errorDetail }); }
       }
     } catch (err: any) {
-      if (import.meta.env.DEV) {
-        console.warn("Dev mode submit error bypassed:", err);
-        setIsSuccess(true);
-      } else {
-        const errorMsg = err?.message || 'Network error occurred while submitting. Please try again.';
-        alert(`Network Error!\n\nDetails: ${errorMsg}`);
-        setErrors({ declared: errorMsg });
+      if (import.meta.env.DEV) { generateCardAndSucceed(); }
+      else { const errorMsg = err?.message || 'Network error.'; alert(`Network Error!\n\nDetails: ${errorMsg}`); setErrors({ otp: errorMsg }); }
+    } finally { setIsSubmitting(false); }
+  };
+
+  const generateCardAndSucceed = (serverMemberId?: string) => {
+    const id = serverMemberId || `NSP-${String(Date.now() % 1000000).padStart(6, '0')}`;
+    setMemberId(id);
+    setIsSuccess(true);
+  };
+
+  const handleDownloadCard = () => {
+    const W = 1012, H = 638;
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const bgImg = new Image(); bgImg.crossOrigin = 'anonymous'; bgImg.src = srirangamImg;
+    const logo = new Image(); logo.crossOrigin = 'anonymous'; logo.src = logoImg;
+
+    let loaded = 0;
+    const onReady = () => {
+      loaded++;
+      if (loaded < 2) return;
+
+      // ── Dark gradient background ──
+      const bg = ctx.createLinearGradient(0, 0, W, H);
+      bg.addColorStop(0, '#0d0d1a'); bg.addColorStop(0.45, '#1c0c28'); bg.addColorStop(1, '#1f0c0c');
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+      // ── Srirangam photo overlay ──
+      ctx.save(); ctx.globalAlpha = 0.18; ctx.globalCompositeOperation = 'luminosity';
+      ctx.drawImage(bgImg, 0, 0, W, H); ctx.restore();
+
+      // ── Red glow ──
+      const glow = ctx.createRadialGradient(W * 0.7, H * 0.3, 0, W * 0.7, H * 0.3, 450);
+      glow.addColorStop(0, 'rgba(204,0,0,0.18)'); glow.addColorStop(1, 'transparent');
+      ctx.fillStyle = glow; ctx.fillRect(0, 0, W, H);
+
+      // ── Gold accent lines (top & bottom) ──
+      const topGrad = ctx.createLinearGradient(0, 0, W, 0);
+      topGrad.addColorStop(0, '#CC0000'); topGrad.addColorStop(0.5, '#FF8C00'); topGrad.addColorStop(1, '#FFD700');
+      ctx.fillStyle = topGrad; ctx.fillRect(0, 0, W, 6);
+      ctx.fillStyle = 'rgba(255,140,0,0.35)'; ctx.fillRect(0, 7, W, 2);
+      const btmGrad = ctx.createLinearGradient(0, 0, W, 0);
+      btmGrad.addColorStop(0, '#FFD700'); btmGrad.addColorStop(0.5, '#FF8C00'); btmGrad.addColorStop(1, '#CC0000');
+      ctx.fillStyle = btmGrad; ctx.fillRect(0, H - 6, W, 6);
+      ctx.fillStyle = 'rgba(255,140,0,0.3)'; ctx.fillRect(0, H - 9, W, 2);
+
+      // ── Diagonal shimmer ──
+      const shim = ctx.createLinearGradient(0, 0, W, H);
+      shim.addColorStop(0.3, 'transparent'); shim.addColorStop(0.5, 'rgba(255,215,0,0.04)'); shim.addColorStop(0.7, 'transparent');
+      ctx.fillStyle = shim; ctx.fillRect(0, 0, W, H);
+
+      // ── Rounded card border ──
+      ctx.save(); ctx.beginPath(); ctx.roundRect(0, 0, W, H, 28); ctx.clip(); ctx.restore();
+
+      const pad = 50;
+
+      // ── TOP ROW: Logo + Brand + VIP Badge ──
+      // Logo
+      ctx.save();
+      ctx.fillStyle = 'rgba(255,255,255,0.1)';
+      ctx.beginPath(); ctx.roundRect(pad, pad, 60, 60, 12); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,215,0,0.3)'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.clip();
+      ctx.drawImage(logo, pad + 4, pad + 4, 52, 52);
+      ctx.restore();
+
+      // Brand text
+      ctx.font = '900 18px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText('SHASHIKIRAN KN', pad + 72, pad + 28);
+      ctx.font = 'bold 11px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = '#FF8C00';
+      ctx.fillText('TAMIL NADU 2026 MOVEMENT', pad + 72, pad + 48);
+
+      // VIP Badge
+      ctx.save();
+      const badgeX = W - pad - 155;
+      const badgeGrad = ctx.createLinearGradient(badgeX, 0, badgeX + 130, 0);
+      badgeGrad.addColorStop(0, '#CC0000'); badgeGrad.addColorStop(1, '#a80000');
+      ctx.fillStyle = badgeGrad;
+      ctx.beginPath(); ctx.roundRect(badgeX, pad, 130, 32, 4); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,140,0,0.5)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.font = '900 13px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = '#FFFFFF'; ctx.textAlign = 'center';
+      ctx.fillText('VIP MEMBER', badgeX + 65, pad + 22);
+      ctx.textAlign = 'left'; ctx.restore();
+
+      // LOYALTY CARD label
+      ctx.font = 'bold 10px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = 'rgba(255,215,0,0.65)'; ctx.textAlign = 'right';
+      ctx.fillText('LOYALTY CARD', W - pad - 25, pad + 58); ctx.textAlign = 'left';
+
+      // ── MIDDLE ROW: Member ID card-number style ──
+      const midY = H * 0.46;
+      // ID Number (like credit card number)
+      ctx.font = '900 28px "Courier New", monospace';
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      const displayId = memberId.replace(/-/g, '').replace(/(.{4})/g, '$1  ').trim();
+      ctx.textAlign = 'right';
+      ctx.fillText(displayId, W - pad, midY);
+      ctx.font = 'bold 10px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = 'rgba(255,215,0,0.6)';
+      ctx.fillText('MEMBER ID', W - pad, midY + 20); ctx.textAlign = 'left';
+
+      // ── BOTTOM ROW: Name + Constituency + Issued + QR ──
+      const btmY = H - pad - 100;
+
+      // CARDHOLDER NAME label
+      ctx.font = 'bold 10px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = 'rgba(255,140,0,0.75)';
+      ctx.fillText('CARDHOLDER NAME', pad, btmY);
+      // Name
+      ctx.font = '900 28px Georgia, serif';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 12;
+      const nameText = (formData.fullName || 'MEMBER NAME').toUpperCase();
+      ctx.fillText(nameText.length > 22 ? nameText.slice(0, 22) + '...' : nameText, pad, btmY + 32);
+      ctx.restore();
+
+      // Constituency
+      ctx.font = 'bold 10px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = 'rgba(255,140,0,0.7)';
+      ctx.fillText('CONSTITUENCY', pad, btmY + 60);
+      ctx.font = 'bold 15px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.75)';
+      ctx.fillText(formData.constituency || '—', pad, btmY + 80);
+
+      // Divider
+      ctx.fillStyle = 'rgba(255,255,255,0.15)';
+      ctx.fillRect(pad + 220, btmY + 48, 2, 40);
+
+      // Issued date
+      ctx.font = 'bold 10px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = 'rgba(255,140,0,0.7)';
+      ctx.fillText('ISSUED', pad + 240, btmY + 60);
+      ctx.font = 'bold 15px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.75)';
+      ctx.fillText(new Date().toLocaleDateString('en-GB'), pad + 240, btmY + 80);
+
+      // QR code
+      const qrCanvas = document.querySelector('.membership-qr canvas') as HTMLCanvasElement;
+      if (qrCanvas) {
+        const qrSize = 100;
+        const qrX = W - pad - qrSize, qrY = btmY - 8;
+        ctx.save();
+        ctx.fillStyle = 'rgba(255,255,255,0.95)';
+        ctx.beginPath(); ctx.roundRect(qrX - 8, qrY - 8, qrSize + 16, qrSize + 16, 10); ctx.fill();
+        ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 16;
+        ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+        ctx.restore();
       }
-    } finally {
-      setIsSubmitting(false);
-    }
+
+      // ── Bottom label ──
+      ctx.font = 'bold 9px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.textAlign = 'center';
+      ctx.fillText('NSP DIGITAL MEMBERSHIP CARD — 2026', W / 2, H - 16);
+      ctx.textAlign = 'left';
+
+      // Trigger download
+      const link = document.createElement('a');
+      link.download = `membership-${formData.fullName.replace(/\s+/g, '-').toLowerCase()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    };
+
+    if (bgImg.complete) { loaded++; } else { bgImg.onload = onReady; }
+    if (logo.complete) { loaded++; } else { logo.onload = onReady; }
+    if (loaded === 2) onReady();
+  };
+
+  const handleWhatsappShare = () => {
+    const inviteText = lang === 'ta'
+      ? `நான் திரு. சசிகிரண் கே.என் அவர்களின் இயக்கத்தில் இணைந்திருக்கிறேன்! 🧡🚩\nஉறுப்பினர் அட்டையைப் பெற இங்கே பதியவும்: ${window.location.origin}`
+      : `I have joined Shashikiran KN's campaign movement for Srirangam! Get your digital membership card! 🧡🚩\nRegister here: ${window.location.origin}`;
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(inviteText)}`, '_blank');
   };
 
   return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-0 md:p-4">
-      {/* Blurred Backdrop */}
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-0 sm:p-4">
+      {/* Backdrop */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
         onClick={onClose}
-        className="absolute inset-0 bg-stone-900/60 backdrop-blur-md"
+        className="absolute inset-0 bg-stone-900/30 backdrop-blur-sm"
       />
 
-      {/* Main Modal Card */}
+      {/* Modal - Split-panel layout */}
       <motion.div
-        ref={modalRef}
-        initial={{ scale: 0.95, opacity: 0, y: 15 }}
+        initial={{ scale: 0.98, opacity: 0, y: 10 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.95, opacity: 0, y: 15 }}
-        transition={{ type: "spring", damping: 28, stiffness: 300 }}
-        className="relative z-10 w-full md:max-w-6xl bg-stone-50 md:rounded-3xl overflow-hidden shadow-2xl border border-white flex flex-col md:flex-row h-full md:h-[85vh] max-h-none md:max-h-[850px]"
+        exit={{ scale: 0.98, opacity: 0, y: 10 }}
+        transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+        className="relative z-10 w-full sm:max-w-md lg:max-w-4xl flex h-full sm:h-auto max-h-full sm:max-h-[90vh] bg-white sm:rounded-3xl overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.12)] border border-stone-200/60"
       >
-        {/* Banner Column/Header (Desktop only) */}
-        <div className="hidden md:flex md:w-[40%] h-full relative overflow-hidden flex-col justify-between items-stretch p-10 text-white select-none shrink-0 bg-stone-950">
-          {/* Background image & heavy gradient overlay for contrast */}
-          <div className="absolute inset-0 z-0 bg-stone-950">
-            <img src={campaignBg} alt="Campaign" className="w-full h-full object-cover opacity-50 md:opacity-40" />
-            <div className="absolute inset-0 bg-black/50" /> {/* Dark overlay with half transparency */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent md:bg-gradient-to-r md:from-[#CC0000]/10" />
+        {/* ── LEFT PANEL: Campaign Branding (Minimal Theme Gradient) */}
+        <div className="hidden lg:flex lg:w-[42%] relative flex-col justify-between p-10 bg-gradient-to-br from-[black]/70 via-[black]/70 to-[#E45C00] text-white overflow-hidden shrink-0">
+          {/* Subtle image watermark */}
+          <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.96] mix-blend-overlay">
+            <img src={campaignBg} alt="" className="w-full h-full object-cover" />
           </div>
 
-          {/* Top Row: Logo & Campaign branding */}
-          <div className="relative z-10 flex items-center gap-2.5 md:gap-3 shrink-0">
-            <img src={logoImg} alt="Logo" className="w-10 h-10 md:w-14 h-14 bg-white rounded-xl md:rounded-2xl p-0.5 md:p-1 border border-stone-200" />
-            <div>
-              <h3 className="font-black text-xs md:text-base uppercase tracking-wider text-[#FF8C00] leading-tight">Shashikiran KN</h3>
-              <p className="text-[0.6rem] md:text-xs font-bold text-stone-300 uppercase tracking-widest leading-none mt-0.5">Srirangam 2026</p>
+          {/* Header Brand */}
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-16">
+              <div className="w-10 h-10 bg-white rounded-xl p-1 shadow-md flex items-center justify-center border border-white/10">
+                <img src={logoImg} alt="Logo" className="w-full h-full object-contain" />
+              </div>
+              <div>
+                <p className="font-extrabold text-[10px] uppercase tracking-[0.2em] leading-none text-white">SHASHIKIRAN KN</p>
+                <p className="text-[7px] text-orange-200 font-bold uppercase tracking-[0.15em] leading-none mt-1">TAMIL NADU 2026</p>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <div className="inline-flex items-center gap-2 border border-white/20 bg-white/10 px-3.5 py-1 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-orange-300 animate-pulse" />
+                <span className="text-[8px] font-bold uppercase tracking-[0.15em] text-white/95">VOLUNTEER REGISTRATION</span>
+              </div>
+              <h2 className="text-2xl font-black leading-[1.2] tracking-tight text-white">
+                {t.campaignSlogan}
+              </h2>
             </div>
           </div>
 
-          {/* Center Content: Slogan only (No bullets, hidden on mobile for clean screen height) */}
-          <div className="relative z-10 hidden md:flex flex-col my-auto py-8 max-w-sm shrink-0">
-            <div className="inline-flex items-center gap-1.5 self-start px-3 py-1 bg-[#FF8C00]/25 border border-[#FF8C00]/40 rounded-full text-[0.65rem] font-black text-[#FF8C00] uppercase tracking-wider mb-4">
-              <Sparkles size={10} />
-              <span>Join the Movement</span>
-            </div>
-            <h2 className="text-xl lg:text-2xl font-black leading-snug tracking-tight text-white">
-              {t.campaignSlogan}
-            </h2>
+          {/* Bottom Srirangam tag */}
+          <div className="relative z-10 pt-4 border-t border-white/10">
+            <p className="text-[8px] text-white/50 font-bold uppercase tracking-widest leading-none">Srirangam Assembly Constituency · Tamil Nadu</p>
           </div>
         </div>
 
-        {/* Right Side: Form (Scrollable body, Sticky footer) */}
-        <form onSubmit={handleSubmit} className="w-full md:w-[60%] flex flex-col flex-1 h-full bg-stone-50 overflow-hidden" noValidate>
-          
-          {/* Header (Sticky) */}
-          <div className="px-6 pt-5 pb-4 md:px-10 md:pt-6 md:pb-5 border-b border-stone-200/80 bg-white flex items-center justify-between shrink-0 relative z-10">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#CC0000] via-[#FF8C00] to-[#CC0000]" />
-            <div className="flex items-center gap-3">
-              {/* Logo visible on mobile header since the banner column is hidden */}
-              <img src={logoImg} alt="Logo" className="md:hidden w-8 h-8 bg-white rounded-lg p-0.5 border border-stone-200 shrink-0 object-contain" />
+        {/* ── RIGHT PANEL: Beautiful Clean Form */}
+        <div className="flex-1 flex flex-col min-w-0 bg-white">
+          {/* Close button */}
+          <button
+            type="button" onClick={onClose}
+            className="absolute top-4 right-4 p-2 rounded-xl text-stone-400 hover:text-stone-600 hover:bg-stone-50 transition-colors z-[100] cursor-pointer"
+          >
+            <X size={18} />
+          </button>
+
+          <form onSubmit={handleSubmit} className="flex flex-col h-full" noValidate>
+            {/* Header section */}
+            <div className="px-6 pt-7 pb-4 sm:px-8 shrink-0 border-b border-stone-100">
+              {/* Mobile-only brand row */}
+              <div className="flex items-center gap-2 mb-4 lg:hidden">
+                <img src={logoImg} alt="Logo" className="w-6 h-6 object-contain bg-stone-50 rounded-lg p-0.5 border border-stone-200/60" />
+                <div>
+                  <p className="font-extrabold text-[8px] uppercase tracking-wider text-stone-800 leading-none">SHASHIKIRAN KN</p>
+                  <p className="text-[5px] text-[#FF8C00] font-black uppercase tracking-widest leading-none mt-0.5">TAMIL NADU 2026</p>
+                </div>
+              </div>
+
               <div>
-                <h2 className="text-base md:text-xl font-black text-stone-900 leading-tight">
-                  {t.title}
+                <h2 className="text-lg sm:text-xl font-extrabold text-stone-900 leading-tight">
+                  {isSuccess ? t.success : t.title}
                 </h2>
-                <p className="text-[10px] md:text-xs font-bold text-stone-500 mt-0.5">{t.subtitle}</p>
+                <p className="text-xs text-stone-455 mt-1">
+                  {isSuccess ? t.successSubtitle : t.subtitle}
+                </p>
               </div>
-            </div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-2 rounded-xl bg-stone-100 text-stone-600 hover:bg-stone-200 transition-colors cursor-pointer"
-            >
-              <X size={18} />
-            </button>
-          </div>
 
-          {/* Step Indicator Progress Bar (Sticky) */}
-          {!isSuccess && (
-            <div className="px-6 py-3.5 md:px-10 md:py-4 bg-stone-100/60 border-b border-stone-200/50 shrink-0">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-[0.65rem] md:text-xs font-black uppercase tracking-wider text-stone-550">
-                  Step {step} of 5: {step === 1 ? t.step1 : step === 2 ? t.step2 : step === 3 ? t.step3 : step === 4 ? t.step4 : t.step5}
-                </span>
-                <span className="text-[0.7rem] md:text-xs font-black text-[#FF8C00]">{Math.round((step / 5) * 100)}%</span>
-              </div>
-              <div className="h-2 bg-stone-200 rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full bg-gradient-to-r from-[#CC0000] to-[#FF8C00]"
-                  initial={{ width: "20%" }}
-                  animate={{ width: `${(step / 5) * 100}%` }}
-                  transition={{ duration: 0.3 }}
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Form Content (Scrollable) */}
-          <div className="flex-1 overflow-y-auto px-6 py-6 md:px-10 md:py-8 scrollbar-thin">
-            <AnimatePresence mode="wait">
-              {isSuccess ? (
-                <motion.div
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="flex flex-col items-center justify-center text-center py-8 h-full"
-                >
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 mb-5 border border-emerald-100 shadow-md">
-                    <CheckCircle2 size={44} className="animate-bounce" />
-                  </div>
-                  <h3 className="text-2xl font-black text-stone-900 mb-2">{t.success}</h3>
-                  <p className="text-stone-600 text-base max-w-md mb-8 leading-relaxed">
-                    {t.successSubtitle}
-                  </p>
-                  
-                  {/* Summary card */}
-                  <div className="w-full max-w-lg bg-white border border-stone-200 rounded-2xl p-6 text-left mb-8 shadow-sm">
-                    <h4 className="text-xs font-black uppercase tracking-wider text-stone-400 border-b border-stone-100 pb-2 mb-3">Registration Summary</h4>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <span className="text-stone-400 block text-xs">Name</span>
-                        <span className="font-bold text-stone-800">{formData.fullName}</span>
-                      </div>
-                      <div>
-                        <span className="text-stone-400 block text-xs">Mobile</span>
-                        <span className="font-bold text-stone-800">{formData.mobile}</span>
-                      </div>
-                      <div>
-                        <span className="text-stone-400 block text-xs">Role</span>
-                        <span className="font-bold text-[#FF8C00]">{formData.joiningAs}</span>
-                      </div>
-                      <div>
-                        <span className="text-stone-400 block text-xs">Voter ID</span>
-                        <span className="font-bold text-stone-800">{formData.voterIdNumber}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={onClose}
-                    className="px-10 py-4 bg-stone-900 hover:bg-stone-800 text-white rounded-xl font-black text-xs uppercase tracking-wider transition-colors shadow-md cursor-pointer"
-                  >
-                    {t.close}
-                  </button>
-                </motion.div>
-              ) : (
-                <div className="space-y-6">
-                  
-                  {/* STEP 1: Personal Info */}
-                  {step === 1 && (
-                    <motion.div
-                      key="step1"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      className="space-y-5"
-                    >
-                      <FormField label={t.fullName} error={errors.fullName} required>
-                        <div className="relative">
-                          <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                          <input
-                            name="fullName"
-                            value={formData.fullName}
-                            onChange={handleChange}
-                            onInput={(e) => {
-                              e.currentTarget.value = e.currentTarget.value.replace(/[0-9!@#$%^&*()_+=:{}\[\];""'<>\/?\\|`~]/g, '');
-                            }}
-                            className={`${getInputClass(!!errors.fullName)} pl-12`}
-                          />
+              {/* Elegant Progress Indicator */}
+              {!isSuccess && (
+                <div className="flex items-center gap-1.5 mt-5">
+                  {[1, 2, 3].map((s) => (
+                    <React.Fragment key={s}>
+                      <div className={`flex items-center gap-1.5 transition-all ${step >= s ? 'opacity-100' : 'opacity-35'}`}>
+                        <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-extrabold border transition-all ${step > s ? 'bg-[#CC0000] border-transparent text-white shadow-sm' : step === s ? 'bg-white border-[#CC0000] text-[#CC0000]' : 'bg-white border-stone-200 text-stone-400'}`}>
+                          {s}
                         </div>
-                      </FormField>
-
-                      <FormField label={t.parentName} error={errors.parentName} required>
-                        <div className="relative">
-                          <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                          <input
-                            name="parentName"
-                            value={formData.parentName}
-                            onChange={handleChange}
-                            onInput={(e) => {
-                              e.currentTarget.value = e.currentTarget.value.replace(/[0-9!@#$%^&*()_+=:{}\[\];""'<>\/?\\|`~]/g, '');
-                            }}
-                            className={`${getInputClass(!!errors.parentName)} pl-12`}
-                          />
-                        </div>
-                      </FormField>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <FormField label={t.dob} error={errors.dob} required>
-                          <input
-                            name="dob"
-                            value={formData.dob}
-                            onChange={handleChange}
-                            onInput={(e) => {
-                              e.currentTarget.value = e.currentTarget.value.replace(/[^0-9\-/ ]/g, '').slice(0, 10);
-                            }}
-                            className={getInputClass(!!errors.dob)}
-                          />
-                        </FormField>
-
-                        <FormField label={t.gender} error={errors.gender} required>
-                          <div className="flex gap-2.5 h-[56px] items-center">
-                            {['Male', 'Female', 'Trans'].map((g) => {
-                              const isSel = formData.gender === g;
-                              const labelText = g === 'Male' ? t.genderMale : g === 'Female' ? t.genderFemale : t.genderTrans;
-                              return (
-                                <button
-                                  key={g}
-                                  type="button"
-                                  onClick={() => {
-                                    setFormData(prev => ({ ...prev, gender: g }));
-                                    if (errors.gender) setErrors(prev => {
-                                      const next = { ...prev };
-                                      delete next.gender;
-                                      return next;
-                                    });
-                                  }}
-                                  className={`flex-1 h-full rounded-xl border text-sm font-bold transition-all cursor-pointer ${
-                                    isSel
-                                      ? 'bg-[#FF8C00] border-[#FF8C00] text-white shadow-sm'
-                                      : errors.gender
-                                      ? 'bg-white border-red-500 text-red-500'
-                                      : 'bg-white border-stone-200 text-stone-600 hover:border-stone-300'
-                                  }`}
-                                >
-                                  {labelText}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        </FormField>
+                        <span className="text-[8px] font-black uppercase tracking-widest hidden sm:inline text-stone-600">
+                          {s === 1 ? t.step1 : s === 2 ? t.step2 : t.step3}
+                        </span>
                       </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <FormField label={t.mobileNumber} error={errors.mobile} required>
-                          <div className="relative">
-                            <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                            <input
-                              name="mobile"
-                              type="tel"
-                              inputMode="numeric"
-                              pattern="[0-9]*"
-                              value={formData.mobile}
-                              onChange={handleChange}
-                              onInput={(e) => {
-                                e.currentTarget.value = e.currentTarget.value.replace(/\D/g, '').slice(0, 10);
-                              }}
-                              className={`${getInputClass(!!errors.mobile)} pl-12`}
-                            />
-                          </div>
-                        </FormField>
-
-                        <FormField label={t.emailId} error={errors.email}>
-                          <div className="relative">
-                            <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                            <input
-                              name="email"
-                              type="email"
-                              value={formData.email}
-                              onChange={handleChange}
-                              className={`${getInputClass(!!errors.email)} pl-12`}
-                            />
-                          </div>
-                        </FormField>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <FormField label={t.occupation}>
-                          <div className="relative">
-                            <Briefcase size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                            <input
-                              name="occupation"
-                              value={formData.occupation}
-                              onChange={handleChange}
-                              className={`${getInputClass(!!errors.occupation)} pl-12`}
-                            />
-                          </div>
-                        </FormField>
-
-                        <FormField label={t.education}>
-                          <div className="relative">
-                            <Award size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                            <input
-                              name="education"
-                              value={formData.education}
-                              onChange={handleChange}
-                              className={`${getInputClass(!!errors.education)} pl-12`}
-                            />
-                          </div>
-                        </FormField>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* STEP 2: Address Info */}
-                  {step === 2 && (
-                    <motion.div
-                      key="step2"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      className="space-y-5"
-                    >
-                      <FormField label={t.currentAddress} error={errors.currentAddress} required>
-                        <textarea
-                          name="currentAddress"
-                          value={formData.currentAddress}
-                          onChange={handleChange}
-                          className={getTextareaClass(!!errors.currentAddress)}
-                        />
-                      </FormField>
-
-                      <div className="flex items-center gap-2.5 py-1">
-                        <input
-                          id="sameAddress"
-                          name="sameAddress"
-                          type="checkbox"
-                          checked={formData.sameAddress}
-                          onChange={handleChange}
-                          className="h-5 w-5 rounded border-stone-300 text-[#FF8C00] focus:ring-[#FF8C00]/20 cursor-pointer"
-                        />
-                        <label htmlFor="sameAddress" className="text-sm font-bold text-stone-700 cursor-pointer select-none">
-                          {t.sameAsCurrent}
-                        </label>
-                      </div>
-
-                      <FormField label={t.permanentAddress} error={errors.permanentAddress} required={!formData.sameAddress}>
-                        <textarea
-                          name="permanentAddress"
-                          value={formData.sameAddress ? formData.currentAddress : formData.permanentAddress}
-                          onChange={handleChange}
-                          disabled={formData.sameAddress}
-                          className={formData.sameAddress ? 'w-full px-5 py-4 bg-stone-100 border-2 border-stone-200 rounded-xl outline-none font-semibold text-stone-500 text-base min-h-[110px] resize-none shadow-sm' : getTextareaClass(!!errors.permanentAddress)}
-                        />
-                      </FormField>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <FormField label={t.district} error={errors.district} required>
-                          <input
-                            name="district"
-                            value={formData.district}
-                            onChange={handleChange}
-                            className={getInputClass(!!errors.district)}
-                          />
-                        </FormField>
-
-                        <FormField label={t.state} error={errors.state} required>
-                          <input
-                            name="state"
-                            value={formData.state}
-                            onChange={handleChange}
-                            className={getInputClass(!!errors.state)}
-                          />
-                        </FormField>
-
-                        <FormField label={t.pincode} error={errors.pincode} required>
-                          <input
-                            name="pincode"
-                            type="tel"
-                            inputMode="numeric"
-                            pattern="[0-9]*"
-                            value={formData.pincode}
-                            onChange={handleChange}
-                            onInput={(e) => {
-                              e.currentTarget.value = e.currentTarget.value.replace(/\D/g, '').slice(0, 6);
-                            }}
-                            className={getInputClass(!!errors.pincode)}
-                          />
-                        </FormField>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* STEP 3: Identity & Emergency */}
-                  {step === 3 && (
-                    <motion.div
-                      key="step3"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      className="space-y-5"
-                    >
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <FormField label={t.voterIdNumber} error={errors.voterIdNumber} required>
-                          <div className="relative">
-                            <FileText size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                            <input
-                              name="voterIdNumber"
-                              value={formData.voterIdNumber}
-                              onChange={handleChange}
-                              onInput={(e) => {
-                                e.currentTarget.value = e.currentTarget.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 15);
-                              }}
-                              className={`${getInputClass(!!errors.voterIdNumber)} pl-12`}
-                            />
-                          </div>
-                        </FormField>
-
-                        <FormField label={t.aadhaarNumber} error={errors.aadhaarNumber}>
-                          <div className="relative">
-                            <FileText size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                            <input
-                              name="aadhaarNumber"
-                              type="tel"
-                              inputMode="numeric"
-                              pattern="[0-9]*"
-                              value={formData.aadhaarNumber}
-                              onChange={handleChange}
-                              onInput={(e) => {
-                                e.currentTarget.value = e.currentTarget.value.replace(/\D/g, '').slice(0, 12);
-                              }}
-                              className={`${getInputClass(!!errors.aadhaarNumber)} pl-12`}
-                            />
-                          </div>
-                        </FormField>
-                      </div>
-
-                      <div className="border-t border-stone-200/60 my-2 pt-5">
-                        <h4 className="text-xs font-black uppercase tracking-wider text-stone-500 mb-4">Emergency Contact Details</h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <FormField label={t.emergencyName} error={errors.emergencyName} required>
-                            <input
-                              name="emergencyName"
-                              value={formData.emergencyName}
-                              onChange={handleChange}
-                              onInput={(e) => {
-                                e.currentTarget.value = e.currentTarget.value.replace(/[0-9!@#$%^&*()_+=:{}\[\];""'<>\/?\\|`~]/g, '');
-                              }}
-                              className={getInputClass(!!errors.emergencyName)}
-                            />
-                          </FormField>
-
-                          <FormField label={t.relationship} error={errors.emergencyRelationship} required>
-                            <input
-                              name="emergencyRelationship"
-                              value={formData.emergencyRelationship}
-                              onChange={handleChange}
-                              className={getInputClass(!!errors.emergencyRelationship)}
-                            />
-                          </FormField>
-                        </div>
-
-                        <div className="mt-4">
-                          <FormField label={t.emergencyMobile} error={errors.emergencyMobile} required>
-                            <div className="relative">
-                              <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                              <input
-                                name="emergencyMobile"
-                                type="tel"
-                                inputMode="numeric"
-                                pattern="[0-9]*"
-                                value={formData.emergencyMobile}
-                                onChange={handleChange}
-                                onInput={(e) => {
-                                  e.currentTarget.value = e.currentTarget.value.replace(/\D/g, '').slice(0, 10);
-                                }}
-                                className={`${getInputClass(!!errors.emergencyMobile)} pl-12`}
-                              />
-                            </div>
-                          </FormField>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* STEP 4: Joining Details */}
-                  {step === 4 && (
-                    <motion.div
-                      key="step4"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      className="space-y-5"
-                    >
-                      <FormField label={t.joiningAs} error={errors.joiningAs} required>
-                        <div className="relative">
-                          <select
-                            name="joiningAs"
-                            value={formData.joiningAs}
-                            onChange={handleChange}
-                            className={getSelectionClass(!!errors.joiningAs)}
-                          >
-                            <option value="">-- {t.joiningAsSelect} --</option>
-                            {t.joiningAsOptions.map(opt => (
-                              <option key={opt.value} value={opt.value}>{opt.label}</option>
-                            ))}
-                          </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-stone-500">
-                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                            </svg>
-                          </div>
-                        </div>
-                      </FormField>
-
-                      <FormField label={t.areaOfInterest}>
-                        <div className="relative">
-                          <Heart size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                          <input
-                            name="areaOfInterest"
-                            value={formData.areaOfInterest}
-                            onChange={handleChange}
-                            className={`${getInputClass(!!errors.areaOfInterest)} pl-12`}
-                          />
-                        </div>
-                      </FormField>
-
-                      <FormField label={t.skills}>
-                        <textarea
-                          name="skills"
-                          value={formData.skills}
-                          onChange={handleChange}
-                          className={getTextareaClass(!!errors.skills)}
-                        />
-                      </FormField>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <FormField label={t.preferredWorkingArea}>
-                          <div className="relative">
-                            <MapPin size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                            <input
-                              name="preferredWorkingArea"
-                              value={formData.preferredWorkingArea}
-                              onChange={handleChange}
-                              className={`${getInputClass(!!errors.preferredWorkingArea)} pl-12`}
-                            />
-                          </div>
-                        </FormField>
-
-                        <FormField label={t.availableTime}>
-                          <div className="relative">
-                            <Clock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
-                            <input
-                              name="availableTime"
-                              value={formData.availableTime}
-                              onChange={handleChange}
-                              className={`${getInputClass(!!errors.availableTime)} pl-12`}
-                            />
-                          </div>
-                        </FormField>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* STEP 5: Document Uploads & Declaration */}
-                  {step === 5 && (
-                    <motion.div
-                      key="step5"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      className="space-y-5"
-                    >
-                      {/* Voter ID Proof upload */}
-                      <FileUploadField
-                        label={t.voterIdProof}
-                        description={t.voterIdProofDesc}
-                        file={formData.voterIdProof}
-                        error={errors.voterIdProof}
-                        required
-                        onFileSelect={(e) => handleFileChange(e, 'voterIdProof')}
-                        onClear={() => setFormData(prev => ({ ...prev, voterIdProof: null }))}
-                        t={t}
-                      />
-
-                      {/* Passport Photo upload */}
-                      <FileUploadField
-                        label={t.passportPhoto}
-                        description={t.passportPhotoDesc}
-                        file={formData.passportPhoto}
-                        error={errors.passportPhoto}
-                        required
-                        previewUrl={photoPreview}
-                        onFileSelect={(e) => handleFileChange(e, 'passportPhoto')}
-                        onClear={() => {
-                          setFormData(prev => ({ ...prev, passportPhoto: null }));
-                          setPhotoPreview(null);
-                        }}
-                        t={t}
-                      />
-
-                      {/* Signature upload */}
-                      <FileUploadField
-                        label={t.signature}
-                        description={t.signatureDesc}
-                        file={formData.signature}
-                        previewUrl={sigPreview}
-                        onFileSelect={(e) => handleFileChange(e, 'signature')}
-                        onClear={() => {
-                          setFormData(prev => ({ ...prev, signature: null }));
-                          setSigPreview(null);
-                        }}
-                        t={t}
-                      />
-
-                      {/* Declaration Checkbox */}
-                      <div className="border-t border-stone-200/60 pt-5 mt-6">
-                        <div className="flex items-start gap-3">
-                          <input
-                            id="declared"
-                            name="declared"
-                            type="checkbox"
-                            checked={formData.declared}
-                            onChange={handleChange}
-                            className={`h-6 w-6 rounded border-stone-300 text-[#FF8C00] focus:ring-[#FF8C00]/20 cursor-pointer shrink-0 mt-0.5 ${errors.declared ? 'border-red-500' : ''}`}
-                          />
-                          <label htmlFor="declared" className="text-sm font-bold text-stone-700 cursor-pointer select-none leading-relaxed">
-                            <span className="text-stone-900 block font-black mb-1 text-base">{t.declaration} <span className="text-[#CC0000]">*</span></span>
-                            “{t.declarationText}”
-                          </label>
-                        </div>
-                        {errors.declared && (
-                          <p className="text-xs text-red-650 font-bold mt-1">{errors.declared}</p>
-                        )}
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* General step errors */}
-                  {Object.keys(errors).length > 0 && (
-                    <div className="flex items-start gap-2.5 bg-red-50 border border-red-200 rounded-xl p-4.5 text-red-700 text-sm font-bold shrink-0">
-                      <AlertCircle size={18} className="shrink-0 mt-0.5" />
-                      <span>{t.validationError}</span>
-                    </div>
-                  )}
-
+                      {s < 3 && <div className={`flex-1 h-[1px] transition-all ${step > s ? 'bg-[#CC0000]' : 'bg-stone-100'}`} />}
+                    </React.Fragment>
+                  ))}
                 </div>
               )}
-            </AnimatePresence>
-          </div>
-
-          {/* Sticky Footer for Buttons (Always visible and accessible) */}
-          {!isSuccess && (
-            <div className="px-6 py-4 md:px-10 md:py-5 border-t border-stone-200 bg-white flex gap-4 shrink-0 relative z-10">
-              {step > 1 && (
-                <button
-                  type="button"
-                  onClick={handlePrev}
-                  className="flex-1 py-4 border-2 border-stone-200 hover:border-stone-300 text-stone-600 rounded-xl font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer"
-                >
-                  <ArrowLeft size={18} />
-                  <span>{t.prev}</span>
-                </button>
-              )}
-
-              {step < 5 ? (
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  className="flex-[2] py-4 bg-stone-900 hover:bg-stone-855 text-white rounded-xl font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm hover:translate-x-0.5"
-                >
-                  <span>{t.next}</span>
-                  <ArrowRight size={18} />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="flex-[2] py-4 bg-gradient-to-r from-[#CC0000] to-[#FF8C00] hover:from-[#a80000] hover:to-[#e67300] disabled:opacity-55 text-white rounded-xl font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>{t.submitting}</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>{t.submit}</span>
-                      <ArrowRight size={18} />
-                    </>
-                  )}
-                </button>
-              )}
             </div>
-          )}
-        </form>
+
+            {/* Scrollable Form Body */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 sm:px-8 has-scrollbar">
+              <AnimatePresence mode="wait">
+
+                {/* SUCCESS SCREEN */}
+                {isSuccess ? (
+                  <motion.div key="success" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                    className="flex flex-col items-center py-2">
+
+                    {/* VIP Membership Card */}
+                    <div className="w-full max-w-[360px] mb-5 mx-auto">
+                      <div
+                        className="relative w-full select-none overflow-hidden"
+                        style={{
+                          aspectRatio: '1.586 / 1',
+                          borderRadius: '14px',
+                          boxShadow: '0 20px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,200,0,0.15)',
+                          background: 'linear-gradient(135deg, #0d0d1a 0%, #1c0c28 45%, #1f0c0c 100%)',
+                        }}
+                      >
+                        {/* Background temple photo */}
+                        <img
+                          src={srirangamImg}
+                          alt=""
+                          className="absolute inset-0 w-full h-full object-cover"
+                          style={{ opacity: 0.2, mixBlendMode: 'luminosity' }}
+                        />
+                        {/* Red glow */}
+                        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 70% 30%, rgba(204,0,0,0.18) 0%, transparent 65%)' }} />
+                        {/* Top gold stripe */}
+                        <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(90deg,#CC0000,#FF8C00 50%,#FFD700)' }} />
+                        <div className="absolute top-[4px] left-0 right-0 h-[1px]" style={{ background: 'linear-gradient(90deg,rgba(255,140,0,0.35),rgba(255,215,0,0.35))' }} />
+                        {/* Bottom gold stripe */}
+                        <div className="absolute bottom-[4px] left-0 right-0 h-[1px]" style={{ background: 'linear-gradient(90deg,rgba(255,140,0,0.3),rgba(255,215,0,0.3))' }} />
+                        <div className="absolute bottom-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(90deg,#FFD700,#FF8C00 50%,#CC0000)' }} />
+                        {/* Diagonal shimmer */}
+                        <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(108deg,transparent 30%,rgba(255,215,0,0.04) 50%,transparent 70%)' }} />
+
+                        {/* Card Content */}
+                        <div className="relative z-10 flex flex-col h-full p-4 justify-between">
+
+                          {/* Top Row: Logo + VIP Badge */}
+                          <div className="flex items-start justify-between">
+                            <div className="flex items-center gap-2">
+                              <div className="w-7 h-7 rounded-md overflow-hidden flex items-center justify-center"
+                                style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,215,0,0.3)', backdropFilter: 'blur(4px)' }}>
+                                <img src={logoImg} alt="Logo" className="w-full h-full object-contain p-0.5" />
+                              </div>
+                              <div>
+                                <p className="font-black uppercase text-white leading-none" style={{ fontSize: '7px', letterSpacing: '0.14em' }}>SHASHIKIRAN KN</p>
+                                <p className="font-bold uppercase leading-none mt-0.5" style={{ fontSize: '5.5px', letterSpacing: '0.1em', background: 'linear-gradient(90deg,#FF8C00,#FFD700)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>TAMIL NADU 2026 MOVEMENT</p>
+                              </div>
+                            </div>
+                            <div className="flex flex-col items-end gap-0.5">
+                              <div className="px-2 py-0.5 rounded-sm" style={{ background: 'linear-gradient(90deg,#CC0000,#a80000)', border: '1px solid rgba(255,140,0,0.5)', boxShadow: '0 2px 8px rgba(180,0,0,0.5)' }}>
+                                <span className="font-black uppercase text-white tracking-widest" style={{ fontSize: '6px' }}>VIP MEMBER</span>
+                              </div>
+                              <span className="font-semibold uppercase tracking-widest" style={{ fontSize: '5px', color: 'rgba(255,215,0,0.65)' }}>LOYALTY CARD</span>
+                            </div>
+                          </div>
+
+                          {/* Middle Row: Card Number */}
+                          <div className="flex items-center justify-end px-0.5">
+                            <div className="text-right">
+                              <p className="font-mono font-bold text-white/85 tracking-[0.22em]" style={{ fontSize: '9px' }}>
+                                {memberId ? memberId.replace(/-/g,'').replace(/(.{4})/g,'$1 ').trim() : '•••• ••••'}
+                              </p>
+                              <p className="font-bold uppercase tracking-widest" style={{ fontSize: '5px', color: 'rgba(255,215,0,0.6)' }}>MEMBER ID</p>
+                            </div>
+                          </div>
+
+                          {/* Bottom Row: Name / Info + QR */}
+                          <div className="flex items-end justify-between">
+                            <div className="flex-1 pr-3">
+                              <p className="uppercase tracking-widest font-semibold" style={{ fontSize: '5px', color: 'rgba(255,140,0,0.75)' }}>CARDHOLDER NAME</p>
+                              <p className="font-black text-white uppercase tracking-wide truncate leading-snug" style={{ fontSize: '11px', fontFamily: 'Georgia, serif', textShadow: '0 2px 10px rgba(0,0,0,0.7)', maxWidth: '170px' }}>
+                                {formData.fullName || 'MEMBER NAME'}
+                              </p>
+                              <div className="flex items-center gap-2 mt-1">
+                                <div>
+                                  <p className="uppercase tracking-widest font-semibold" style={{ fontSize: '5px', color: 'rgba(255,140,0,0.7)' }}>CONSTITUENCY</p>
+                                  <p className="font-semibold text-white/75 truncate" style={{ fontSize: '6.5px', maxWidth: '110px' }}>{formData.constituency || '—'}</p>
+                                </div>
+                                <div className="w-px h-5" style={{ background: 'rgba(255,255,255,0.15)' }} />
+                                <div>
+                                  <p className="uppercase tracking-widest font-semibold" style={{ fontSize: '5px', color: 'rgba(255,140,0,0.7)' }}>ISSUED</p>
+                                  <p className="font-semibold text-white/75" style={{ fontSize: '6.5px' }}>{new Date().toLocaleDateString('en-GB')}</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="shrink-0 membership-qr">
+                              <div className="rounded-md p-1" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                                <QRCodeCanvas
+                                  value={`NSP|${memberId}|${formData.fullName}|${formData.constituency}`}
+                                  size={42} level="M" fgColor="#1a0a22"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <p className="text-center uppercase tracking-widest font-bold text-stone-400 mt-2" style={{ fontSize: '8px' }}>NSP Digital Membership Card — 2026</p>
+                    </div>
+
+                    {/* Action buttons */}
+                    <div className="flex flex-col sm:flex-row gap-3.5 w-full max-w-sm mb-4">
+                      <button type="button" onClick={handleDownloadCard}
+                        className="flex-1 py-3 bg-stone-900 hover:bg-stone-800 text-white rounded-xl font-bold text-[10px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer">
+                        <Download size={12} />
+                        <span>{t.download}</span>
+                      </button>
+                      <button type="button" onClick={handleWhatsappShare}
+                        className="flex-1 py-3 border border-stone-200 hover:bg-stone-50 text-stone-700 rounded-xl font-bold text-[10px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer">
+                        <Share2 size={12} className="text-[#25D366]" />
+                        <span>{t.share}</span>
+                      </button>
+                    </div>
+                    <button type="button" onClick={onClose}
+                      className="text-stone-400 hover:text-stone-600 font-bold text-[10px] uppercase tracking-widest transition-colors cursor-pointer py-2">
+                      {t.close}
+                    </button>
+                  </motion.div>
+                ) : (
+                  <div>
+                    {/* STEP 1: Mobile */}
+                    {step === 1 && (
+                      <motion.div key="step1" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -12 }}
+                        className="space-y-6">
+                        <div className="bg-stone-50 border border-stone-100 rounded-2xl p-5">
+                          <p className="text-xs text-stone-500 font-medium leading-relaxed">
+                            {lang === 'ta'
+                              ? 'உங்கள் 10-இலக்க மொபைல் எண்ணை உள்ளிடவும். OTP குறியீடு மூலம் எண் சரிபார்க்கப்படும்.'
+                              : 'Please enter your active mobile number. We will send you a verification OTP to verify ownership.'}
+                          </p>
+                        </div>
+                        <PremiumField label={t.mobileNumber} error={errors.mobile} required>
+                          <div className="relative">
+                            <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none">
+                              <Phone size={14} className="text-stone-400" />
+                              <span className="text-stone-300 text-xs">|</span>
+                              <span className="text-stone-500 text-xs font-bold">+91</span>
+                            </div>
+                            <input
+                              name="mobile" type="tel" inputMode="numeric" pattern="[0-9]*"
+                              placeholder="9876543210"
+                              value={formData.mobile} onChange={handleChange}
+                              className={getPremiumInputClass(!!errors.mobile) + ' pl-20 font-mono tracking-widest'}
+                            />
+                          </div>
+                        </PremiumField>
+                      </motion.div>
+                    )}
+
+                    {/* STEP 2: Profile details */}
+                    {step === 2 && (
+                      <motion.div key="step2" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -12 }}
+                        className="space-y-4">
+
+                        {/* Name */}
+                        <PremiumField label={t.fullName} error={errors.fullName} required>
+                          <div className="relative">
+                            <User size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+                            <input name="fullName" type="text" value={formData.fullName} onChange={handleChange}
+                              placeholder="e.g. Rajan Kumar"
+                              className={getPremiumInputClass(!!errors.fullName) + ' pl-10'} />
+                          </div>
+                        </PremiumField>
+
+                        {/* DOB + Gender row */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <PremiumField label={t.dob} error={errors.dob} required>
+                            <input name="dob" type="date" value={formData.dob} onChange={handleChange}
+                              className={getPremiumInputClass(!!errors.dob)} />
+                          </PremiumField>
+
+                          <PremiumField label={t.gender} error={errors.gender} required>
+                            <div className="flex gap-2 h-[42px]">
+                              {[
+                                { key: 'Male', label: t.genderMale },
+                                { key: 'Female', label: t.genderFemale },
+                                { key: 'Trans', label: lang === 'ta' ? 'திரு' : 'Other' },
+                              ].map(({ key, label }) => {
+                                const isSel = formData.gender === key;
+                                return (
+                                  <button key={key} type="button"
+                                    onClick={() => {
+                                      setFormData(p => ({ ...p, gender: key }));
+                                      if (errors.gender) setErrors(p => { const n = { ...p }; delete n.gender; return n; });
+                                    }}
+                                    className={`flex-1 h-full rounded-xl border text-[9px] font-extrabold uppercase tracking-wider transition-all cursor-pointer ${isSel
+                                      ? 'bg-gradient-to-br from-[#CC0000] to-[#FF8C00] border-transparent text-white shadow-sm'
+                                      : errors.gender
+                                        ? 'bg-white border-red-350 text-red-500'
+                                        : 'bg-stone-50/50 border border-stone-200 text-stone-600 hover:border-stone-300 hover:bg-stone-100/30'
+                                      }`}>
+                                    {label}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </PremiumField>
+                        </div>
+
+                        {/* Email */}
+                        <PremiumField label={t.emailId} error={errors.email}>
+                          <div className="relative">
+                            <Mail size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+                            <input name="email" type="email" placeholder="name@example.com"
+                              value={formData.email} onChange={handleChange}
+                              className={getPremiumInputClass(!!errors.email) + ' pl-10'} />
+                          </div>
+                        </PremiumField>
+
+                        {/* State & Constituency */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <PremiumField label={t.state} error={errors.state} required>
+                            <input name="state" value={formData.state} onChange={handleChange}
+                              className={getPremiumInputClass(!!errors.state)} />
+                          </PremiumField>
+
+                          {/* Searchable Constituency Dropdown */}
+                          <PremiumField label={t.constituency} error={errors.constituency} required>
+                            <div className="relative" ref={dropdownRef}>
+                              <div className="relative">
+                                <input
+                                  type="text"
+                                  placeholder={t.searchConstituency}
+                                  value={searchTerm}
+                                  onChange={(e) => { setSearchTerm(e.target.value); setIsDropdownOpen(true); }}
+                                  onFocus={() => setIsDropdownOpen(true)}
+                                  className={getPremiumInputClass(!!errors.constituency) + ' pr-8'}
+                                />
+                                <ChevronDown size={14}
+                                  className={`absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                              </div>
+                              {isDropdownOpen && (
+                                <div className="absolute z-[200] top-full left-0 right-0 mt-1 bg-white border border-stone-200 rounded-xl shadow-lg overflow-y-auto has-scrollbar max-h-[200px]">
+                                  {filteredConstituencies.length > 0 ? (
+                                    filteredConstituencies.map((name) => (
+                                      <button key={name} type="button"
+                                        onClick={() => handleSelectConstituency(name)}
+                                        className="w-full px-4 py-2.5 text-left text-xs font-semibold text-stone-700 hover:bg-stone-50 hover:text-[#CC0000] transition-colors border-b border-stone-50 last:border-0 cursor-pointer">
+                                        {name}
+                                      </button>
+                                    ))
+                                  ) : (
+                                    <div className="px-4 py-4 text-xs text-stone-400 font-bold text-center">
+                                      {t.noConstituency}
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </PremiumField>
+                        </div>
+
+
+
+                        {/* Terms */}
+                        <div className="pt-1">
+                          <label className="flex items-start gap-3 cursor-pointer group">
+                            <div className="relative mt-0.5 shrink-0">
+                              <input
+                                id="declared" name="declared" type="checkbox"
+                                checked={formData.declared} onChange={handleChange}
+                                className="sr-only peer"
+                              />
+                              <div className={`w-4 h-4 rounded-md border flex items-center justify-center transition-all ${formData.declared ? 'bg-[#CC0000] border-[#CC0000]' : errors.declared ? 'border-red-400 bg-red-50' : 'border-stone-300 bg-white group-hover:border-stone-400'}`}
+                                onClick={() => {
+                                  setFormData(p => ({ ...p, declared: !p.declared }));
+                                  if (errors.declared) setErrors(p => { const n = { ...p }; delete n.declared; return n; });
+                                }}>
+                                {formData.declared && <CheckCircle2 size={10} className="text-white" strokeWidth={3} />}
+                              </div>
+                            </div>
+                            <span className="text-xs text-stone-500 font-medium leading-relaxed select-none">{t.agreeTerms}</span>
+                          </label>
+                          {errors.declared && <p className="text-[10px] text-red-500 font-bold mt-1.5 ml-7">{errors.declared}</p>}
+                        </div>
+
+                        {/* General validation notice */}
+                        {Object.keys(errors).filter(k => k !== 'otp').length > 0 && (
+                          <div className="flex items-center gap-2 bg-red-50 border border-red-100 rounded-xl p-3 text-red-600 text-xs font-semibold">
+                            <AlertCircle size={14} className="shrink-0" />
+                            <span>{t.validationError}</span>
+                          </div>
+                        )}
+                      </motion.div>
+                    )}
+
+                    {/* STEP 3: OTP */}
+                    {step === 3 && (
+                      <motion.div key="step3" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -12 }}
+                        className="flex flex-col items-center text-center py-4 space-y-6">
+                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#CC0000] to-[#FF8C00] flex items-center justify-center shadow-md shadow-red-100">
+                          <Phone size={24} className="text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-base font-extrabold text-stone-900 mb-1">
+                            {lang === 'ta' ? 'OTP சரிபார்ப்பு' : 'OTP Verification'}
+                          </h3>
+                          <p className="text-xs text-stone-500 font-medium max-w-xs mx-auto leading-relaxed">
+                            {lang === 'ta'
+                              ? `${formData.mobile} மொபைல் எண்ணிற்கு அனுப்பப்பட்ட 6-இலக்க குறியீட்டை உள்ளிடவும்`
+                              : `Enter the 6-digit code sent to +91 ${formData.mobile}`}
+                          </p>
+                        </div>
+                        <div>
+                          <input
+                            name="otpCode" type="tel" inputMode="numeric" maxLength={6}
+                            value={otpCode}
+                            onChange={(e) => {
+                              const val = e.target.value.replace(/\D/g, '');
+                              setOtpCode(val);
+                              if (errors.otp) setErrors(p => ({ ...p, otp: '' }));
+                            }}
+                            className="w-48 text-center py-3 border border-stone-200 rounded-xl font-mono text-2xl font-black tracking-[0.4em] focus:border-[#CC0000] focus:ring-4 focus:ring-[#CC0000]/5 outline-none shadow-sm transition-all"
+                            placeholder="••••••"
+                          />
+                          {errors.otp && (
+                            <p className="text-xs text-red-500 font-bold mt-3 flex items-center justify-center gap-1">
+                              <AlertCircle size={12} />{errors.otp}
+                            </p>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Form Footer */}
+            {!isSuccess && (
+              <div className="px-6 py-4 sm:px-8 border-t border-stone-100 bg-white flex gap-3 shrink-0">
+                {step > 1 && (
+                  <button type="button" onClick={handlePrev}
+                    className="flex items-center justify-center gap-2 px-5 py-3 border border-stone-200 hover:bg-stone-50 text-stone-600 rounded-xl font-bold text-[10px] uppercase tracking-wider transition-all cursor-pointer">
+                    <ArrowLeft size={12} />
+                    <span>{t.prev}</span>
+                  </button>
+                )}
+
+                {step < 3 ? (
+                  <button type="button" onClick={handleNext}
+                    className="flex-1 flex items-center justify-center gap-2.5 py-3 bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white rounded-xl font-bold text-[10px] uppercase tracking-wider shadow-md shadow-red-200/50 hover:opacity-95 transition-all cursor-pointer">
+                    <span>{step === 1 ? t.submit : t.next}</span>
+                    <ArrowRight size={12} />
+                  </button>
+                ) : (
+                  <button type="submit" disabled={isSubmitting}
+                    className="flex-1 flex items-center justify-center gap-2.5 py-3 bg-gradient-to-r from-[#CC0000] to-[#FF8C00] text-white rounded-xl font-bold text-[10px] uppercase tracking-wider shadow-md shadow-red-200/50 hover:opacity-95 disabled:opacity-60 transition-all cursor-pointer">
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>{t.submitting}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>{t.verify}</span>
+                        <ArrowRight size={12} />
+                      </>
+                    )}
+                  </button>
+                )}
+              </div>
+            )}
+          </form>
+        </div>
       </motion.div>
     </div>
   );
 }
 
-// ─── HELPER COMPONENTS ───────────────────────────────────────────────────────
-function FormField({
-  label,
-  error,
-  required,
-  children
+// ─── HELPER: Input Class ─────────────────────────────────────────────────────
+function getPremiumInputClass(hasError: boolean) {
+  return `w-full px-4 py-2.5 bg-stone-50/70 border rounded-xl outline-none text-sm font-semibold text-stone-800 transition-all placeholder:text-stone-350 shadow-sm ${
+    hasError
+      ? 'border-red-300 focus:border-red-400 focus:ring-4 focus:ring-red-400/10'
+      : 'border-stone-200 focus:bg-white focus:border-[#CC0000] focus:ring-4 focus:ring-[#CC0000]/5 hover:border-stone-300'
+  }`;
+}
+
+// ─── HELPER: Field Wrapper ───────────────────────────────────────────────────
+function PremiumField({
+  label, error, required, hint, children
 }: {
   label: string;
   error?: string;
   required?: boolean;
+  hint?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-2">
-      <label className="text-sm font-black text-stone-800 flex items-center gap-0.5 select-none mb-1">
-        {label}
-        {required && <span className="text-[#CC0000] font-black">*</span>}
+    <div className="flex flex-col gap-1">
+      <label className="text-[9px] font-extrabold text-stone-400 uppercase tracking-widest flex items-center gap-0.5 select-none">
+        {label}{required && <span className="text-[#CC0000] font-black ml-0.5">*</span>}
       </label>
       {children}
+      {hint && !error && <p className="text-[9px] text-stone-400/80 font-medium">{hint}</p>}
       {error && (
-        <span className="text-xs text-red-650 font-bold flex items-center gap-1 mt-0.5">
-          <AlertCircle size={14} />
-          {error}
-        </span>
-      )}
-    </div>
-  );
-}
-
-interface FileUploadFieldProps {
-  label: string;
-  description: string;
-  file: File | null;
-  error?: string;
-  required?: boolean;
-  previewUrl?: string | null;
-  onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClear: () => void;
-  t: any;
-}
-
-function FileUploadField({
-  label,
-  description,
-  file,
-  error,
-  required,
-  previewUrl,
-  onFileSelect,
-  onClear,
-  t
-}: FileUploadFieldProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  return (
-    <div className="flex flex-col gap-2">
-      <label className="text-sm font-black text-stone-800 flex items-center gap-0.5 select-none mb-1">
-        {label}
-        {required && <span className="text-[#CC0000] font-black">*</span>}
-      </label>
-      
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={onFileSelect}
-        accept="image/*,application/pdf"
-        className="hidden"
-      />
-
-      {file ? (
-        <div className={`flex items-center justify-between border-2 rounded-xl p-4 shadow-sm ${error ? 'border-red-500 bg-red-50/10' : 'border-[#FF8C00]/30 bg-orange-50/20'}`}>
-          <div className="flex items-center gap-3 min-w-0">
-            {previewUrl ? (
-              <img src={previewUrl} alt="Upload preview" className="w-14 h-14 rounded-lg object-cover border border-stone-200 shadow-sm shrink-0" />
-            ) : (
-              <div className="w-14 h-14 rounded-lg bg-stone-100 border border-stone-200 flex items-center justify-center shrink-0">
-                <FileText size={22} className="text-stone-400" />
-              </div>
-            )}
-            <div className="min-w-0">
-              <p className="text-sm font-bold text-stone-850 truncate">{file.name}</p>
-              <p className="text-xs text-stone-400 font-medium">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={onClear}
-            className="px-4 py-2 text-xs font-black uppercase text-[#CC0000] hover:bg-[#CC0000]/5 rounded-lg border border-[#CC0000]/15 transition-all cursor-pointer shrink-0"
-          >
-            {t.changeFile}
-          </button>
-        </div>
-      ) : (
-        <div
-          onClick={handleClick}
-          className={`border-2 border-dashed rounded-xl p-6 text-center flex flex-col items-center justify-center gap-2 cursor-pointer transition-all hover:bg-stone-100/50 ${
-            error ? 'border-red-500 bg-red-50/10' : 'border-stone-300 bg-white hover:border-[#FF8C00]/55'
-          }`}
-        >
-          <UploadCloud size={28} className={error ? 'text-red-500' : 'text-[#FF8C00]/70'} />
-          <div>
-            <p className="text-sm font-bold text-stone-800">{t.dragDrop}</p>
-            <p className="text-xs text-stone-400 mt-0.5">{description}</p>
-          </div>
-        </div>
-      )}
-
-      {error && (
-        <span className="text-xs text-red-650 font-bold flex items-center gap-1 mt-0.5">
-          <AlertCircle size={14} />
-          {error}
+        <span className="text-[9px] text-red-500 font-bold flex items-center gap-1">
+          <AlertCircle size={10} />{error}
         </span>
       )}
     </div>
